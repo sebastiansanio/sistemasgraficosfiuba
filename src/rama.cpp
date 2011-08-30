@@ -112,6 +112,7 @@ void rama::dibujarHijos(){
 }
 int rama::getCantHijos(){
 	return cantHijos;
+	//
 }
 
 void rama::agregarRama(){
