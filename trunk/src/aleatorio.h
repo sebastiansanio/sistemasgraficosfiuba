@@ -7,11 +7,11 @@
 class aleatorio{
 
 	private:
-		int contador;
+		static int contador;
 
 	public:
 		aleatorio();
-		float obtener(float min,float max);
+		static float obtener(float min,float max);
 
 };
 
