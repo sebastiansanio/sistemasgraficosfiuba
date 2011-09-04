@@ -112,25 +112,23 @@ void rama::dibujarHijos(){
 }
 int rama::getCantHijos(){
 	return cantHijos;
-	//
 }
 
 void rama::agregarRama(){
 	if(cantHijos==0){
-		aleatorio* al=new aleatorio();
-		cantHijos=(int) al->obtener(4.0,7.4);
+		cantHijos=((int) aleatorio::obtener(4.0,6.4))+1;
 		subRamas=new rama*[cantHijos];
 
-		for(int i=0;i<cantHijos;i++){
-			float nuevoAlto=al->obtener(tall*0.55,tall*0.75);
-			float nuevoRadio=al->obtener(radio*0.3,radio*0.55);
-			float altRel=al->obtener(0.6*tall,0.85*tall);
-			float rot1=al->obtener(20+i*45/cantHijos,65/cantHijos+i*45/cantHijos); //20-65
-			float rot2=al->obtener(i*360/cantHijos,360/cantHijos+i*360/cantHijos); //0-360
+		subRamas[0]=new rama(tall*0.3,radio2,tall,0,0);
+
+		for(int i=1;i<cantHijos;i++){
+			float nuevoAlto=aleatorio::obtener(tall*0.55,tall*0.70);
+			float nuevoRadio=aleatorio::obtener(radio*0.3,radio*0.55);
+			float altRel=aleatorio::obtener(0.6*tall,0.85*tall);
+			float rot1=aleatorio::obtener(20+i*45/cantHijos,65/cantHijos+i*45/cantHijos); //20-65
+			float rot2=aleatorio::obtener(i*360/cantHijos,360/cantHijos+i*360/cantHijos); //0-360
 			subRamas[i]=new rama(nuevoAlto,nuevoRadio,altRel,rot1,rot2);
 		}
-		delete al;
-
 	}
 	else{
 		for(int i=0;i<cantHijos;i++){
