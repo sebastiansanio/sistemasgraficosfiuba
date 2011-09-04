@@ -122,9 +122,9 @@ void rama::agregarRama(){
 		subRamas[0]=new rama(tall*0.3,radio2,tall,0,0);
 
 		for(int i=1;i<cantHijos;i++){
-			float nuevoAlto=aleatorio::obtener(tall*0.55,tall*0.70);
+			float nuevoAlto=aleatorio::obtener(tall*0.45,tall*0.65);
 			float nuevoRadio=aleatorio::obtener(radio*0.3,radio*0.55);
-			float altRel=aleatorio::obtener(0.6*tall,0.85*tall);
+			float altRel=aleatorio::obtener(0.7*tall,0.85*tall);
 			float rot1=aleatorio::obtener(20,65); //20-65
 			float rot2=aleatorio::obtener(i*360/(cantHijos-1),360/(cantHijos-1)+i*360/(cantHijos-1)); //0-360
 			subRamas[i]=new rama(nuevoAlto,nuevoRadio,altRel,rot1,rot2);

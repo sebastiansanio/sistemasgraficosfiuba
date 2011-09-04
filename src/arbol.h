@@ -8,6 +8,7 @@
 class arbol{
 
 	private:
+		int ratioDeCrecimiento;
 		float altura;
 		float radio;
 		int edad;
@@ -22,7 +23,8 @@ class arbol{
 		void envejecer();
 		void rejuvenecer();
 		void crecimiento();
-
+		void aumentarCrecimiento();
+		void disminuirCrecimiento();
 };
 
 #endif
