@@ -12,10 +12,13 @@
 #include "suelo.h"
 
 float angulo=0;
+float radio= 21;
 arbol* arbol1;
+float posX = -1;
+float posY = -1;
 
 // Variables que controlan la ubicación de la cámara en la Escena 3D
-float eye[3] = {21.21, 0, 5.0};
+float eye[3] = {21.0, 0.0, 5.0};
 float at[3]  = { 0.0,  0.0, 0.0};
 float up[3]  = { 0.0,  0.0, 1.0};
 
@@ -59,8 +62,8 @@ void arrows(int key, int x, int y)
 	  case 100:
 		  if(up[1]!=1){
 			  angulo=angulo-0.1;
-			  eye[0] = 21.21*cos(angulo);
-			  eye[1]= 21.21*sin(angulo);
+			  eye[0] = radio*cos(angulo);
+			  eye[1]= radio*sin(angulo);
 			  glutPostRedisplay();
 		  }
 		  break;
@@ -68,19 +71,25 @@ void arrows(int key, int x, int y)
 	  case 102:
 		  if(up[1]!=1){
 			  angulo=angulo+0.1;
-			  eye[0] = 21.21*cos(angulo);
-			  eye[1]= 21.21*sin(angulo);
+			  eye[0] = radio*cos(angulo);
+			  eye[1]= radio*sin(angulo);
 			  glutPostRedisplay();
 		  }
 		  break;
 
 	  case 101:
-		  eye[2] = eye[2] + 1.0;
-	  	  glutPostRedisplay();
+		  if(radio>=2){
+			  radio -= 0.5;
+			  eye[0] = radio*cos(angulo);
+			  eye[1]= radio*sin(angulo);
+			  glutPostRedisplay();
+		  }
 	  	  break;
 
 	  case 103:
-		  eye[2] = eye[2] - 1.0;
+		  radio += 0.5;
+		  eye[0] = radio*cos(angulo);
+		  eye[1]= radio*sin(angulo);
 	  	  glutPostRedisplay();
 	  	  break;
 	  default:
@@ -88,14 +97,6 @@ void arrows(int key, int x, int y)
     }
 }
 
-
-void OnIdle (void)
-{
-
-//	glutPostRedisplay();
-
-
-}
 
 void DrawAxis()
 {
@@ -295,19 +296,13 @@ void keyboard (unsigned char key, int x, int y)
 	  	  glutPostRedisplay();
 	  	  break;
 
-	  case '2':
-		  eye[0] = 0.0;
-		  eye[1] = 0.0;
-		  eye[2] = 15.0;
+	  case 'p':
+		  arbol1->crecimiento();
+		  break;
 
-		  at[0] = 0.0;
-		  at[1] = 0.0;
-		  at[2] = 0.0;
-
-		  up[0] = 0.0;
-		  up[1] = 1.0;
-		  up[2] = 0.0;
-		  glutPostRedisplay();
+	  case 'r':
+		  delete arbol1;
+		  arbol1=new arbol(1.0,0.1,0,0);
 		  break;
 
 	  case '3':
@@ -330,6 +325,49 @@ void keyboard (unsigned char key, int x, int y)
    }
 }
 
+void mouseRotacion(int x,int y){
+
+	if (posX==-1){
+		posX = x;
+		posY = y;
+
+	}
+	else{
+		  angulo+=((x-posX)/100);
+		  eye[0] = radio*cos(angulo);
+		  eye[1]= radio*sin(angulo);
+		  posX=x;
+		  posY=y;
+		  glutPostRedisplay();
+	}
+}
+
+void mouseInclinacion(int x,int y){
+	if (posX==-1){
+		posX = x;
+		posY = y;
+
+	}
+	else{
+		  angulo+=((x-posX)/100);
+		  eye[0] = radio*cos(angulo);
+		  eye[1]= radio*sin(angulo);
+		  eye[2]+=((posY-y)/5);
+		  if(eye[2]<0)
+			  eye[2]=0.5;
+		  posY=y;
+		  posX=x;
+
+		  glutPostRedisplay();
+	}
+}
+
+void tiempo(int value){
+	  arbol1->envejecer();
+	  glutTimerFunc(50,tiempo,0);
+	  glutPostRedisplay();
+}
+
 int main(int argc, char** argv)
 {
 
@@ -338,19 +376,21 @@ int main(int argc, char** argv)
    glutInitWindowSize (1024, 768);
    glutInitWindowPosition (0, 0);
 
-   glutCreateWindow (argv[0]);
+   glutCreateWindow ("Sistemas Graficos");
    //glutFullScreen();
    init ();
    glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutSpecialFunc(arrows);
-   glutIdleFunc(OnIdle);
+   glutPassiveMotionFunc(mouseRotacion);
+   glutMotionFunc(mouseInclinacion);
+   glutTimerFunc(50,tiempo,0);
 
    suelo::inicializar();
-   arbol1=new arbol(2.5,0.25,0,0);
+   arbol1=new arbol(1.0,0.1,0,0);
 
-   glClearColor(0.0,0.6,0.9,0.0);
+   glClearColor(0.0,0.6,0.7,0.0);
    glutMainLoop();
    return 0;
 }
