@@ -9,25 +9,43 @@ arbol::arbol(float altura,float radio,float posX,float posY){
 	hoja::inicializar();
 	tronco = new rama(altura,radio,0,0,0);
 	edad=1;
+	crece=true;
 }
 
 void arbol::envejecer(){
 
-	edad+=1;
-	tronco->agregarRama();
+	if(crece){
+		edad+=1;
+		if(edad % 75 == 0){
+			tronco->agregarRama();
+
+		}
+	}
+
+
 }
+
+void arbol::crecimiento(){
+	crece=!crece;
+}
+
+
 
 void arbol::rejuvenecer(){
 	if(edad>1){
+		if(edad % 75 == 0){
+			tronco->quitarRama();
+		}
 		edad-=1;
-		tronco->quitarRama();
+
+
 	}
 }
 
 void arbol::dibujar(){
 	glPushMatrix();
 	glTranslatef(posX,posY,0.0);
-	glScalef(1.0+0.25*(edad-1),1.0+0.25*(edad-1),1.0+0.25*(edad-1));
+	glScalef(1.0+0.0125*(edad-1),1.0+0.0125*(edad-1),1.0+0.0125*(edad-1));
 	tronco->dibujar();
 	tronco->dibujarHijos();
 	glPopMatrix();

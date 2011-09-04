@@ -14,13 +14,14 @@ class arbol{
 		rama* tronco;
 		float posX;
 		float posY;
+		bool crece;
 
 	public:
 		arbol(float altura,float radio,float posX,float posY);
 		void dibujar();
 		void envejecer();
 		void rejuvenecer();
-
+		void crecimiento();
 
 };
 
