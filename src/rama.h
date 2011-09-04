@@ -8,7 +8,7 @@
 class rama{
 
 	private:
-		const static int precision=10;
+		const static int precision=6;
 
 		float tall;
 		float radio;
