@@ -296,14 +296,22 @@ void keyboard (unsigned char key, int x, int y)
 	  	  glutPostRedisplay();
 	  	  break;
 
-	  case 'p':
-		  arbol1->crecimiento();
-		  break;
-
-	  case 'r':
+	  case 'R':
 		  delete arbol1;
 		  arbol1=new arbol(1.0,0.1,0,0);
 		  break;
+
+	  case 'P':
+		  arbol1->crecimiento();
+		  break;
+
+	  case 'Q':
+			  arbol1->aumentarCrecimiento();
+			  break;
+
+	  case 'A':
+			  arbol1->disminuirCrecimiento();
+			  break;
 
 	  case '3':
 		  eye[0]=15.0;

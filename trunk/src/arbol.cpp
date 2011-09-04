@@ -10,16 +10,20 @@ arbol::arbol(float altura,float radio,float posX,float posY){
 	tronco = new rama(altura,radio,0,0,0);
 	edad=1;
 	crece=true;
+	ratioDeCrecimiento=1;
 }
 
 void arbol::envejecer(){
 
 	if(crece){
-		edad+=1;
-		if(edad % 75 == 0){
-			tronco->agregarRama();
+		for(int contador=0;contador<ratioDeCrecimiento;contador++){
+			edad+=1;
+			if(edad % 75 == 0){
+				tronco->agregarRama();
 
+			}
 		}
+
 	}
 
 
@@ -29,6 +33,16 @@ void arbol::crecimiento(){
 	crece=!crece;
 }
 
+void arbol::aumentarCrecimiento(){
+	ratioDeCrecimiento++;
+}
+void arbol::disminuirCrecimiento(){
+	if(ratioDeCrecimiento>1){
+		ratioDeCrecimiento--;
+	}
+
+
+}
 
 
 void arbol::rejuvenecer(){
