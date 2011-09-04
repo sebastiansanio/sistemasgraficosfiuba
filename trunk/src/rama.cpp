@@ -62,7 +62,7 @@ rama::rama(float alto,float radio,float alturaPadre,float rotacion1,float rotaci
 
 	this->tall=alto;
 	this->radio=radio;
-	this->radio2=al->obtener(0.6,0.7)*this->radio;
+	this->radio2=aleatorio::obtener(0.6,0.7)*this->radio;
 	this->rotacion1=rotacion1;
 	this->rotacion2=rotacion2;
 	this->alturaPadre=alturaPadre;
@@ -125,8 +125,8 @@ void rama::agregarRama(){
 			float nuevoAlto=aleatorio::obtener(tall*0.55,tall*0.70);
 			float nuevoRadio=aleatorio::obtener(radio*0.3,radio*0.55);
 			float altRel=aleatorio::obtener(0.6*tall,0.85*tall);
-			float rot1=aleatorio::obtener(20+i*45/cantHijos,65/cantHijos+i*45/cantHijos); //20-65
-			float rot2=aleatorio::obtener(i*360/cantHijos,360/cantHijos+i*360/cantHijos); //0-360
+			float rot1=aleatorio::obtener(20,65); //20-65
+			float rot2=aleatorio::obtener(i*360/(cantHijos-1),360/(cantHijos-1)+i*360/(cantHijos-1)); //0-360
 			subRamas[i]=new rama(nuevoAlto,nuevoRadio,altRel,rot1,rot2);
 		}
 	}
