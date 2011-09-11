@@ -19,6 +19,7 @@ class arbol{
 
 	public:
 		arbol(float altura,float radio,float posX,float posY);
+		~arbol();
 		void dibujar();
 		void envejecer();
 		void rejuvenecer();
