@@ -13,11 +13,17 @@ arbol::arbol(float altura,float radio,float posX,float posY){
 	ratioDeCrecimiento=1;
 }
 
+arbol::~arbol(){
+	delete tronco;
+
+}
+
 void arbol::envejecer(){
 
 	if(crece){
 		for(int contador=0;contador<ratioDeCrecimiento;contador++){
 			edad+=1;
+			tronco->crecer();
 			if(edad % 75 == 0){
 				tronco->agregarRama();
 

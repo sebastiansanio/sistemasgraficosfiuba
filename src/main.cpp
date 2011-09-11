@@ -306,26 +306,11 @@ void keyboard (unsigned char key, int x, int y)
 		  break;
 
 	  case 'Q':
-			  arbol1->aumentarCrecimiento();
-			  break;
+		  arbol1->aumentarCrecimiento();
+		  break;
 
 	  case 'A':
-			  arbol1->disminuirCrecimiento();
-			  break;
-
-	  case '3':
-		  eye[0]=15.0;
-		  eye[1] = 15.0;
-		  eye[2] = 5.0;
-
-		  at[0] = 0.0;
-		  at[1] = 0.0;
-		  at[2] = 0.0;
-
-		  up[0] = 0.0;
-		  up[1] = 0.0;
-		  up[2] = 1.0;
-		  glutPostRedisplay();
+		  arbol1->disminuirCrecimiento();
 		  break;
 
      default:
