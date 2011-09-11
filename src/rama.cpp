@@ -130,7 +130,10 @@ void rama::dibujarHijos(){
 		glTranslatef(0.0,0.0,0.85*tall*aux/75);
 		glTranslatef(radio2*aux/75,0.0,0.0);
 		glRotatef(180,0.0,0.0,1.0);
-		glScalef(aux/75,aux/75,aux/75);
+		if(edad<75){
+			glScalef(aux/75,aux/75,aux/75);
+		}
+
 		hoja::dibujar();
 		glPopMatrix();
 
@@ -138,7 +141,9 @@ void rama::dibujarHijos(){
 		glTranslatef(0.0,0.0,0.95*tall*aux/75);
 		glTranslatef(0.0,-radio2*aux/75,0.0);
 		glRotatef(90,0.0,0.0,1.0);
-		glScalef(aux/75,aux/75,aux/75);
+		if(edad<75){
+			glScalef(aux/75,aux/75,aux/75);
+		}
 		hoja::dibujar();
 		glPopMatrix();
 
