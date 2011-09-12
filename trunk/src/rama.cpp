@@ -45,18 +45,12 @@ void rama::borde(){
 		glColor3f(0.25, 0.19, 0.0);
 		for(GLfloat j=0;j<=360;j=j+incremento)
 		{
-			glColor3f(0.25, 0.19, 0.0);
 			glVertex3f(radio*cos(PI*j/180),radio*sin(PI*j/180),0.0);
-			glColor3f(0.30, 0.15, 0.0);
 			glVertex3f(radio2*cos(PI*j/180),radio2*sin(PI*j/180),tall);
-			glColor3f(0.27, 0.17, 0.0);
 			glVertex3f(radio*cos(PI*(j+incremento)/180),radio*sin(PI*(j+incremento)/180),0.0);
 
-			glColor3f(0.30, 0.15, 0.0);
 			glVertex3f(radio2*cos(PI*j/180),radio2*sin(PI*j/180),tall);
-			glColor3f(0.27, 0.17, 0.0);
 			glVertex3f(radio2*cos(PI*(j+incremento)/180),radio2*sin(PI*(j+incremento)/180),tall);
-			glColor3f(0.30, 0.15, 0.0);
 			glVertex3f(radio*cos(PI*(j+incremento)/180),radio*sin(PI*(j+incremento)/180),0.0);
 		}
 	glEnd();
@@ -103,7 +97,7 @@ void rama::dibujar(){
 	glPushMatrix();
 	if(edad<75){
 		float aux=(float)edad;
-		glScalef(aux/75,aux/75,aux/75);
+		glScalef(1,1,aux/75);
 	}
 
 	glCallList(dlTapa);
@@ -125,29 +119,30 @@ void rama::dibujarHijos(){
 			glPopMatrix();
 		}
 	}
-		float aux=(float) edad;
-		glPushMatrix();
-		glTranslatef(0.0,0.0,0.85*tall*aux/75);
-		glTranslatef(radio2*aux/75,0.0,0.0);
-		glRotatef(180,0.0,0.0,1.0);
-		if(edad<75){
-			glScalef(aux/75,aux/75,aux/75);
-		}
+	float aux=(float) edad;
+//	Hoja 1
+	glPushMatrix();
+	glTranslatef(0.0,0.0,0.95*tall*aux/75);
+	glTranslatef(0.0,-radio2*aux/75,0.0);
+	glRotatef(90,0.0,0.0,1.0);
+	if(edad<75){
+		glScalef(aux/75,aux/75,aux/75);
+	}
+	hoja::dibujar();
+	glPopMatrix();
 
-		hoja::dibujar();
-		glPopMatrix();
-
-		glPushMatrix();
-		glTranslatef(0.0,0.0,0.95*tall*aux/75);
-		glTranslatef(0.0,-radio2*aux/75,0.0);
-		glRotatef(90,0.0,0.0,1.0);
-		if(edad<75){
-			glScalef(aux/75,aux/75,aux/75);
-		}
-		hoja::dibujar();
-		glPopMatrix();
-
+//	Hoja 2
+//	glPushMatrix();
+//	glTranslatef(0.0,0.0,0.85*tall*aux/75);
+//	glTranslatef(radio2*aux/75,0.0,0.0);
+//	glRotatef(180,0.0,0.0,1.0);
+//	if(edad<75){
+//		glScalef(aux/75,aux/75,aux/75);
+//	}
+//		hoja::dibujar();
+//	glPopMatrix();
 }
+
 int rama::getCantHijos(){
 	return cantHijos;
 }
@@ -159,13 +154,17 @@ void rama::agregarRama(){
 
 		subRamas[0]=new rama(tall*0.3,radio2,tall,0,0);
 
-		for(int i=1;i<cantHijos;i++){
-			float nuevoAlto=aleatorio::obtener(tall*0.4,tall*0.5);
-			float nuevoRadio=aleatorio::obtener(radio*0.3,radio*0.55);
-			float altRel=aleatorio::obtener(0.7*tall,0.85*tall);
-			float rot1=aleatorio::obtener(20,80); //20-65
-			float rot2=aleatorio::obtener(i*360/(cantHijos-1),360/(cantHijos-1)+i*360/(cantHijos-1)); //0-360
-			subRamas[i]=new rama(nuevoAlto,nuevoRadio,altRel,rot1,rot2);
+		for(int i=0;i<(cantHijos-1);i++){
+			float nuevoAlto=aleatorio::obtener(tall*0.5,tall*0.6);
+			float nuevoRadio=aleatorio::obtener(radio*0.5,radio*0.6);
+			float altRel=aleatorio::obtener(0.62*tall,0.66*tall);
+			float rot1=aleatorio::obtener(42,46);
+
+			float rotProm=i*360/(cantHijos-1)+180/(cantHijos-1);
+			float rotDelta=360/((cantHijos-1)*5);
+			float rot2=aleatorio::obtener(rotProm-rotDelta,rotProm+rotDelta);
+			//float rot2=aleatorio::obtener(i*360/(cantHijos-1),360/(cantHijos-1)+i*360/(cantHijos-1)); //0-360
+			subRamas[i+1]=new rama(nuevoAlto,nuevoRadio,altRel,rot1,rot2);
 		}
 	}
 	else{

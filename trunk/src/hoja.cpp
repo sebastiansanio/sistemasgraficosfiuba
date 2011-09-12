@@ -12,23 +12,16 @@ void hoja::inicializar(){
 	glNewList(dlHoja,GL_COMPILE);
 
 	glPushMatrix();
-	glShadeModel(GL_SMOOTH);
+	glScalef(0.5,0.5,0.5);
+	glColor3f(0.0, 0.8f, 0.2f);
 	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(0.0, 0.8f, 0.2f);
 	glVertex3f(0.05,0.05,0.0);
-	glColor3f(0.0, 0.7f, 0.3f);
 	glVertex3f(0.1,0.1,0.0);
-	glColor3f(0.0, 0.75f, 0.25f);
 	glVertex3f(0.15,0.05,0.0);
-	glColor3f(0.0, 0.8f, 0.2f);
 	glVertex3f(0.1,0.0,0.0);
-	glColor3f(0.0, 0.7f, 0.3f);
 	glVertex3f(0.05,0.025,0.0);
-	glColor3f(0.0, 0.75f, 0.25f);
 	glVertex3f(0.0,0.05,0.0);
-	glColor3f(0.0, 0.8f, 0.2f);
 	glVertex3f(0.05,0.025,0.0);
-	glColor3f(0.0, 0.7f, 0.3f);
 	glVertex3f(0.1,0.1,0.0);
 	glEnd();
 
