@@ -22,7 +22,6 @@ class arbol{
 		~arbol();
 		void dibujar();
 		void envejecer();
-		void rejuvenecer();
 		void crecimiento();
 		void aumentarCrecimiento();
 		void disminuirCrecimiento();
