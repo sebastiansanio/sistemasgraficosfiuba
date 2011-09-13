@@ -163,7 +163,6 @@ void rama::agregarRama(){
 			float rotProm=i*360/(cantHijos-1)+180/(cantHijos-1);
 			float rotDelta=360/((cantHijos-1)*5);
 			float rot2=aleatorio::obtener(rotProm-rotDelta,rotProm+rotDelta);
-			//float rot2=aleatorio::obtener(i*360/(cantHijos-1),360/(cantHijos-1)+i*360/(cantHijos-1)); //0-360
 			subRamas[i+1]=new rama(nuevoAlto,nuevoRadio,altRel,rot1,rot2);
 		}
 	}
