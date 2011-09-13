@@ -269,44 +269,44 @@ void reshape (int w, int h)
 void keyboard (unsigned char key, int x, int y)
 {
    switch (key) {
-      case 'q':
+      case 'e':
          exit(0);
          break;
+//
+//	  case 'g':
+//		  view_grid = !view_grid;
+//		  glutPostRedisplay();
+//		  break;
+//
+//	  case 'a':
+//		  view_axis = !view_axis;
+//		  glutPostRedisplay();
+//		  break;
+//
+//	  case 'e':
+//		  edit_panel = !edit_panel;
+//		  glutPostRedisplay();
+//		  break;
+//
+//	  case 'w':
+//		  arbol1->envejecer();
+//		  glutPostRedisplay();
+//	  	  break;
 
-	  case 'g':
-		  view_grid = !view_grid;
-		  glutPostRedisplay();
-		  break;
-
-	  case 'a':
-		  view_axis = !view_axis;
-		  glutPostRedisplay();
-		  break;
-
-	  case 'e':
-		  edit_panel = !edit_panel;
-		  glutPostRedisplay();
-		  break;
-
-	  case 'w':
-		  arbol1->envejecer();
-		  glutPostRedisplay();
-	  	  break;
-
-	  case 'R':
+	  case 'r':
 		  delete arbol1;
 		  arbol1=new arbol(1.0,0.1,0,0);
 		  break;
 
-	  case 'P':
+	  case 'p':
 		  arbol1->crecimiento();
 		  break;
 
-	  case 'Q':
+	  case 'q':
 		  arbol1->aumentarCrecimiento();
 		  break;
 
-	  case 'A':
+	  case 'a':
 		  arbol1->disminuirCrecimiento();
 		  break;
 
