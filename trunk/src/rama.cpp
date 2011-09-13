@@ -90,7 +90,6 @@ void rama::crecer(){
 			subRamas[i]->crecer();;
 		}
 	}
-
 }
 
 void rama::dibujar(){
@@ -120,7 +119,7 @@ void rama::dibujarHijos(){
 		}
 	}
 	float aux=(float) edad;
-//	Hoja 1
+
 	glPushMatrix();
 	glTranslatef(0.0,0.0,0.95*tall*aux/75);
 	glTranslatef(0.0,-radio2*aux/75,0.0);
@@ -131,16 +130,6 @@ void rama::dibujarHijos(){
 	hoja::dibujar();
 	glPopMatrix();
 
-//	Hoja 2
-//	glPushMatrix();
-//	glTranslatef(0.0,0.0,0.85*tall*aux/75);
-//	glTranslatef(radio2*aux/75,0.0,0.0);
-//	glRotatef(180,0.0,0.0,1.0);
-//	if(edad<75){
-//		glScalef(aux/75,aux/75,aux/75);
-//	}
-//		hoja::dibujar();
-//	glPopMatrix();
 }
 
 int rama::getCantHijos(){
@@ -169,18 +158,6 @@ void rama::agregarRama(){
 	else{
 		for(int i=0;i<cantHijos;i++){
 			subRamas[i]->agregarRama();
-		}
-	}
-}
-
-void rama::quitarRama(){
-	for(int i=0;i<cantHijos;i++){
-		if(subRamas[i]->getCantHijos()==0){
-			cantHijos=0;
-			delete subRamas[i];
-		}
-		else{
-			subRamas[i]->quitarRama();
 		}
 	}
 }

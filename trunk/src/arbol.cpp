@@ -50,18 +50,6 @@ void arbol::disminuirCrecimiento(){
 
 }
 
-
-void arbol::rejuvenecer(){
-	if(edad>1){
-		if(edad % 75 == 0){
-			tronco->quitarRama();
-		}
-		edad-=1;
-
-
-	}
-}
-
 void arbol::dibujar(){
 	glPushMatrix();
 	glTranslatef(posX,posY,0.0);

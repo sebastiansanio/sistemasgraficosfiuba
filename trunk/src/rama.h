@@ -33,7 +33,6 @@ class rama{
 		void dibujar();
 		void dibujarHijos();
 		void agregarRama();
-		void quitarRama();
 		int getCantHijos();
 		float getAlturaPadre();
 		float getRotacion1();

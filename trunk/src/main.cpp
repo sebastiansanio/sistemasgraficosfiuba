@@ -292,10 +292,6 @@ void keyboard (unsigned char key, int x, int y)
 		  arbol1->envejecer();
 		  glutPostRedisplay();
 	  	  break;
-	  case 's':
-	  	  arbol1->rejuvenecer();
-	  	  glutPostRedisplay();
-	  	  break;
 
 	  case 'R':
 		  delete arbol1;
