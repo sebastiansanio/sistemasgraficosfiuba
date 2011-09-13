@@ -24,7 +24,7 @@ void arbol::envejecer(){
 		for(int contador=0;contador<ratioDeCrecimiento;contador++){
 			edad+=1;
 			tronco->crecer();
-			if(edad % 75 == 0){
+			if(edad % 60 == 0){
 				tronco->agregarRama();
 
 			}
