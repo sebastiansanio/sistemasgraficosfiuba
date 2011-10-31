@@ -1,0 +1,55 @@
+﻿Compilación iniciada a las 30/10/2011 10:06:14 p.m..
+     1>Proyecto "C:\Users\damian\Downloads\tp2-sistemasgraficos\TemplateProject.vcxproj" en el nodo 2 (build destinos).
+     1>InitializeBuildStatus:
+         Se creará "Debug\TemplateProject.unsuccessfulbuild" porque se especificó "AlwaysCreate".
+       ClCompile:
+         Todas las salidas están actualizadas.
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Users\damian\Downloads\tp2-sistemasgraficos\include" /I"C:\Users\damian\Downloads\tp2-sistemasgraficos\freeglut/include" /I"C:\Users\damian\Downloads\tp2-sistemasgraficos\glew/include" /I"C:\Users\damian\Downloads\tp2-sistemasgraficos\cwc/include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D FREEGLUT_STATIC /D GLEW_STATIC /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt src\myWindow.cpp
+         myWindow.cpp
+       ManifestResourceCompile:
+         Todas las salidas están actualizadas.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Debug\TemplateProject.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\TemplateProject.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"Debug\TemplateProject.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\TemplateProject.lib" /MACHINE:X86 Debug\TemplateProject.exe.embed.manifest.res
+         Debug\glew.obj
+         Debug\freeglut_callbacks.obj
+         Debug\freeglut_cursor.obj
+         Debug\freeglut_display.obj
+         Debug\freeglut_ext.obj
+         Debug\freeglut_font.obj
+         Debug\freeglut_font_data.obj
+         Debug\freeglut_gamemode.obj
+         Debug\freeglut_geometry.obj
+         Debug\freeglut_glutfont_definitions.obj
+         Debug\freeglut_init.obj
+         Debug\freeglut_joystick.obj
+         Debug\freeglut_main.obj
+         Debug\freeglut_menu.obj
+         Debug\freeglut_misc.obj
+         Debug\freeglut_overlay.obj
+         Debug\freeglut_state.obj
+         Debug\freeglut_stroke_mono_roman.obj
+         Debug\freeglut_stroke_roman.obj
+         Debug\freeglut_structure.obj
+         Debug\freeglut_teapot.obj
+         Debug\freeglut_videoresize.obj
+         Debug\freeglut_window.obj
+         Debug\glApplication.obj
+         Debug\glutwindow.obj
+         Debug\glWindow.obj
+         Debug\main.obj
+         Debug\myApplication.obj
+         Debug\myWindow.obj
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\TemplateProject.exe.embed.manifest" /manifest Debug\TemplateProject.exe.intermediate.manifest
+         Todas las salidas están actualizadas.
+       LinkEmbedManifest:
+         Todas las salidas están actualizadas.
+         TemplateProject.vcxproj -> C:\Users\damian\Downloads\tp2-sistemasgraficos\Debug\TemplateProject.exe
+       FinalizeBuildStatus:
+         Se eliminará el archivo "Debug\TemplateProject.unsuccessfulbuild".
+         Aplicando tarea Touch a "Debug\TemplateProject.lastbuildstate".
+     1>Compilación del proyecto terminada "C:\Users\damian\Downloads\tp2-sistemasgraficos\TemplateProject.vcxproj" (build destinos).
+
+Compilación correcta.
+
+Tiempo transcurrido 00:00:02.44
