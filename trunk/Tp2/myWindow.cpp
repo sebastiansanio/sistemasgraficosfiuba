@@ -17,6 +17,8 @@
 using glm::mat4;
 using glm::vec3;
 
+enum Figura { CUBO, TOROIDE, CILINDRO, ESFERA };
+
 float anglex = 0;
 float angley = 0;
 
@@ -43,6 +45,22 @@ GLuint programHandle;
 // Handle to the vertex array object
 GLuint vaoHandle;
 
+int opcion = 0;
+
+Figura opcionFigura = CUBO;
+
+float DoblarXEje = 0.5;
+float DoblarAngulo = 0.0;
+
+float RetorcerAng = PI;
+
+float RuidoAmplitud = 0.02;
+float RuidoInvLongOnda = 40.0;
+float RuidoFase = 0.0;
+
+float EsfRadio = 0.7;
+float EsfFactor = 0.0;
+
 const char* loadShaderAsString(const char* file)
 {
     std::ifstream shader_file(file, std::ifstream::in);
@@ -68,10 +86,40 @@ void myWindow::OnRender(void)
 		glUniformMatrix4fv(location, 1, GL_FALSE,
 		&rotationMatrix[0][0]);
 	}
+
+	location =glGetUniformLocation(programHandle,"opcion");
+	glUniform1i(location,opcion);
+
+	location =glGetUniformLocation(programHandle,"DoblarXEje");
+	glUniform1f(location,DoblarXEje);
+
+	location =glGetUniformLocation(programHandle,"DoblarAngulo");
+	glUniform1f(location,DoblarAngulo);
+
+	location =glGetUniformLocation(programHandle,"RetorcerAng");
+	glUniform1f(location,RetorcerAng);
+
+	location =glGetUniformLocation(programHandle,"RuidoAmplitud");
+	glUniform1f(location,RuidoAmplitud);
+
+	location =glGetUniformLocation(programHandle,"RuidoInvLongOnda");
+	glUniform1f(location,RuidoInvLongOnda);
+
+	location =glGetUniformLocation(programHandle,"RuidoFase");
+	glUniform1f(location,RuidoFase);
+
+	location =glGetUniformLocation(programHandle,"EsfRadio");
+	glUniform1f(location,EsfRadio);
+
+	location =glGetUniformLocation(programHandle,"EsfFactor");
+	glUniform1f(location,EsfFactor);
  
-    //myWindow::drawToroide(0.35,0.1,1.0,0.0,0.0);
-	//myWindow::drawRectangle(0.0,0.5,0.0,0.0,0.0,0.0,0.5,0.0,0.0,0.5,0.5,0.0,0.5,1.0,1.0);
-	myWindow::drawCube(0.5,0.0,1.0,0.0);
+    //myWindow::drawRectangle(0.0,0.5,0.0,0.0,0.0,0.0,0.5,0.0,0.0,0.5,0.5,0.0,0.5,1.0,1.0);
+	if(opcionFigura == CUBO){
+		myWindow::drawCube(0.5,0.0,1.0,0.0);
+	} else if(opcionFigura == TOROIDE){
+		myWindow::drawToroide(0.35,0.1,1.0,0.0,0.0);
+	}
     
     //gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
@@ -80,6 +128,15 @@ void myWindow::OnRender(void)
 
 void  myWindow::OnIdle()
 {
+	RetorcerAng+=0.01;
+	if(RetorcerAng>(2*PI)) RetorcerAng -= (2*PI);
+	RuidoFase+=0.002;
+	if(RuidoFase>(2*PI)) RuidoFase -= (2*PI);
+	DoblarAngulo+=0.01;
+	if(DoblarAngulo > PI) DoblarAngulo -= PI;
+	EsfFactor+=0.005;
+	if(EsfFactor > 1) EsfFactor -= 1;
+	myWindow::OnRender();
 }
 
 // When OnInit is called, a render context (in this case GLUT-Window) 
@@ -89,6 +146,8 @@ void  myWindow::OnInit()
 	glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
 
     GLuint vboHandles[2];
     glGenBuffers(2, vboHandles);
@@ -493,11 +552,58 @@ void myWindow::OnKeyDown(int nKey, char cAscii)
 	} else if (nKey == 103){
 		angley-=2;
 		myWindow::OnRender();
+	} else if (cAscii == 'z'){
+		opcionFigura=CUBO;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
+	} else if (cAscii == 'x'){
+		opcionFigura=TOROIDE;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
+	} else if (cAscii == 'c'){
+		opcionFigura=CILINDRO;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
+	} else if (cAscii == 'v'){
+		opcionFigura=ESFERA;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
+	} else if (cAscii == 'g'){
+		opcion=0;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
+	} else if (cAscii == 'h'){
+		opcion=1;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
+	} else if (cAscii == 'j'){
+		opcion=2;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
+	} else if (cAscii == 'k'){
+		opcion=3;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
+	}  else if (cAscii == 'l'){
+		opcion=4;
+		anglex=0;
+		angley=0;
+		myWindow::OnRender();
 	}
+
+
 	if (cAscii == 27) // 0x1b = ESC
 	{
 		this->Close(); // Close Window!
-	} 
+	}
 };
 
 void myWindow::OnKeyUp(int nKey, char cAscii)
