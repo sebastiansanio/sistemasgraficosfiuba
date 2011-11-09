@@ -30,7 +30,17 @@ float positionData[] =
      0.8f, -0.8f, 0.0f,
      0.0f,  0.8f, 0.0f
 };
+
 GLuint positionBufferHandle;
+
+float normalData[] = 
+{
+    -0.8f, -0.8f, 0.0f,
+     0.8f, -0.8f, 0.0f,
+     0.0f,  0.8f, 0.0f
+};
+
+GLuint normalBufferHandle;
 
 float colorData[] = 
 {
@@ -121,6 +131,12 @@ void myWindow::OnRender(void)
 		myWindow::drawToroide(0.35,0.1,1.0,0.0,0.0);
 	}
     
+	myWindow::drawRectangle(0.0,0.0,0.7,0.0,0.0,0.75,0.02,0.02,0.75,0.02,0.02,0.7,0.0,0.0,1.0);
+
+	myWindow::drawRectangle(0.7,0.0,0.0,0.75,0.0,0.0,0.75,0.02,0.02,0.7,0.02,0.02,1.0,0.0,0.0);
+
+	myWindow::drawRectangle(0.0,0.7,0.0,0.0,0.75,0.0,0.02,0.75,0.02,0.02,0.7,0.02,0.0,1.0,0.0);
+
     //gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
 	glutSwapBuffers();
@@ -149,16 +165,20 @@ void  myWindow::OnInit()
 	glEnable(GL_LIGHTING);
 	glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
 
-    GLuint vboHandles[2];
-    glGenBuffers(2, vboHandles);
+    GLuint vboHandles[3];
+    glGenBuffers(3, vboHandles);
     positionBufferHandle = vboHandles[0];
     colorBufferHandle = vboHandles[1];
+	normalBufferHandle = vboHandles[2];
 
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle );
     glBufferData( GL_ARRAY_BUFFER, 9 * sizeof (float), positionData, GL_STATIC_DRAW );
 
     glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle );
     glBufferData( GL_ARRAY_BUFFER, 9 * sizeof (float), colorData, GL_STATIC_DRAW );
+
+	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle );
+    glBufferData( GL_ARRAY_BUFFER, 9 * sizeof (float), normalData, GL_STATIC_DRAW );
 
     // Create and set-up the vertex array objet
     glGenVertexArrays( 1, &vaoHandle );
@@ -167,6 +187,7 @@ void  myWindow::OnInit()
     // Enable the vertex attributes array
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 
     // Map index 0 to the position buffer
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle);
@@ -175,6 +196,10 @@ void  myWindow::OnInit()
     // Map index 1 to the color buffer
     glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle);
     glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+	// Map index 2 to the normal buffer
+    glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle);
+    glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	// ********************************************
     // Compiling the shader programms
@@ -288,6 +313,9 @@ void  myWindow::OnInit()
                 // Bind index 1 to the shader input variable "VertexColor"
                 glBindAttribLocation( programHandle, 1, "VertexColor" );
 
+				// Bind index 2 to the shader input variable "VertexNorm"
+                glBindAttribLocation( programHandle, 2, "VertexNorm" );
+
             // *******************************************
 
             glLinkProgram( programHandle );
@@ -336,14 +364,21 @@ void myWindow::drawTriangle(float r, float g, float b)
 	glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle );
 	glBufferData( GL_ARRAY_BUFFER, 9 * sizeof (float), colorData, GL_STATIC_DRAW );
 
+	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle );
+	glBufferData( GL_ARRAY_BUFFER, 9 * sizeof (float), normalData, GL_STATIC_DRAW );
+
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 
 	glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle);
 	glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle);
 	glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle);
+	glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	glDrawArrays( GL_TRIANGLES, 0, 3);
 }
@@ -499,16 +534,83 @@ void myWindow::drawCube(float lado, float r, float g, float b)
 			float y=j;
 			float yhasta=j+PASOCUADRADO;
 			float z=(-lado/2);
+			
+			normalData[0]=0.0;
+			normalData[1]=0.0;
+			normalData[2]=-1.0;
+			normalData[3]=0.0;
+			normalData[4]=0.0;
+			normalData[5]=-1.0;
+			normalData[6]=0.0;
+			normalData[7]=0.0;
+			normalData[8]=-1.0;
 
 			myWindow::drawRectangle(x,y,z,x,yhasta,z,xhasta,yhasta,z,xhasta,y,z,r,g,b);
+
 			//Una vez que dibuje las dos caras hago lo mismo pero cambio los ejes
+
+			normalData[0]=0.0;
+			normalData[1]=-1.0;
+			normalData[2]=0.0;
+			normalData[3]=0.0;
+			normalData[4]=-1.0;
+			normalData[5]=0.0;
+			normalData[6]=0.0;
+			normalData[7]=-1.0;
+			normalData[8]=0.0;
+
 			myWindow::drawRectangle(x,z,y,x,z,yhasta,xhasta,z,yhasta,xhasta,z,y,r,g,b);
+
+			normalData[0]=-1.0;
+			normalData[1]=0.0;
+			normalData[2]=0.0;
+			normalData[3]=-1.0;
+			normalData[4]=0.0;
+			normalData[5]=0.0;
+			normalData[6]=-1.0;
+			normalData[7]=0.0;
+			normalData[8]=0.0;
+
 			myWindow::drawRectangle(z,y,x,z,yhasta,x,z,yhasta,xhasta,z,y,xhasta,r,g,b);
 
 			z=(lado/2);
+
+			normalData[0]=0.0;
+			normalData[1]=0.0;
+			normalData[2]=1.0;
+			normalData[3]=0.0;
+			normalData[4]=0.0;
+			normalData[5]=1.0;
+			normalData[6]=0.0;
+			normalData[7]=0.0;
+			normalData[8]=1.0;
+
 			myWindow::drawRectangle(x,y,z,x,yhasta,z,xhasta,yhasta,z,xhasta,y,z,r,g,b);
+
 			//Una vez que dibuje las dos caras hago lo mismo pero cambio los ejes
+
+			normalData[0]=0.0;
+			normalData[1]=1.0;
+			normalData[2]=0.0;
+			normalData[3]=0.0;
+			normalData[4]=1.0;
+			normalData[5]=0.0;
+			normalData[6]=0.0;
+			normalData[7]=1.0;
+			normalData[8]=0.0;
+
 			myWindow::drawRectangle(x,z,y,x,z,yhasta,xhasta,z,yhasta,xhasta,z,y,r,g,b);
+
+			normalData[0]=1.0;
+			normalData[1]=0.0;
+			normalData[2]=0.0;
+			normalData[3]=1.0;
+			normalData[4]=0.0;
+			normalData[5]=0.0;
+			normalData[6]=1.0;
+			normalData[7]=0.0;
+			normalData[8]=0.0;
+
 			myWindow::drawRectangle(z,y,x,z,yhasta,x,z,yhasta,xhasta,z,y,xhasta,r,g,b);
 		}
 	}
