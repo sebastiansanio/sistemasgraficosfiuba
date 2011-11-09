@@ -3,10 +3,13 @@
 #define PI 3.14159265
 
 in vec3 VertexPosition;
-in vec3 VertexColor;
 in vec3 VertexNormal;
+in vec3 VertexColor;
+in vec3 VertexNorm;
 
 out vec3 Color;
+out vec3 Position;
+out vec3 Normal;
 
 uniform mat4 RotationMatrix;
 
@@ -27,6 +30,8 @@ uniform float EsfFactor;
 void main()
 {
 	Color = VertexColor;
+	Normal = normalize(VertexNormal);
+	Position = VertexPosition;
 	float x = VertexPosition.x;
 	float y = VertexPosition.y;
 	float z = VertexPosition.z;
