@@ -13,6 +13,10 @@
 #define PI 3.14159265
 #define pasotoroide 8
 #define PASOCUADRADO 0.05
+#define PASOTITA (PI/10)
+#define PASOPHI (PI/10)
+#define PASOALTURA 0.1
+#define PASOTAPA 0.1
 
 using glm::mat4;
 using glm::vec3;
@@ -97,6 +101,10 @@ void myWindow::OnRender(void)
 		&rotationMatrix[0][0]);
 	}
 
+	GLfloat modelview[16];
+
+	//glGetFloatv(GL_MODELVIEW_MATRIX,modelview);
+
 	location =glGetUniformLocation(programHandle,"opcion");
 	glUniform1i(location,opcion);
 
@@ -124,18 +132,15 @@ void myWindow::OnRender(void)
 	location =glGetUniformLocation(programHandle,"EsfFactor");
 	glUniform1f(location,EsfFactor);
  
-    //myWindow::drawRectangle(0.0,0.5,0.0,0.0,0.0,0.0,0.5,0.0,0.0,0.5,0.5,0.0,0.5,1.0,1.0);
-	if(opcionFigura == CUBO){
+    if(opcionFigura == CUBO){
 		myWindow::drawCube(0.5,0.0,1.0,0.0);
 	} else if(opcionFigura == TOROIDE){
-		myWindow::drawToroide(0.35,0.1,1.0,0.0,0.0);
+		myWindow::drawToroide(0.4,0.15,1.0,0.0,0.0);
+	} else if(opcionFigura == ESFERA){
+		myWindow::drawEsfera(0.5,0.0,0.0,1.0);
+	} else if(opcionFigura == CILINDRO){
+		myWindow::drawCilindro(0.3,0.5,1.0,0.0,0.8);
 	}
-    
-	myWindow::drawRectangle(0.0,0.0,0.7,0.0,0.0,0.75,0.02,0.02,0.75,0.02,0.02,0.7,0.0,0.0,1.0);
-
-	myWindow::drawRectangle(0.7,0.0,0.0,0.75,0.0,0.0,0.75,0.02,0.02,0.7,0.02,0.02,1.0,0.0,0.0);
-
-	myWindow::drawRectangle(0.0,0.7,0.0,0.0,0.75,0.0,0.02,0.75,0.02,0.02,0.7,0.02,0.0,1.0,0.0);
 
     //gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
@@ -384,116 +389,92 @@ void myWindow::drawTriangle(float r, float g, float b)
 }
 
 void myWindow::drawToroide(float radio1, float radio2, float r, float g, float b){
-	float x, y, z;
-	
+	for(float beta = 0; beta < (2*PI); beta+=(PASOTITA)){
+		for(float alfa = 0; alfa < (2*PI); alfa+=(PASOPHI)){
+			float cosalfa = cos(alfa);
+			float cosbeta = cos(beta);
+			float cosalfapaso = cos(alfa+(PASOPHI));
+			float cosbetapaso = cos(beta+(PASOTITA));
+			float sinalfa = sin(alfa);
+			float sinbeta = sin(beta);
+			float sinalfapaso = sin(alfa+(PASOPHI));
+			float sinbetapaso = sin(beta+(PASOTITA));
 
-	//Primero completa el vector que tiene la circunferencia
-	float circunferencia[pasotoroide*3];
-	float paso2 = (2*PI)/pasotoroide;
-	float angulo2=0;
-	for(int vertice = 0; vertice < (pasotoroide*3); vertice += 3)
-	{
-		x=(radio2*cos(angulo2)) + radio1;
-		z=radio2*sin(angulo2);
-		y= 0;
-		circunferencia[vertice] = x;
-		circunferencia[vertice+1] = y;
-		circunferencia[vertice+2] = z;
-		angulo2+=paso2;
-	}
+			float x11 = (radio1 + radio2 * cosalfa) * cosbeta;
+			float y11 = (radio1 + radio2 * cosalfa) * sinbeta;
+			float z11 = radio2 * sinalfa;
 
-	//Crea el vector que va a tener la circunferencia rotada
-	float circunferenciaactual[pasotoroide*3];
+			float xNorm11 = (radio2 * cosalfa) * cosbeta;
+			float yNorm11 = (radio2 * cosalfa) * sinbeta;
+			float zNorm11 = radio2 * sinalfa;
 
-	//Crea el vector que va a tener la circunferencia que se roto anteriormente y le da como valor inicial la circunferencia original
-	float circunferenciaanterior[pasotoroide*3];
+			float x12 = (radio1 + radio2 * cosalfapaso) * cosbeta;
+			float y12 = (radio1 + radio2 * cosalfapaso) * sinbeta;
+			float z12 = radio2 * sin(alfa+(PASOPHI));
 
-	for(int i = 0; i < (pasotoroide*3); i+=1)
-	{
-		circunferenciaanterior[i] = circunferencia[i];
-	}
+			float xNorm12 = (radio2 * cosalfapaso) * cosbeta;
+			float yNorm12 = (radio2 * cosalfapaso) * sinbeta;
+			float zNorm12 = radio2 * sinalfapaso;
 
-	//Comienza, para cada angulo
-	float paso1 = (2*PI)/20.0;
-	for(float angulo1 = 0; angulo1 < ((2*PI)+paso1); angulo1 += paso1)
-	{
-		//Recorre de a tres puntos, para cada uno lo rota en el eje z y lo guarda en el vector que tiene la circunferencia modificada
-		for(int vertice2 = 0; vertice2 < (pasotoroide*3); vertice2 += 3)
-		{
-			float xmod, ymod;
-			x = circunferencia[vertice2];
-			y = circunferencia[vertice2+1];
-			z = circunferencia[vertice2+2];
+			float x21 = (radio1 + radio2 * cosalfa) * cosbetapaso;
+			float y21 = (radio1 + radio2 * cosalfa) * sinbetapaso;
+			float z21 = radio2 * sinalfa;
+
+			float xNorm21 = (radio2 * cosalfa) * cosbetapaso;
+			float yNorm21 = (radio2 * cosalfa) * sinbetapaso;
+			float zNorm21 = radio2 * sinalfa;
+
+			float x22 = (radio1 + radio2 * cosalfapaso) * cosbetapaso;
+			float y22 = (radio1 + radio2 * cosalfapaso) * sinbetapaso;
+			float z22 = radio2 * sinalfapaso;
+
+			float xNorm22 = (radio2 * cosalfapaso) * cosbetapaso;
+			float yNorm22 = (radio2 * cosalfapaso) * sinbetapaso;
+			float zNorm22 = radio2 * sinalfapaso;
 			
-			xmod=(cos(angulo1)*x)-(sin(angulo1)*y);
-			ymod=(sin(angulo1)*x)+(cos(angulo1)*y);
-			x = xmod;
-			y = ymod;
+			positionData[0]=x11;
+			positionData[1]=y11;
+			positionData[2]=z11;
+			positionData[3]=x12;
+			positionData[4]=y12;
+			positionData[5]=z12;
+			positionData[6]=x22;
+			positionData[7]=y22;
+			positionData[8]=z22;
 
-			circunferenciaactual[vertice2] = x;
-			circunferenciaactual[vertice2+1] = y;
-			circunferenciaactual[vertice2+2] = z;
-		}
-		
-		//Ahora tiene la circunferencia actual y la anterior, recorre de a tres puntos y usando el siguiente dibuja un cuadrado
+			normalData[0]=xNorm11;
+			normalData[1]=yNorm11;
+			normalData[2]=zNorm11;
+			normalData[3]=xNorm12;
+			normalData[4]=yNorm12;
+			normalData[5]=zNorm12;
+			normalData[6]=xNorm22;
+			normalData[7]=yNorm22;
+			normalData[8]=zNorm22;
 
-		for(int vertice2 = 0; vertice2 < (pasotoroide*3); vertice2 += 3)
-		{
-			float x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4;
+			drawTriangle(r,g,b);
 
-			//El proximo vertice empieza en 3 posiciones
+			positionData[0]=x11;
+			positionData[1]=y11;
+			positionData[2]=z11;
+			positionData[3]=x21;
+			positionData[4]=y21;
+			positionData[5]=z21;
+			positionData[6]=x22;
+			positionData[7]=y22;
+			positionData[8]=z22;
 
-			int verticeprox = vertice2 + 3;
+			normalData[0]=xNorm11;
+			normalData[1]=yNorm11;
+			normalData[2]=zNorm11;
+			normalData[3]=xNorm21;
+			normalData[4]=yNorm21;
+			normalData[5]=zNorm21;
+			normalData[6]=xNorm22;
+			normalData[7]=yNorm22;
+			normalData[8]=zNorm22;
 
-			//Si el proximo vertice en su tercera posicion alcanza la cantidad de vertices del toroide se usa el vertice 0
-			if((verticeprox+2) >= (pasotoroide*3)) verticeprox = 0;
-
-			x1 = circunferenciaactual[vertice2];
-			y1 = circunferenciaactual[vertice2+1];
-			z1 = circunferenciaactual[vertice2+2];
-
-			x2 = circunferenciaanterior[vertice2];
-			y2 = circunferenciaanterior[vertice2+1];
-			z2 = circunferenciaanterior[vertice2+2];
-
-			x3 = circunferenciaanterior[verticeprox];
-			y3 = circunferenciaanterior[verticeprox+1];
-			z3 = circunferenciaanterior[verticeprox+2];
-
-			x4 = circunferenciaactual[verticeprox];
-			y4 = circunferenciaactual[verticeprox+1];
-			z4 = circunferenciaactual[verticeprox+2];
-
-			positionData[0]=x1;
-			positionData[1]=y1;
-			positionData[2]=z1;
-			positionData[3]=x2;
-			positionData[4]=y2;
-			positionData[5]=z2;
-			positionData[6]=x3;
-			positionData[7]=y3;
-			positionData[8]=z3;
-
-			myWindow::drawTriangle(r,g,b);
-
-			positionData[0]=x1;
-			positionData[1]=y1;
-			positionData[2]=z1;
-			positionData[3]=x4;
-			positionData[4]=y4;
-			positionData[5]=z4;
-			positionData[6]=x3;
-			positionData[7]=y3;
-			positionData[8]=z3;
-
-			myWindow::drawTriangle(r,g,b);
-		}
-
-		//Se copia la circunferencia actual en la anterior
-
-		for(int i = 0; i < (pasotoroide*3); i+=1)
-		{
-			circunferenciaanterior[i] = circunferenciaactual[i];
+			drawTriangle(r,g,b);
 		}
 	}
 }
@@ -612,6 +593,216 @@ void myWindow::drawCube(float lado, float r, float g, float b)
 			normalData[8]=0.0;
 
 			myWindow::drawRectangle(z,y,x,z,yhasta,x,z,yhasta,xhasta,z,y,xhasta,r,g,b);
+		}
+	}
+}
+
+void myWindow::drawEsfera(float radio, float r, float g, float b){
+	for(float tita = 0; tita < PI; tita+=(PASOTITA)){
+		for(float phi = 0; phi < (2*PI); phi+=(PASOPHI)){
+			float costita = cos(tita);
+			float costitapaso = cos(tita+(PASOTITA));
+			float cosphi = cos(phi);
+			float cosphipaso = cos(phi+(PASOPHI));
+
+			float sintita = sin(tita);
+			float sintitapaso = sin(tita+(PASOTITA));
+			float sinphi = sin(phi);
+			float sinphipaso = sin(phi+(PASOPHI));
+
+			float x11 = radio * sintita * cosphi;
+			float y11 = radio * sintita * sinphi;
+			float z11 = radio * costita;
+
+			float x12 = radio * sintitapaso * cosphi;
+			float y12 = radio * sintitapaso * sinphi;
+			float z12 = radio * costitapaso;
+
+			float x21 = radio * sintita * cosphipaso;
+			float y21 = radio * sintita * sinphipaso;
+			float z21 = radio * costita;
+
+			float x22 = radio * sintitapaso * cosphipaso;
+			float y22 = radio * sintitapaso * sinphipaso;
+			float z22 = radio * costitapaso;
+
+			positionData[0]=x11;
+			positionData[1]=y11;
+			positionData[2]=z11;
+			positionData[3]=x12;
+			positionData[4]=y12;
+			positionData[5]=z12;
+			positionData[6]=x22;
+			positionData[7]=y22;
+			positionData[8]=z22;
+
+			normalData[0]=x11;
+			normalData[1]=y11;
+			normalData[2]=z11;
+			normalData[3]=x12;
+			normalData[4]=y12;
+			normalData[5]=z12;
+			normalData[6]=x22;
+			normalData[7]=y22;
+			normalData[8]=z22;
+
+			drawTriangle(r,g,b);
+
+			positionData[0]=x11;
+			positionData[1]=y11;
+			positionData[2]=z11;
+			positionData[3]=x21;
+			positionData[4]=y21;
+			positionData[5]=z21;
+			positionData[6]=x22;
+			positionData[7]=y22;
+			positionData[8]=z22;
+
+			normalData[0]=x11;
+			normalData[1]=y11;
+			normalData[2]=z11;
+			normalData[3]=x21;
+			normalData[4]=y21;
+			normalData[5]=z21;
+			normalData[6]=x22;
+			normalData[7]=y22;
+			normalData[8]=z22;
+
+			drawTriangle(r,g,b);
+		}
+	}
+}
+
+void myWindow::drawCilindro(float radio, float altura, float r, float g, float b){
+	for(float alto = -altura; alto < (altura-(PASOALTURA/2)); alto+=(PASOALTURA)){
+		for(float phi = 0; phi < (2*PI); phi+=(PASOPHI)){
+			float x11 = radio * sin(phi);
+			float z11 = radio * cos(phi);		
+			float y11 = alto;
+
+			float x12 = radio * sin(phi+(PASOPHI));
+			float z12 = radio * cos(phi+(PASOPHI));		
+			float y12 = alto;
+
+			float x21 = radio * sin(phi);
+			float z21 = radio * cos(phi);		
+			float y21 = alto+(PASOALTURA);
+
+			float x22 = radio * sin(phi+(PASOPHI));
+			float z22 = radio * cos(phi+(PASOPHI));
+			float y22 = alto+(PASOALTURA);
+
+			positionData[0]=x11;
+			positionData[1]=y11;
+			positionData[2]=z11;
+			positionData[3]=x12;
+			positionData[4]=y12;
+			positionData[5]=z12;
+			positionData[6]=x22;
+			positionData[7]=y22;
+			positionData[8]=z22;
+
+			normalData[0]=x11;
+			normalData[1]=0;
+			normalData[2]=z11;
+			normalData[3]=x12;
+			normalData[4]=0;
+			normalData[5]=z12;
+			normalData[6]=x22;
+			normalData[7]=0;
+			normalData[8]=z22;
+
+			drawTriangle(r,g,b);
+
+			positionData[0]=x11;
+			positionData[1]=y11;
+			positionData[2]=z11;
+			positionData[3]=x21;
+			positionData[4]=y21;
+			positionData[5]=z21;
+			positionData[6]=x22;
+			positionData[7]=y22;
+			positionData[8]=z22;
+
+			normalData[0]=x11;
+			normalData[1]=0;
+			normalData[2]=z11;
+			normalData[3]=x21;
+			normalData[4]=0;
+			normalData[5]=z21;
+			normalData[6]=x22;
+			normalData[7]=0;
+			normalData[8]=z22;
+
+			drawTriangle(r,g,b);
+		}
+	}
+	myWindow::drawTapaCilindro(radio,altura,r,g,b);
+	myWindow::drawTapaCilindro(radio,-altura,r,g,b);
+}
+
+void myWindow::drawTapaCilindro(float radio, float altura, float r, float g, float b){
+	for(float raux = 0; raux < radio; raux+=(PASOTAPA)){
+		for(float phi = 0; phi < (2*PI); phi+=(PASOPHI)){
+			float x11 = raux * sin(phi);
+			float z11 = raux * cos(phi);		
+			float y11 = altura;
+
+			float x12 = raux * sin(phi+(PASOPHI));
+			float z12 = raux * cos(phi+(PASOPHI));		
+			float y12 = altura;
+
+			float x21 = (raux+(PASOTAPA)) * sin(phi);
+			float z21 = (raux+(PASOTAPA)) * cos(phi);		
+			float y21 = altura;
+
+			float x22 = (raux+(PASOTAPA)) * sin(phi+(PASOPHI));
+			float z22 = (raux+(PASOTAPA)) * cos(phi+(PASOPHI));		
+			float y22 = altura;
+
+			positionData[0]=x11;
+			positionData[1]=y11;
+			positionData[2]=z11;
+			positionData[3]=x12;
+			positionData[4]=y12;
+			positionData[5]=z12;
+			positionData[6]=x22;
+			positionData[7]=y22;
+			positionData[8]=z22;
+
+			normalData[0]=0;
+			normalData[1]=y11;
+			normalData[2]=0;
+			normalData[3]=0;
+			normalData[4]=y12;
+			normalData[5]=0;
+			normalData[6]=0;
+			normalData[7]=y22;
+			normalData[8]=0;
+
+			drawTriangle(r,g,b);
+
+			positionData[0]=x11;
+			positionData[1]=y11;
+			positionData[2]=z11;
+			positionData[3]=x21;
+			positionData[4]=y21;
+			positionData[5]=z21;
+			positionData[6]=x22;
+			positionData[7]=y22;
+			positionData[8]=z22;
+
+			normalData[0]=0;
+			normalData[1]=y11;
+			normalData[2]=0;
+			normalData[3]=0;
+			normalData[4]=y21;
+			normalData[5]=0;
+			normalData[6]=0;
+			normalData[7]=y22;
+			normalData[8]=0;
+
+			drawTriangle(r,g,b);
 		}
 	}
 }

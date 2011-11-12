@@ -8,13 +8,13 @@ out vec4 FragColor;
 
 void main()
 {
-	vec3 fuenteluz = vec3(0.5,0.7,1.0);
+	vec3 fuenteluz = vec3(0.0,0.0,-1.0);
 	//Ver
 	vec3 vista = vec3(-Position);
 	vec3 ks = vec3(1.0,1.0,1.0);
 	float brillodifusa = 0.5;
 	float luzambiente = 0.3;
-	float brillo = 3.0;
+	float brillo = 4.0;
 
 	vec3 s = normalize( fuenteluz - Position );
 	vec3 n = normalize(Normal);
