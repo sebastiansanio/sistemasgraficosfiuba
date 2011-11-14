@@ -20,6 +20,8 @@ public:
 	virtual void OnMouseUp(int button, int x, int y);
 	virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y);
 
+	virtual void OnLeftMouseDrag(int x,int y);
+
 	virtual void OnKeyDown(int nKey, char cAscii);
 
 	virtual void OnKeyUp(int nKey, char cAscii);
