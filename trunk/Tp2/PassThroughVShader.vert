@@ -6,6 +6,7 @@ in vec3 VertexPosition;
 in vec3 VertexNormal;
 in vec3 VertexColor;
 in vec3 VertexNorm;
+in vec2 VertexTexture;
 
 out vec3 Color;
 out vec3 Position;
@@ -27,8 +28,12 @@ uniform float RuidoFase;
 uniform float EsfRadio;
 uniform float EsfFactor;
 
+out vec2 TexCoord;
+
 void main()
 {
+	TexCoord = VertexTexture;
+
 	Color = VertexColor;
 
 	float x = VertexPosition.x;
