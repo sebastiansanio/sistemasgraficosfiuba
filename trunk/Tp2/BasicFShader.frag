@@ -9,6 +9,8 @@ out vec4 FragColor;
 
 uniform sampler2D Tex1;
 
+uniform int opcionshader;
+
 uniform vec3 FuenteLuz1;
 
 uniform vec3 FuenteLuz2;
@@ -21,7 +23,9 @@ void main()
 {
 	
 	vec3 colormaterial = Color;
-	colormaterial = vec3(texture( Tex1, TexCoord ));
+	if(opcionshader==1){
+		colormaterial = vec3(texture( Tex1, TexCoord ));
+	}
 
 	vec3 colorfinal;
 
@@ -31,6 +35,11 @@ void main()
 	float brillodifusa = 0.5;
 	float luzambiente = 0.2;
 	float foco = 4.0;
+
+	if(opcionshader==3){
+		brilloespecular = vec3(0.2,0.2,0.2);
+		brillodifusa = 0.3;
+	}
 
 	//Luz ambiente
 
