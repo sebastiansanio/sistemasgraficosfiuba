@@ -17,6 +17,7 @@ uniform mat4 ModelMatrix;
 uniform mat4 RotationMatrix;
 
 uniform int opcion;
+uniform int opcionshader;
 
 uniform float DoblarXEje;
 uniform float DoblarAngulo;
@@ -159,6 +160,10 @@ void main()
 	vec3 PositionMundo = posicion;
 	vec3 VistaMundo = normalize( vec3(0.0,0.0,-1.0) - PositionMundo );
 	ReflectDir = reflect(-VistaMundo, NormalMundo);
+
+	if(opcionshader != 4){
+		posicion = vec3((posicion.x)+0.40,posicion.y,posicion.z);
+	}
 
 	gl_Position = vec4(posicion,1.0);
 }

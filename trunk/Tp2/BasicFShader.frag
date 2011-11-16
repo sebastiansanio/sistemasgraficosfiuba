@@ -10,6 +10,8 @@ out vec4 FragColor;
 
 uniform sampler2D Tex1;
 
+uniform sampler2D TexMenu1;
+
 uniform samplerCube CubeMapTex;
 
 uniform int opcionshader;
@@ -29,8 +31,11 @@ void main()
 	if(opcionshader==1){
 		colormaterial = vec3(texture( Tex1, TexCoord ));
 	} else if (opcionshader==2){
-		//colormaterial = vec3(texture( CubeMapTex, ReflectDir ));
+		colormaterial = vec3(texture( CubeMapTex, ReflectDir ));
+	} else if (opcionshader==4){
+		colormaterial = vec3(texture( TexMenu1, TexCoord ) * 5);
 	}
+
 	vec3 colorfinal;
 
 	//Modelo de Phong

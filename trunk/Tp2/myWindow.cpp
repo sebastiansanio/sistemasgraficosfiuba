@@ -13,7 +13,7 @@
 
 
 #define PI 3.14159265
-#define PASOCUADRADO 0.05
+#define PASOCUADRADO 0.1
 #define PASOTITA (PI/10)
 #define PASOPHI (PI/10)
 #define PASOALTURA 0.1
@@ -28,6 +28,9 @@ float anglex = 0;
 float angley = 0;
 
 float grados = 90;
+
+int anchoVentana = 640;
+int altoVentana = 480;
 
 mat4 modelMatrix = glm::mat4(1.0f);
 
@@ -105,7 +108,7 @@ float RuidoAmplitud = 0.02;
 float RuidoInvLongOnda = 40.0;
 float RuidoFase = 0.0;
 
-float EsfRadio = 0.7;
+float EsfRadio = 0.5;
 float EsfFactor = 0.0;
 
 const char* loadShaderAsString(const char* file)
@@ -161,14 +164,6 @@ void myWindow::OnRender(void)
 
 	location = glGetUniformLocation(programHandle,"opcionshader");
 	glUniform1i(location,opcionshader);
- 
-	GLuint tex_2d = SOIL_load_OGL_texture
-	(
-		"textura.png",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
 
     if(opcionFigura == CUBO){
 		drawCube(0.25,0.0,1.0,0.0);
@@ -180,14 +175,6 @@ void myWindow::OnRender(void)
 		myWindow::drawCilindro(0.3,0.5,0.0,1.0,0.0);
 	}
 
-	tex_2d = SOIL_load_OGL_texture
-	(
-		"img_test.png",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
-
 	rotationMatrix = glm::mat4(1.0);
 
 	location =glGetUniformLocation(programHandle,"RotationMatrix");
@@ -197,71 +184,15 @@ void myWindow::OnRender(void)
 		glUniformMatrix4fv(location, 1, GL_FALSE, &rotationMatrix[0][0]);
 	}
 
-	modelMatrix = glm::translate(modelMatrix,vec3(-0.8,0.0,0.0));
+	modelMatrix = glm::translate(modelMatrix,vec3(-0.60,0.0,0.0));
 
 	location = glGetUniformLocation(programHandle,"opcionshader");
-	glUniform1i(location,1);
+	glUniform1i(location,4);
 
 	location = glGetUniformLocation(programHandle,"opcion");
 	glUniform1i(location,0);
 
-	drawRectangle(0.2,1.0,0.0,0.0);
-
-	tex_2d = SOIL_load_OGL_texture
-	(
-		"img_test.png",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
-
-	modelMatrix = glm::mat4(1.0f);
-
-	modelMatrix = glm::translate(modelMatrix,vec3(0.8,0.0,0.0));
-
-	drawRectangle(0.2,1.0,0.0,0.0);
-
-	tex_2d = SOIL_load_OGL_texture
-	(
-		"img_test.png",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
-
-	modelMatrix = glm::mat4(1.0f);
-
-	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.8,0.0));
-
-	drawRectangle(0.2,1.0,0.0,0.0);
-
-	//Dibujo menu
-
-	/*rotationMatrix = glm::mat4(1.0);
-	//rotationMatrix = glm::rotate((glm::rotate(mat4(1.0f), -grados/2, vec3(1.0f,0.0f,0.0f))), -grados/2, vec3(0.0f,1.0f,0.0f));;
-	location =glGetUniformLocation(programHandle,"RotationMatrix");
-
-	if( location >= 0 )
-	{
-		glUniformMatrix4fv(location, 1, GL_FALSE, &rotationMatrix[0][0]);
-	}
-
-	opcionshader=3;
-	modelMatrix = glm::scale(glm::translate(modelMatrix,vec3(-0.8,-2.0,0.0)),vec3(0.3,0.3,0.3));
-
-	drawCube(0.25,0.0,1.0,0.0);
-
-	modelMatrix = glm::translate(modelMatrix,vec3(0.0,1.0,0.0));
-
-	myWindow::drawCilindro(0.3,0.5,0.0,1.0,0.0);
-
-	modelMatrix = glm::translate(modelMatrix,vec3(0.0,1.0,0.0));
-
-	myWindow::drawToroide(0.4,0.15,0.0,1.0,0.0);
-
-	//modelMatrix = glm::translate(modelMatrix,vec3(0.0,1.5,0.0));
-
-	//myWindow::drawEsfera(0.5,0.0,1.0,0.0);*/
+	drawRectangle(0.40,1.0,1.0,0.0,0.0);
 
     //gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
@@ -424,40 +355,6 @@ void  myWindow::OnInit()
         }
 
 
-		 // Load fragment Shader CubeMap
-        fragShaderCubeMap = glCreateShader (GL_FRAGMENT_SHADER);
-        if ( 0 == fragShaderCubeMap )
-        {
-            std::cout << "Error creating fragment shader" << std::endl;
-        }
-
-        std::ifstream f_shader_fileCubeMap("BasicFShaderCubeMap.frag", std::ifstream::in);
-        std::string f_strCubeMap((std::istreambuf_iterator<char>(f_shader_fileCubeMap)), std::istreambuf_iterator<char>());
-        const char* fs_code_arrayCubeMap[] = {f_strCubeMap.c_str()};
-        
-        glShaderSource( fragShaderCubeMap, 1, fs_code_arrayCubeMap, NULL);
-
-        // Compilar el shader
-        glCompileShader( fragShaderCubeMap );
-
-		// verificar resultado de la compilacion
-        GLint fs_compilation_resultCubeMap;
-        glGetShaderiv( fragShaderCubeMap, GL_COMPILE_STATUS, &fs_compilation_resultCubeMap );
-        if( GL_FALSE == fs_compilation_resultCubeMap )
-        {
-            std::cout << "Fragment shader compilation failed!\n" << std::endl;
-            GLint logLen;
-            glGetShaderiv( fragShaderCubeMap, GL_INFO_LOG_LENGTH, &logLen );
-            if( logLen > 0 )
-            {
-                char * log = (char *)malloc(logLen);
-                GLsizei written;
-                glGetShaderInfoLog(fragShaderCubeMap, logLen, &written, log);
-                std::cout << "Shader log: " << log << std::endl;
-                free(log);
-            }
-        }
-
 	// *******************************************
 
     // *******************************************
@@ -549,6 +446,19 @@ void  myWindow::OnInit()
 		printf( "SOIL loading error: '%s'\n", SOIL_last_result() );
 	}
 
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, tex_2d);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	int loc = glGetUniformLocation(programHandle, "Tex1");
+	if( loc >= 0 )
+	{
+		glUniform1i(loc, 0);
+	} else
+	{
+		fprintf(stderr, "Uniform variable Tex1 not found!\n");
+	}
+
 	GLuint tex_cube = SOIL_load_OGL_cubemap
 	(
 		"xp.png",
@@ -562,6 +472,41 @@ void  myWindow::OnInit()
 		SOIL_FLAG_MIPMAPS
 	);
 
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, tex_cube);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER,	GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER,	GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S,	GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T,	GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R,	GL_CLAMP_TO_EDGE);
+	int uniloc = glGetUniformLocation(programHandle, "CubeMapTex");
+	if( uniloc >= 0 ) glUniform1i(uniloc, 1);
+
+	GLuint tex_menu_1 = SOIL_load_OGL_texture
+	(
+		"menu.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+
+	if( 0 == tex_menu_1 )
+	{
+		printf( "SOIL loading error: '%s'\n", SOIL_last_result() );
+	}
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, tex_menu_1);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	int locMenu1 = glGetUniformLocation(programHandle, "TexMenu1");
+	if( locMenu1 >= 0 )
+	{
+		glUniform1i(locMenu1, 2);
+	} else
+	{
+		fprintf(stderr, "Uniform variable TexMenu1 not found!\n");
+	}
 }
 
 void myWindow::drawTriangle(float r, float g, float b)
@@ -720,10 +665,10 @@ void myWindow::drawToroide(float radio1, float radio2, float r, float g, float b
 	}
 }
 
-void myWindow::drawRectangle(float largo, float r, float g, float b)
+void myWindow::drawRectangle(float ancho, float alto, float r, float g, float b)
 {
-	for(float x = -largo; x < (largo-(PASOTAPA/2)); x+=PASOTAPA){
-		for(float y = -largo; y < (largo-(PASOTAPA/2)); y+=PASOTAPA){
+	for(float x = -ancho; x < (ancho-(PASOTAPA/2)); x+=PASOTAPA){
+		for(float y = -alto; y < (alto-(PASOTAPA/2)); y+=PASOTAPA){
 			
 			float x11 = x;
 			float y11 = y;
@@ -755,20 +700,20 @@ void myWindow::drawRectangle(float largo, float r, float g, float b)
 			normalData[7]=0;
 			normalData[8]=1;
 
-			textureData[0]=(x/(2*largo))+0.5;
-			textureData[1]=(y/(2*largo))+0.5;
-			textureData[2]=(x/(2*largo))+0.5;
-			textureData[3]=((y+PASOTAPA)/(2*largo))+0.5;
-			textureData[4]=((x+PASOTAPA)/(2*largo))+0.5;
-			textureData[5]=((y+PASOTAPA)/(2*largo))+0.5;
+			textureData[0]=(x/(2*ancho))+0.5;
+			textureData[1]=(y/(2*alto))+0.5;
+			textureData[2]=(x/(2*ancho))+0.5;
+			textureData[3]=((y+PASOTAPA)/(2*alto))+0.5;
+			textureData[4]=((x+PASOTAPA)/(2*ancho))+0.5;
+			textureData[5]=((y+PASOTAPA)/(2*alto))+0.5;
 
 			myWindow::drawTriangle(r,g,b);
 
 			positionData[3] = x21;
 			positionData[4] = y21;
 
-			textureData[2]=((x+PASOTAPA)/(2*largo))+0.5;
-			textureData[3]=((y)/(2*largo))+0.5;
+			textureData[2]=((x+PASOTAPA)/(2*ancho))+0.5;
+			textureData[3]=((y)/(2*alto))+0.5;
 
 			myWindow::drawTriangle(r,g,b);
 		}
@@ -780,37 +725,37 @@ void myWindow::drawCube(float lado, float r, float g, float b)
 	glm::mat4 matrizmodel = modelMatrix;
 
 	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
-	drawRectangle(lado,r,g,b);
+	drawRectangle(lado,lado,r,g,b);
 
 	modelMatrix = matrizmodel;
 
 	modelMatrix = glm::rotate((modelMatrix), (grados), vec3(1.0f,0.0f,0.0f));
 	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
-	drawRectangle(lado,r,g,b);
+	drawRectangle(lado,lado,r,g,b);
 
 	modelMatrix = matrizmodel;
 
 	modelMatrix = glm::rotate((modelMatrix), (2*grados), vec3(1.0f,0.0f,0.0f));
 	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
-	drawRectangle(lado,r,g,b);
+	drawRectangle(lado,lado,r,g,b);
 
 	modelMatrix = matrizmodel;
 
 	modelMatrix = glm::rotate((modelMatrix), (3*grados), vec3(1.0f,0.0f,0.0f));
 	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
-	drawRectangle(lado,r,g,b);
+	drawRectangle(lado,lado,r,g,b);
 
 	modelMatrix = matrizmodel;
 
 	modelMatrix = glm::rotate((modelMatrix), (grados), vec3(0.0f,1.0f,0.0f));
 	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
-	drawRectangle(lado,r,g,b);
+	drawRectangle(lado,lado,r,g,b);
 
 	modelMatrix = matrizmodel;
 
 	modelMatrix = glm::rotate((modelMatrix), (3 * grados), vec3(0.0f,1.0f,0.0f));
 	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
-	drawRectangle(lado,r,g,b);
+	drawRectangle(lado,lado,r,g,b);
 
 	modelMatrix = matrizmodel;
 }
@@ -1069,6 +1014,8 @@ void myWindow::drawTapaCilindro(float radio, float altura, float r, float g, flo
 
 void myWindow::OnResize(int w, int h) 
 {
+	anchoVentana = w;
+	altoVentana = h;
     glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
@@ -1081,7 +1028,84 @@ void  myWindow::OnClose(void)
 
 void myWindow::OnMouseDown(int button, int x, int y)
 {
+	float xClick = (x+0.0)/anchoVentana;
+	float yClick = (y+0.0)/altoVentana;
 
+	if(xClick >= 0.2 && xClick <= 0.4)
+	{
+		if(yClick <= 0.153)
+		{
+			opcionFigura=TOROIDE;
+			anglex=0;
+			angley=0;
+			opcion=0;
+			myWindow::OnRender();
+		} else if (yClick <= 0.32 )
+		{
+			opcionFigura=ESFERA;
+			anglex=0;
+			angley=0;
+			opcion=0;
+			myWindow::OnRender();
+		} else if (yClick <= 0.52 )
+		{
+			opcion=2;
+			anglex=0;
+			angley=0;
+			myWindow::OnRender();
+		} else if (yClick <= 0.683 )
+		{
+			opcion=4;
+			anglex=0;
+			angley=0;
+			myWindow::OnRender();
+		} else if (yClick <= 0.834 )
+		{
+			opcionshader = 1;
+			myWindow::OnRender();
+		} else if (yClick <= 1.0 )
+		{
+			opcionshader = 3;
+			myWindow::OnRender();
+		}
+	} else if (xClick <= 0.18)
+	{
+		if(yClick <= 0.153)
+		{
+			opcionFigura=CUBO;
+			anglex=0;
+			angley=0;
+			opcion=0;
+			myWindow::OnRender();
+		} else if (yClick <= 0.32 )
+		{
+			opcionFigura=CILINDRO;
+			anglex=0;
+			angley=0;
+			opcion=0;
+			myWindow::OnRender();
+		} else if (yClick <= 0.52 )
+		{
+			opcion=1;
+			anglex=0;
+			angley=0;
+			myWindow::OnRender();
+		} else if (yClick <= 0.683 )
+		{
+			opcion=3;
+			anglex=0;
+			angley=0;
+			myWindow::OnRender();
+		} else if (yClick <= 0.834 )
+		{
+			opcionshader = 0;
+			myWindow::OnRender();
+		} else if (yClick <= 1.0 )
+		{
+			opcionshader = 2;
+			myWindow::OnRender();
+		}
+	}
 }
 
 void myWindow::OnMouseUp(int button, int x, int y)

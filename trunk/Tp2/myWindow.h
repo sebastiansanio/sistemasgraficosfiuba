@@ -30,7 +30,7 @@ public:
 
 	void drawTriangle(float r, float g, float b);
 
-	void drawRectangle(float largo, float r, float g, float b);
+	void drawRectangle(float ancho, float alto, float r, float g, float b);
 
 	void drawCube(float lado, float r, float g, float b);
 
