@@ -12,6 +12,8 @@ out vec3 Color;
 out vec3 Position;
 out vec3 Normal;
 
+uniform mat4 ModelMatrix;
+
 uniform mat4 RotationMatrix;
 
 uniform int opcion;
@@ -29,20 +31,24 @@ uniform float EsfRadio;
 uniform float EsfFactor;
 
 out vec2 TexCoord;
+out vec3 ReflectDir;
 
 void main()
 {
 	TexCoord = VertexTexture;
 
 	Color = VertexColor;
+	
+	vec3 posicion = vec3(ModelMatrix * vec4(VertexPosition,1.0));
+	vec3 normal = vec3(ModelMatrix * vec4(VertexNormal,0.0));
 
-	float x = VertexPosition.x;
-	float y = VertexPosition.y;
-	float z = VertexPosition.z;
+	float x = posicion.x;
+	float y = posicion.y;
+	float z = posicion.z;
 
-	float xNorm = VertexNormal.x;
-	float yNorm = VertexNormal.y;
-	float zNorm = VertexNormal.z;
+	float xNorm = normal.x;
+	float yNorm = normal.y;
+	float zNorm = normal.z;
 
 	if(opcion == 1){
 		//Doblar
@@ -143,11 +149,16 @@ void main()
 		zNorm = zNorm + factorEsf * (z - zNorm);
 	}
 
-	vec3 posicion = vec3(x,y,z);
-	vec3 normal = vec3(xNorm,yNorm,zNorm);
+	posicion = vec3( RotationMatrix * vec4(x,y,z,1.0));
+	normal = vec3( RotationMatrix * vec4(xNorm,yNorm,zNorm,0.0));
 
-	Normal = normalize(vec3(RotationMatrix * vec4(normal,1.0)));
-	Position = vec3(RotationMatrix * vec4(posicion,1.0));
+	Normal = normalize(normal);
+	Position = vec3(posicion);
 
-	gl_Position = RotationMatrix * vec4(posicion,1.0);
+	vec3 NormalMundo = normal;
+	vec3 PositionMundo = posicion;
+	vec3 VistaMundo = normalize( vec3(0.0,0.0,-1.0) - PositionMundo );
+	ReflectDir = reflect(-VistaMundo, NormalMundo);
+
+	gl_Position = vec4(posicion,1.0);
 }

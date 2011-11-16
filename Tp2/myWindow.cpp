@@ -27,6 +27,10 @@ enum Figura { CUBO, TOROIDE, CILINDRO, ESFERA };
 float anglex = 0;
 float angley = 0;
 
+float grados = 90;
+
+mat4 modelMatrix = glm::mat4(1.0f);
+
 mat4 rotationMatrix;
 
 float positionData[] = 
@@ -65,14 +69,18 @@ float textureData[] =
 
 GLuint textureBufferHandle;
 
+GLuint fragShader;
+
+GLuint fragShaderCubeMap;
+
 GLuint programHandle;
 
 // Handle to the vertex array object
 GLuint vaoHandle;
 
-float fuenteLuz1[] = {0.5,0.0,-0.5};
+float fuenteLuz1[] = {1.0,0.0,0.0};
 
-float fuenteLuz2[] = {0.0,0.5,-0.5};
+float fuenteLuz2[] = {0.0,0.0,-1.0};
 
 int encFuente1 = 1;
 
@@ -117,18 +125,18 @@ void myWindow::OnRender(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+	modelMatrix = glm::mat4(1.0f);
+
 	rotationMatrix = glm::rotate((glm::rotate(mat4(1.0f), angley, vec3(1.0f,0.0f,0.0f))), anglex, vec3(0.0f,1.0f,0.0f));
 
+	//glm::mat4 view = glm::lookAt( glm::vec3(1.0*cos(anglex),0.2,1.0*sin(anglex)),glm::vec3(0.0,0.0,0.),glm::vec3(0.0,1.0,0.0) );
+
 	GLuint location =glGetUniformLocation(programHandle,"RotationMatrix");
+
 	if( location >= 0 )
 	{
-		glUniformMatrix4fv(location, 1, GL_FALSE,
-		&rotationMatrix[0][0]);
+		glUniformMatrix4fv(location, 1, GL_FALSE, &rotationMatrix[0][0]);
 	}
-
-	GLfloat modelview[16];
-
-	//glGetFloatv(GL_MODELVIEW_MATRIX,modelview);
 
 	location =glGetUniformLocation(programHandle,"opcion");
 	glUniform1i(location,opcion);
@@ -154,8 +162,16 @@ void myWindow::OnRender(void)
 	location = glGetUniformLocation(programHandle,"opcionshader");
 	glUniform1i(location,opcionshader);
  
+	GLuint tex_2d = SOIL_load_OGL_texture
+	(
+		"textura.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+
     if(opcionFigura == CUBO){
-		myWindow::drawCube(0.5,0.0,1.0,0.0);
+		drawCube(0.25,0.0,1.0,0.0);
 	} else if(opcionFigura == TOROIDE){
 		myWindow::drawToroide(0.4,0.15,0.0,1.0,0.0);
 	} else if(opcionFigura == ESFERA){
@@ -163,6 +179,89 @@ void myWindow::OnRender(void)
 	} else if(opcionFigura == CILINDRO){
 		myWindow::drawCilindro(0.3,0.5,0.0,1.0,0.0);
 	}
+
+	tex_2d = SOIL_load_OGL_texture
+	(
+		"img_test.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+
+	rotationMatrix = glm::mat4(1.0);
+
+	location =glGetUniformLocation(programHandle,"RotationMatrix");
+
+	if( location >= 0 )
+	{
+		glUniformMatrix4fv(location, 1, GL_FALSE, &rotationMatrix[0][0]);
+	}
+
+	modelMatrix = glm::translate(modelMatrix,vec3(-0.8,0.0,0.0));
+
+	location = glGetUniformLocation(programHandle,"opcionshader");
+	glUniform1i(location,1);
+
+	location = glGetUniformLocation(programHandle,"opcion");
+	glUniform1i(location,0);
+
+	drawRectangle(0.2,1.0,0.0,0.0);
+
+	tex_2d = SOIL_load_OGL_texture
+	(
+		"img_test.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+
+	modelMatrix = glm::mat4(1.0f);
+
+	modelMatrix = glm::translate(modelMatrix,vec3(0.8,0.0,0.0));
+
+	drawRectangle(0.2,1.0,0.0,0.0);
+
+	tex_2d = SOIL_load_OGL_texture
+	(
+		"img_test.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+
+	modelMatrix = glm::mat4(1.0f);
+
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.8,0.0));
+
+	drawRectangle(0.2,1.0,0.0,0.0);
+
+	//Dibujo menu
+
+	/*rotationMatrix = glm::mat4(1.0);
+	//rotationMatrix = glm::rotate((glm::rotate(mat4(1.0f), -grados/2, vec3(1.0f,0.0f,0.0f))), -grados/2, vec3(0.0f,1.0f,0.0f));;
+	location =glGetUniformLocation(programHandle,"RotationMatrix");
+
+	if( location >= 0 )
+	{
+		glUniformMatrix4fv(location, 1, GL_FALSE, &rotationMatrix[0][0]);
+	}
+
+	opcionshader=3;
+	modelMatrix = glm::scale(glm::translate(modelMatrix,vec3(-0.8,-2.0,0.0)),vec3(0.3,0.3,0.3));
+
+	drawCube(0.25,0.0,1.0,0.0);
+
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,1.0,0.0));
+
+	myWindow::drawCilindro(0.3,0.5,0.0,1.0,0.0);
+
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,1.0,0.0));
+
+	myWindow::drawToroide(0.4,0.15,0.0,1.0,0.0);
+
+	//modelMatrix = glm::translate(modelMatrix,vec3(0.0,1.5,0.0));
+
+	//myWindow::drawEsfera(0.5,0.0,1.0,0.0);*/
 
     //gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
@@ -291,7 +390,7 @@ void  myWindow::OnInit()
         }
 
          // Load fragment Shader
-        GLuint fragShader = glCreateShader (GL_FRAGMENT_SHADER);
+        fragShader = glCreateShader (GL_FRAGMENT_SHADER);
         if ( 0 == fragShader )
         {
             std::cout << "Error creating fragment shader" << std::endl;
@@ -306,7 +405,7 @@ void  myWindow::OnInit()
         // Compilar el shader
         glCompileShader( fragShader );
 
-        // verificar resultado de la compilacion
+		// verificar resultado de la compilacion
         GLint fs_compilation_result;
         glGetShaderiv( fragShader, GL_COMPILE_STATUS, &fs_compilation_result );
         if( GL_FALSE == fs_compilation_result )
@@ -323,6 +422,42 @@ void  myWindow::OnInit()
                 free(log);
             }
         }
+
+
+		 // Load fragment Shader CubeMap
+        fragShaderCubeMap = glCreateShader (GL_FRAGMENT_SHADER);
+        if ( 0 == fragShaderCubeMap )
+        {
+            std::cout << "Error creating fragment shader" << std::endl;
+        }
+
+        std::ifstream f_shader_fileCubeMap("BasicFShaderCubeMap.frag", std::ifstream::in);
+        std::string f_strCubeMap((std::istreambuf_iterator<char>(f_shader_fileCubeMap)), std::istreambuf_iterator<char>());
+        const char* fs_code_arrayCubeMap[] = {f_strCubeMap.c_str()};
+        
+        glShaderSource( fragShaderCubeMap, 1, fs_code_arrayCubeMap, NULL);
+
+        // Compilar el shader
+        glCompileShader( fragShaderCubeMap );
+
+		// verificar resultado de la compilacion
+        GLint fs_compilation_resultCubeMap;
+        glGetShaderiv( fragShaderCubeMap, GL_COMPILE_STATUS, &fs_compilation_resultCubeMap );
+        if( GL_FALSE == fs_compilation_resultCubeMap )
+        {
+            std::cout << "Fragment shader compilation failed!\n" << std::endl;
+            GLint logLen;
+            glGetShaderiv( fragShaderCubeMap, GL_INFO_LOG_LENGTH, &logLen );
+            if( logLen > 0 )
+            {
+                char * log = (char *)malloc(logLen);
+                GLsizei written;
+                glGetShaderInfoLog(fragShaderCubeMap, logLen, &written, log);
+                std::cout << "Shader log: " << log << std::endl;
+                free(log);
+            }
+        }
+
 	// *******************************************
 
     // *******************************************
@@ -401,23 +536,6 @@ void  myWindow::OnInit()
 	location = glGetUniformLocation(programHandle,"FuenteLuz2");
 	glUniform3f(location,fuenteLuz2[0],fuenteLuz2[1],fuenteLuz2[2]);
 
-//	glActiveTexture(GL_TEXTURE0);
-	//GLuint tid;
-	//glGenTextures(1, &tid);
-	//glBindTexture(GL_TEXTURE_2D, tid);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ancho, alto, 0, GL_RGB, GL_UNSIGNED_BYTE, imagen);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	//location = glGetUniformLocation(programHandle, "Tex1");
-
-	//if( location >= 0 )
-	//{
-//		glUniform1i(location, 0);
-//	} else {
-//		fprintf(stderr, "Uniform variable Tex1 not found!\n");
-//	}
-
 	GLuint tex_2d = SOIL_load_OGL_texture
 	(
 		"textura.png",
@@ -430,10 +548,31 @@ void  myWindow::OnInit()
 	{
 		printf( "SOIL loading error: '%s'\n", SOIL_last_result() );
 	}
+
+	GLuint tex_cube = SOIL_load_OGL_cubemap
+	(
+		"xp.png",
+		"xn.png",
+		"yp.png",
+		"yn.png",
+		"zp.png",
+		"zn.png",
+		SOIL_LOAD_RGB,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS
+	);
+
 }
 
 void myWindow::drawTriangle(float r, float g, float b)
 {
+	GLuint location =glGetUniformLocation(programHandle,"ModelMatrix");
+
+	if( location >= 0 )
+	{
+		glUniformMatrix4fv(location, 1, GL_FALSE, &modelMatrix[0][0]);
+	}
+
 	colorData[0] = r;
 	colorData[1] = g;
 	colorData[2] = b;
@@ -581,122 +720,99 @@ void myWindow::drawToroide(float radio1, float radio2, float r, float g, float b
 	}
 }
 
-void myWindow::drawRectangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float x4, float y4, float z4, float r, float g, float b)
+void myWindow::drawRectangle(float largo, float r, float g, float b)
 {
-	positionData[0] = x1;
-	positionData[1] = y1;
-	positionData[2] = z1;
-	positionData[3] = x2;
-	positionData[4] = y2;
-	positionData[5] = z2;
-	positionData[6] = x3;
-	positionData[7] = y3;
-	positionData[8] = z3;
+	for(float x = -largo; x < (largo-(PASOTAPA/2)); x+=PASOTAPA){
+		for(float y = -largo; y < (largo-(PASOTAPA/2)); y+=PASOTAPA){
+			
+			float x11 = x;
+			float y11 = y;
+			float x12 = x;
+			float y12 = y+PASOTAPA;
+			float x21 = x+PASOTAPA;
+			float y21 = y;
+			float x22 = x+PASOTAPA;
+			float y22 = y+PASOTAPA;
 
-	myWindow::drawTriangle(r,g,b);
 
-	positionData[3] = x4;
-	positionData[4] = y4;
-	positionData[5] = z4;
+			positionData[0] = x11;
+			positionData[1] = y11;
+			positionData[2] = 0;
+			positionData[3] = x12;
+			positionData[4] = y12;
+			positionData[5] = 0;
+			positionData[6] = x22;
+			positionData[7] = y22;
+			positionData[8] = 0;
 
-	myWindow::drawTriangle(r,g,b);
+			normalData[0]=0;
+			normalData[1]=0;
+			normalData[2]=1;
+			normalData[3]=0;
+			normalData[4]=0;
+			normalData[5]=1;
+			normalData[6]=0;
+			normalData[7]=0;
+			normalData[8]=1;
+
+			textureData[0]=(x/(2*largo))+0.5;
+			textureData[1]=(y/(2*largo))+0.5;
+			textureData[2]=(x/(2*largo))+0.5;
+			textureData[3]=((y+PASOTAPA)/(2*largo))+0.5;
+			textureData[4]=((x+PASOTAPA)/(2*largo))+0.5;
+			textureData[5]=((y+PASOTAPA)/(2*largo))+0.5;
+
+			myWindow::drawTriangle(r,g,b);
+
+			positionData[3] = x21;
+			positionData[4] = y21;
+
+			textureData[2]=((x+PASOTAPA)/(2*largo))+0.5;
+			textureData[3]=((y)/(2*largo))+0.5;
+
+			myWindow::drawTriangle(r,g,b);
+		}
+	}
 }
 
 void myWindow::drawCube(float lado, float r, float g, float b)
 {
-	//Dibuja pequeños cuadrados de PASOCUADRADO de ancho
-	//Cara inferior y superior e
-	//En x
-	for(float i = (-lado/2); i <= ((lado/2)-PASOCUADRADO); i+=PASOCUADRADO)
-	{
-		float x=i;
-		float xhasta=i+PASOCUADRADO;
-		//En y
-		for(float j = (-lado/2); j <= ((lado/2)-PASOCUADRADO); j+=PASOCUADRADO)
-		{
-			float y=j;
-			float yhasta=j+PASOCUADRADO;
-			float z=(-lado/2);
-			
-			normalData[0]=0.0;
-			normalData[1]=0.0;
-			normalData[2]=-1.0;
-			normalData[3]=0.0;
-			normalData[4]=0.0;
-			normalData[5]=-1.0;
-			normalData[6]=0.0;
-			normalData[7]=0.0;
-			normalData[8]=-1.0;
+	glm::mat4 matrizmodel = modelMatrix;
 
-			myWindow::drawRectangle(x,y,z,x,yhasta,z,xhasta,yhasta,z,xhasta,y,z,r,g,b);
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
+	drawRectangle(lado,r,g,b);
 
-			//Una vez que dibuje las dos caras hago lo mismo pero cambio los ejes
+	modelMatrix = matrizmodel;
 
-			normalData[0]=0.0;
-			normalData[1]=-1.0;
-			normalData[2]=0.0;
-			normalData[3]=0.0;
-			normalData[4]=-1.0;
-			normalData[5]=0.0;
-			normalData[6]=0.0;
-			normalData[7]=-1.0;
-			normalData[8]=0.0;
+	modelMatrix = glm::rotate((modelMatrix), (grados), vec3(1.0f,0.0f,0.0f));
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
+	drawRectangle(lado,r,g,b);
 
-			myWindow::drawRectangle(x,z,y,x,z,yhasta,xhasta,z,yhasta,xhasta,z,y,r,g,b);
+	modelMatrix = matrizmodel;
 
-			normalData[0]=-1.0;
-			normalData[1]=0.0;
-			normalData[2]=0.0;
-			normalData[3]=-1.0;
-			normalData[4]=0.0;
-			normalData[5]=0.0;
-			normalData[6]=-1.0;
-			normalData[7]=0.0;
-			normalData[8]=0.0;
+	modelMatrix = glm::rotate((modelMatrix), (2*grados), vec3(1.0f,0.0f,0.0f));
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
+	drawRectangle(lado,r,g,b);
 
-			myWindow::drawRectangle(z,y,x,z,yhasta,x,z,yhasta,xhasta,z,y,xhasta,r,g,b);
+	modelMatrix = matrizmodel;
 
-			z=(lado/2);
+	modelMatrix = glm::rotate((modelMatrix), (3*grados), vec3(1.0f,0.0f,0.0f));
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
+	drawRectangle(lado,r,g,b);
 
-			normalData[0]=0.0;
-			normalData[1]=0.0;
-			normalData[2]=1.0;
-			normalData[3]=0.0;
-			normalData[4]=0.0;
-			normalData[5]=1.0;
-			normalData[6]=0.0;
-			normalData[7]=0.0;
-			normalData[8]=1.0;
+	modelMatrix = matrizmodel;
 
-			myWindow::drawRectangle(x,y,z,x,yhasta,z,xhasta,yhasta,z,xhasta,y,z,r,g,b);
+	modelMatrix = glm::rotate((modelMatrix), (grados), vec3(0.0f,1.0f,0.0f));
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
+	drawRectangle(lado,r,g,b);
 
-			//Una vez que dibuje las dos caras hago lo mismo pero cambio los ejes
+	modelMatrix = matrizmodel;
 
-			normalData[0]=0.0;
-			normalData[1]=1.0;
-			normalData[2]=0.0;
-			normalData[3]=0.0;
-			normalData[4]=1.0;
-			normalData[5]=0.0;
-			normalData[6]=0.0;
-			normalData[7]=1.0;
-			normalData[8]=0.0;
+	modelMatrix = glm::rotate((modelMatrix), (3 * grados), vec3(0.0f,1.0f,0.0f));
+	modelMatrix = glm::translate(modelMatrix,vec3(0.0,0.0,lado));
+	drawRectangle(lado,r,g,b);
 
-			myWindow::drawRectangle(x,z,y,x,z,yhasta,xhasta,z,yhasta,xhasta,z,y,r,g,b);
-
-			normalData[0]=1.0;
-			normalData[1]=0.0;
-			normalData[2]=0.0;
-			normalData[3]=1.0;
-			normalData[4]=0.0;
-			normalData[5]=0.0;
-			normalData[6]=1.0;
-			normalData[7]=0.0;
-			normalData[8]=0.0;
-
-			myWindow::drawRectangle(z,y,x,z,yhasta,x,z,yhasta,xhasta,z,y,xhasta,r,g,b);
-		}
-	}
+	modelMatrix = matrizmodel;
 }
 
 void myWindow::drawEsfera(float radio, float r, float g, float b){
