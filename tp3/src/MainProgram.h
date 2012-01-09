@@ -1,0 +1,28 @@
+/*
+ * MainProgram.h
+ *
+ *  Created on: 09/01/2012
+ *      Author: damian
+ */
+
+#ifndef MAINPROGRAM_H_
+#define MAINPROGRAM_H_
+
+#include "Shader.h"
+#include "Attribute.h"
+#include <list>
+
+class MainProgram {
+public:
+	MainProgram();
+	void linkProgramHandler();
+	Attribute* AddAttribute(int index, char* name);
+	void addVertexShader(char* name);
+	void addFragmentShader(char* name);
+	virtual ~MainProgram();
+
+//private:
+	GLuint programHandler;
+};
+
+#endif /* MAINPROGRAM_H_ */

@@ -5,32 +5,26 @@
  *      Author: damian
  */
 
-#ifndef PROGRAM_H_
-#define PROGRAM_H_
+#ifndef BASICPROGRAM_H_
+#define BASICPROGRAM_H_
 
-#include "Shader.h"
-#include "Attribute.h"
-#include <list>
+#include "MainProgram.h"
 
-class Program {
+class BasicProgram {
 public:
-	Program();
+	BasicProgram();
 	void setActualProgram();
 	void updateBuffer();
 	void setPositionValue(int position, float value);
 	void setColorValue(int position, float value);
 	void drawTriangle();
-	virtual ~Program();
+	virtual ~BasicProgram();
 
 
 private:
-	GLuint programHandler;
-	//GLuint vertexArrayHandler;
+	MainProgram* program;
 	Attribute* positionAttrib;
 	Attribute* colorAttrib;
-
-	void linkProgramHandler();
-	void createVertexArray();
 };
 
-#endif /* PROGRAM_H_ */
+#endif /* BASICPROGRAM_H_ */
