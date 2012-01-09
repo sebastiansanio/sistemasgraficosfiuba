@@ -17,6 +17,7 @@ public:
 	void updateBuffer();
 	void setPositionValue(int position, float value);
 	void setColorValue(int position, float value);
+	void setNormalValue(int position, float value);
 	void drawTriangle();
 	virtual ~BasicProgram();
 
@@ -25,6 +26,7 @@ private:
 	MainProgram* program;
 	Attribute* positionAttrib;
 	Attribute* colorAttrib;
+	Attribute* normalAttrib;
 };
 
 #endif /* BASICPROGRAM_H_ */
