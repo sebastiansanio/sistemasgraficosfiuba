@@ -36,8 +36,7 @@ void display(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	mainProgram->updateBuffer();
-	glDrawArrays( GL_TRIANGLES, 0, 3);
+	mainProgram->drawTriangle();
 
 	//gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	//glutWireTeapot(1.0);
@@ -57,6 +56,15 @@ void keyboard (unsigned char key, int x, int y) {
          exit(0);
          break;
       case 'e':
+    	  mainProgram->setPositionValue(0,-0.5);
+    	  mainProgram->setPositionValue(3,0.5);
+    	  mainProgram->setPositionValue(7,0.5);
+    	  mainProgram->setColorValue(0,1.0);
+    	  mainProgram->setColorValue(2,1.0);
+    	  mainProgram->setColorValue(4,1.0);
+    	  mainProgram->setColorValue(6,1.0);
+    	  mainProgram->setColorValue(8,1.0);
+    	  glutPostRedisplay();
     	  break;
      default:
          break;
