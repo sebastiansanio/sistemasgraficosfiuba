@@ -1,6 +1,6 @@
-#include "Program.h"
+#include "BasicProgram.h"
 
-Program* mainProgram;
+BasicProgram* mainProgram;
 
 // Handle to the vertex array object
 GLuint vertexArrayHandler;
@@ -26,7 +26,7 @@ void printVersion(){
 
 void init(void)
 {
-	mainProgram = new Program();
+	mainProgram = new BasicProgram();
 }
 
 

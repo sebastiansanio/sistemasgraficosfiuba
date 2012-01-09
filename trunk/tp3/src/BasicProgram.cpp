@@ -1,0 +1,49 @@
+/*
+ * Program.cpp
+ *
+ *  Created on: 08/01/2012
+ *      Author: damian
+ */
+
+#include "BasicProgram.h"
+
+BasicProgram::BasicProgram() {
+	program = new MainProgram();
+
+	program->addVertexShader("basic.vert");
+
+	program->addFragmentShader("basic.frag");
+
+	positionAttrib = program->AddAttribute(0,"VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
+
+	colorAttrib = program->AddAttribute(1,"VertexColor");
+
+	setActualProgram();
+
+}
+
+void BasicProgram::updateBuffer(){
+	positionAttrib->updateBuffer();
+	colorAttrib->updateBuffer();
+}
+
+void BasicProgram::setPositionValue(int position, float value){
+	positionAttrib->setValue(position,value);
+}
+
+void BasicProgram::setColorValue(int position, float value){
+	colorAttrib->setValue(position,value);
+}
+
+void BasicProgram::setActualProgram(){
+	program->linkProgramHandler();
+}
+
+void BasicProgram::drawTriangle(){
+	this->updateBuffer();
+	glDrawArrays( GL_TRIANGLES, 0, 3);
+}
+
+BasicProgram::~BasicProgram() {
+	// TODO Auto-generated destructor stub
+}
