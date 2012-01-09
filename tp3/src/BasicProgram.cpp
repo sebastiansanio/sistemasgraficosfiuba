@@ -18,6 +18,8 @@ BasicProgram::BasicProgram() {
 
 	colorAttrib = program->AddAttribute(1,"VertexColor");
 
+	normalAttrib = program->AddAttribute(1,"VertexNormal");
+
 	setActualProgram();
 
 }
@@ -25,6 +27,7 @@ BasicProgram::BasicProgram() {
 void BasicProgram::updateBuffer(){
 	positionAttrib->updateBuffer();
 	colorAttrib->updateBuffer();
+	normalAttrib->updateBuffer();
 }
 
 void BasicProgram::setPositionValue(int position, float value){
@@ -33,6 +36,10 @@ void BasicProgram::setPositionValue(int position, float value){
 
 void BasicProgram::setColorValue(int position, float value){
 	colorAttrib->setValue(position,value);
+}
+
+void BasicProgram::setNormalValue(int position, float value){
+	normalAttrib->setValue(position,value);
 }
 
 void BasicProgram::setActualProgram(){

@@ -2,6 +2,7 @@
 
 in vec3 VertexPosition;
 in vec3 VertexColor;
+in vec3 VertexNormal;
 
 out vec3 Color;
 
