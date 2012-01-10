@@ -52,6 +52,20 @@ void BasicProgram::setNormalValue(int position, float value){
 	normalAttrib->setValue(position,value);
 }
 
+void BasicProgram::updateModelViewProjection(){
+	GLfloat modelView[16];
+	glGetFloatv (GL_MODELVIEW_MATRIX, modelView);
+
+	program->setUniformMat4(modelView,"ModelViewMatrix");
+
+	GLfloat projection[16];
+
+	glGetFloatv(GL_PROJECTION_MATRIX, projection);
+
+	program->setUniformMat4(projection,"ProjectionMatrix");
+
+}
+
 void BasicProgram::setActualProgram(){
 	program->linkProgramHandler();
 }

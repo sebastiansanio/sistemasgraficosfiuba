@@ -19,14 +19,15 @@ public:
 	void setPositionValue(int position, float value);
 	void setColorValue(int position, float value);
 	void setNormalValue(int position, float value);
+	void updateModelViewProjection();
 	void drawTriangle();
 	virtual ~BasicProgram();
 
-protected:
+//protected:
 	BasicProgram(const BasicProgram & ) ;
 	BasicProgram &operator= (const BasicProgram & ) ;
 
-private:
+//private:
 	static BasicProgram* instance;
 	MainProgram* program;
 	Attribute* positionAttrib;

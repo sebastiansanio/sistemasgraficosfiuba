@@ -27,6 +27,14 @@ void MainProgram::addFragmentShader(char* name){
 	new Shader(GL_FRAGMENT_SHADER,name, programHandler);
 }
 
+void MainProgram::setUniformMat4(GLfloat* data, char* name){
+	GLuint location = glGetUniformLocation(programHandler, name);
+	if( location >= 0 )
+	{
+		glUniformMatrix4fv(location, 1, GL_FALSE,data);
+	}
+}
+
 void MainProgram::linkProgramHandler(){
 	glLinkProgram( programHandler );
 

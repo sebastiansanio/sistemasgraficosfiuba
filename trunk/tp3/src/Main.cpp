@@ -30,10 +30,21 @@ void init(void)
 
 void display(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport (0, 0, (GLsizei) 1024, (GLsizei) 768);
+	glMatrixMode (GL_PROJECTION);
+	glLoadIdentity ();
+	gluPerspective(60.0, (GLfloat) 1024/(GLfloat) 768, 0.10, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();*/
 
+	gluLookAt(1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0);
+
+	//Paso matriz modelview
+
+	BasicProgram::Instance()->updateModelViewProjection();
 	BasicProgram::Instance()->drawTriangle();
 
 	//gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
