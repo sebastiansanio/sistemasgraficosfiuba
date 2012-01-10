@@ -1,4 +1,7 @@
 #include "BasicProgram.h"
+#include "Camera.h"
+
+Camera* camera;
 
 // Handle to the vertex array object
 GLuint vertexArrayHandler;
@@ -25,6 +28,7 @@ void printVersion(){
 void init(void)
 {
 	BasicProgram::Instance();
+	camera = new Camera();
 }
 
 
@@ -36,11 +40,12 @@ void display(void)
 	gluPerspective(60.0, (GLfloat) 1024/(GLfloat) 768, 0.10, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	/*glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();*/
 
-	gluLookAt(1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0);
+	camera->setPosition();
 
 	//Paso matriz modelview
 
@@ -64,6 +69,22 @@ void keyboard (unsigned char key, int x, int y) {
       case 'q':
          exit(0);
          break;
+      case 'w':
+    	  camera->upz();
+    	  glutPostRedisplay();
+    	  break;
+      case 's':
+		  camera->downz();
+		  glutPostRedisplay();
+		  break;
+      case 'a':
+		  camera->left();
+		  glutPostRedisplay();
+		  break;
+      case 'd':
+		  camera->right();
+		  glutPostRedisplay();
+		  break;
       case 'e':
     	  BasicProgram::Instance()->setPositionValue(0,-0.5);
     	  BasicProgram::Instance()->setPositionValue(3,0.5);
