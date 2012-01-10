@@ -7,6 +7,16 @@
 
 #include "BasicProgram.h"
 
+BasicProgram* BasicProgram::instance = 0;// Inicializar el puntero
+BasicProgram* BasicProgram::Instance ()
+{
+  if (instance == 0)  // ¿Es la primera llamada?
+  {
+    instance = new BasicProgram; // Creamos la instancia
+  }
+  return instance; // Retornamos la dirección de la instancia
+}
+
 BasicProgram::BasicProgram() {
 	program = new MainProgram();
 
@@ -18,7 +28,7 @@ BasicProgram::BasicProgram() {
 
 	colorAttrib = program->AddAttribute(1,"VertexColor");
 
-	normalAttrib = program->AddAttribute(1,"VertexNormal");
+	normalAttrib = program->AddAttribute(2,"VertexNormal");
 
 	setActualProgram();
 

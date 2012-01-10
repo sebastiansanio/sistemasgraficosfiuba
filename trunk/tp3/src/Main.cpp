@@ -1,7 +1,5 @@
 #include "BasicProgram.h"
 
-BasicProgram* mainProgram;
-
 // Handle to the vertex array object
 GLuint vertexArrayHandler;
 
@@ -26,7 +24,7 @@ void printVersion(){
 
 void init(void)
 {
-	mainProgram = new BasicProgram();
+	BasicProgram::Instance();
 }
 
 
@@ -36,7 +34,7 @@ void display(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	mainProgram->drawTriangle();
+	BasicProgram::Instance()->drawTriangle();
 
 	//gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	//glutWireTeapot(1.0);
@@ -56,14 +54,14 @@ void keyboard (unsigned char key, int x, int y) {
          exit(0);
          break;
       case 'e':
-    	  mainProgram->setPositionValue(0,-0.5);
-    	  mainProgram->setPositionValue(3,0.5);
-    	  mainProgram->setPositionValue(7,0.5);
-    	  mainProgram->setColorValue(0,1.0);
-    	  mainProgram->setColorValue(2,1.0);
-    	  mainProgram->setColorValue(4,1.0);
-    	  mainProgram->setColorValue(6,1.0);
-    	  mainProgram->setColorValue(8,1.0);
+    	  BasicProgram::Instance()->setPositionValue(0,-0.5);
+    	  BasicProgram::Instance()->setPositionValue(3,0.5);
+    	  BasicProgram::Instance()->setPositionValue(7,0.5);
+    	  BasicProgram::Instance()->setColorValue(0,1.0);
+    	  BasicProgram::Instance()->setColorValue(2,1.0);
+    	  BasicProgram::Instance()->setColorValue(4,1.0);
+    	  BasicProgram::Instance()->setColorValue(6,1.0);
+    	  BasicProgram::Instance()->setColorValue(8,1.0);
     	  glutPostRedisplay();
     	  break;
      default:
