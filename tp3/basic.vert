@@ -6,9 +6,13 @@ in vec3 VertexNormal;
 
 out vec3 Color;
 
+uniform mat4 ModelViewMatrix;
+
+uniform mat4 ProjectionMatrix;
+
 void main()
 {
 	Color = VertexColor;
 	
-	gl_Position = vec4( VertexPosition, 1.0);
+	gl_Position = ProjectionMatrix * ModelViewMatrix * vec4( VertexPosition, 1.0);
 }
