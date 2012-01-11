@@ -1,10 +1,5 @@
-#include "BasicProgram.h"
 #include "Camera.h"
-
-Camera* camera;
-
-// Handle to the vertex array object
-GLuint vertexArrayHandler;
+#include "Scene.h"
 
 void OnIdle (void)
 {
@@ -28,7 +23,6 @@ void printVersion(){
 void init(void)
 {
 	BasicProgram::Instance();
-	camera = new Camera();
 }
 
 
@@ -45,15 +39,13 @@ void display(void)
 	/*glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();*/
 
-	camera->setPosition();
+	Camera::Instance()->setPosition();
 
-	//Paso matriz modelview
+	Scene::Instance()->printScene();
 
-	BasicProgram::Instance()->updateModelViewProjection();
-	BasicProgram::Instance()->drawTriangle();
+	/*BasicProgram::Instance()->updateModelViewProjection();
+	BasicProgram::Instance()->drawTriangle();*/
 
-	//gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-	//glutWireTeapot(1.0);
 	glutSwapBuffers();
 }
 
@@ -70,19 +62,27 @@ void keyboard (unsigned char key, int x, int y) {
          exit(0);
          break;
       case 'w':
-    	  camera->upz();
+    	  Camera::Instance()->upz();
     	  glutPostRedisplay();
     	  break;
       case 's':
-		  camera->downz();
+    	  Camera::Instance()->downz();
 		  glutPostRedisplay();
 		  break;
       case 'a':
-		  camera->left();
+    	  Camera::Instance()->left();
 		  glutPostRedisplay();
 		  break;
       case 'd':
-		  camera->right();
+    	  Camera::Instance()->right();
+		  glutPostRedisplay();
+		  break;
+      case 'z':
+    	  Camera::Instance()->nearRatio();
+		  glutPostRedisplay();
+		  break;
+      case 'x':
+    	  Camera::Instance()->farRatio();
 		  glutPostRedisplay();
 		  break;
       case 'e':

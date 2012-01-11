@@ -7,10 +7,20 @@
 
 #include "Camera.h"
 
+Camera* Camera::instance = 0;// Inicializar el puntero
+Camera* Camera::Instance ()
+{
+  if (instance == 0)  // ¿Es la primera llamada?
+  {
+    instance = new Camera(); // Creamos la instancia
+  }
+  return instance; // Retornamos la dirección de la instancia
+}
+
 Camera::Camera() {
-	ratio=5.0f;
+	ratio=2.0f;
 	anglehor=0.0f;
-	anglevert= 3.1416 / 4;
+	anglevert= 3.1416 * 3 / 4;
 
 	calcPosition();
 }
@@ -20,27 +30,42 @@ void Camera::setPosition(){
 }
 
 void Camera::upz(){
-	anglevert+=0.1;
+	anglevert+=0.05;
+	if(anglevert > 3.14) anglevert = 3.14;
 	calcPosition();
 }
 void Camera::downz(){
-	anglevert-=0.1;
+	anglevert-=0.05;
+	if(anglevert < 0.05) anglevert = 0.05;
 	calcPosition();
 }
 void Camera::left(){
-	anglehor-=0.1;
+	anglehor-=0.05;
+	if(anglehor < 0) anglehor = (3.14 * 2);
 	calcPosition();
 }
 
 void Camera::right(){
-	anglehor+=0.1;
+	anglehor+=0.05;
+	if(anglehor > (3.14 * 2)) anglehor = 0;
+	calcPosition();
+}
+
+void Camera::nearRatio(){
+	ratio-=0.05;
+	if(ratio < 0.05) ratio = 0.05;
+	calcPosition();
+}
+
+void Camera::farRatio(){
+	ratio+=0.05;
 	calcPosition();
 }
 
 void Camera::calcPosition(){
 	eye[0]= ratio * cos(anglehor) * sin(anglevert);
 	eye[1]= ratio * sin(anglehor) * sin(anglevert);
-	eye[2]= ratio * cos(anglevert);
+	eye[2]= -ratio * cos(anglevert);
 
 	at[0] = 0.0;
 	at[1] = 0.0;
