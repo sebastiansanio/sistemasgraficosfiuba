@@ -22,7 +22,7 @@ public:
 	void setUniformMat4(GLfloat* data, char* name);
 	virtual ~MainProgram();
 
-//private:
+private:
 	GLuint programHandler;
 };
 

@@ -12,18 +12,28 @@
 #include <GL/glut.h>
 #include <GL/freeglut.h>
 #include <math.h>
+#include <iostream>
+using namespace std;
 
 class Camera {
 public:
-	Camera();
+	static Camera* Instance();
 	void setPosition();
 	void upz();
 	void downz();
 	void left();
 	void right();
+	void nearRatio();
+	void farRatio();
 	virtual ~Camera();
 
+protected:
+	Camera();
+	Camera(const Camera & ) ;
+	Camera &operator= (const Camera & ) ;
+
 private:
+	static Camera* instance;
 	float eye[3];
 	float at[3];
 	float up[3];

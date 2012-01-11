@@ -12,7 +12,6 @@
 
 class BasicProgram {
 public:
-	BasicProgram();
 	static BasicProgram* Instance();
 	void setActualProgram();
 	void updateBuffer();
@@ -23,11 +22,12 @@ public:
 	void drawTriangle();
 	virtual ~BasicProgram();
 
-//protected:
+protected:
+	BasicProgram();
 	BasicProgram(const BasicProgram & ) ;
 	BasicProgram &operator= (const BasicProgram & ) ;
 
-//private:
+private:
 	static BasicProgram* instance;
 	MainProgram* program;
 	Attribute* positionAttrib;
