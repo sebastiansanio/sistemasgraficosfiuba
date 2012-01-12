@@ -9,6 +9,7 @@
 #define BASICPROGRAM_H_
 
 #include "MainProgram.h"
+#include "Camera.h"
 
 class BasicProgram {
 public:

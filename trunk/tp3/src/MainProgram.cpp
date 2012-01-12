@@ -33,6 +33,20 @@ void MainProgram::setUniformMat4(GLfloat* data, char* name){
 	{
 		glUniformMatrix4fv(location, 1, GL_FALSE,data);
 	}
+
+	/*location = glGetUniformLocation(programHandler, "lightPos");
+	if( location >= 0 )
+	{
+		glUniform3f(location,0.0f,0.0f,1.0f);
+	}*/
+}
+
+void MainProgram::setUniformVec3(GLfloat* data, char* name){
+	GLuint location = glGetUniformLocation(programHandler, name);
+	if( location >= 0 )
+	{
+		glUniform3f(location,data[0],data[1],data[2]);
+	}
 }
 
 void MainProgram::linkProgramHandler(){

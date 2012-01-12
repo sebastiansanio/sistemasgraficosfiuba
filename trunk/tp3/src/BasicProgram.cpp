@@ -38,6 +38,14 @@ void BasicProgram::updateBuffer(){
 	positionAttrib->updateBuffer();
 	colorAttrib->updateBuffer();
 	normalAttrib->updateBuffer();
+	//Esto no tiene que estar hardcodeado en el program
+	GLfloat data2[3];
+	data2[0]=0.0f;
+	data2[1]=0.0f;
+	data2[2]=0.0f;
+	float* data3 = Camera::Instance()->transformViewCoord(data2[0], data2[1], data2[2]);
+	cout << "LighEyeCoord:" << data3[0] << "; " << data3[1] << "; " << data3[2] << endl;
+	program->setUniformVec3(data3,"lightPos");
 }
 
 void BasicProgram::setPositionValue(int position, float value){

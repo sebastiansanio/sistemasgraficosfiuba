@@ -22,6 +22,9 @@ void printVersion(){
 
 void init(void)
 {
+	glClearColor (0.02f, 0.02f, 0.04f, 0.0f);
+	glShadeModel (GL_SMOOTH);
+	glEnable(GL_DEPTH_TEST);
 	BasicProgram::Instance();
 }
 

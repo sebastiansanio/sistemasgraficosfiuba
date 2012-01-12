@@ -20,6 +20,7 @@ public:
 	void addVertexShader(char* name);
 	void addFragmentShader(char* name);
 	void setUniformMat4(GLfloat* data, char* name);
+	void setUniformVec3(GLfloat* data, char* name);
 	virtual ~MainProgram();
 
 private:
