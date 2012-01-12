@@ -30,6 +30,7 @@ protected:
 
 private:
 	static BasicProgram* instance;
+	void setLightPosition(float x, float y, float z, char* name);
 	MainProgram* program;
 	Attribute* positionAttrib;
 	Attribute* colorAttrib;

@@ -39,13 +39,7 @@ void BasicProgram::updateBuffer(){
 	colorAttrib->updateBuffer();
 	normalAttrib->updateBuffer();
 	//Esto no tiene que estar hardcodeado en el program
-	GLfloat data2[3];
-	data2[0]=0.0f;
-	data2[1]=0.0f;
-	data2[2]=0.0f;
-	float* data3 = Camera::Instance()->transformViewCoord(data2[0], data2[1], data2[2]);
-	cout << "LighEyeCoord:" << data3[0] << "; " << data3[1] << "; " << data3[2] << endl;
-	program->setUniformVec3(data3,"lightPos");
+	//setLightPosition(0.0,0.0,1.0,"lightPos");
 }
 
 void BasicProgram::setPositionValue(int position, float value){
@@ -58,6 +52,15 @@ void BasicProgram::setColorValue(int position, float value){
 
 void BasicProgram::setNormalValue(int position, float value){
 	normalAttrib->setValue(position,value);
+}
+
+void BasicProgram::setLightPosition(float x, float y, float z, char* name){
+	GLfloat data2[3];
+	data2[0]=0.0f;
+	data2[1]=0.0f;
+	data2[2]=1.0f;
+	float* data3 = Camera::Instance()->transformViewCoord(x,y,z);
+	program->setUniformVec3(data3,name);
 }
 
 void BasicProgram::updateModelViewProjection(){
@@ -76,6 +79,8 @@ void BasicProgram::updateModelViewProjection(){
 
 void BasicProgram::setActualProgram(){
 	program->linkProgramHandler();
+	//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
+	setLightPosition(1.0,1.0,1.0,"lightPos");
 }
 
 void BasicProgram::drawTriangle(){

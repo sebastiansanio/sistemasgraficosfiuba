@@ -41,7 +41,6 @@ void Cube::print(){
 	program->setNormalValue(6,0.0);
 	program->setNormalValue(7,0.0);
 	program->setNormalValue(8,1.0);
-
 	glPushMatrix();
 		glScalef(this->x,this->y,this->z);
 		glPushMatrix();
