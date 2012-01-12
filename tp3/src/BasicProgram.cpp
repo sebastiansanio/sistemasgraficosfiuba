@@ -32,6 +32,10 @@ BasicProgram::BasicProgram() {
 
 	setActualProgram();
 
+	lightPos[0] = 0.2;
+	lightPos[1] = 0.2;
+	lightPos[2] = 1.0;
+
 }
 
 void BasicProgram::updateBuffer(){
@@ -54,13 +58,9 @@ void BasicProgram::setNormalValue(int position, float value){
 	normalAttrib->setValue(position,value);
 }
 
-void BasicProgram::setLightPosition(float x, float y, float z, char* name){
-	GLfloat data2[3];
-	data2[0]=0.0f;
-	data2[1]=0.0f;
-	data2[2]=1.0f;
-	float* data3 = Camera::Instance()->transformViewCoord(x,y,z);
-	program->setUniformVec3(data3,name);
+void BasicProgram::setLightPosition(){
+	float* data3 = Camera::Instance()->transformViewCoord(lightPos[0],lightPos[1],lightPos[2]);
+	program->setUniformVec3(data3,"lightPos");
 }
 
 void BasicProgram::updateModelViewProjection(){
@@ -80,7 +80,7 @@ void BasicProgram::updateModelViewProjection(){
 void BasicProgram::setActualProgram(){
 	program->linkProgramHandler();
 	//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
-	setLightPosition(1.0,1.0,1.0,"lightPos");
+	setLightPosition();
 }
 
 void BasicProgram::drawTriangle(){
