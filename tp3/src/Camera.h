@@ -19,6 +19,7 @@ class Camera {
 public:
 	static Camera* Instance();
 	void setPosition();
+	float* transformViewCoord(float x, float y, float z);
 	void upz();
 	void downz();
 	void left();
@@ -37,9 +38,11 @@ private:
 	float eye[3];
 	float at[3];
 	float up[3];
+	float transf[3];
 	float ratio;
 	float anglehor;
 	float anglevert;
+	GLfloat viewMatrix[16];
 
 	void calcPosition();
 };

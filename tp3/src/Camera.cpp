@@ -20,13 +20,31 @@ Camera* Camera::Instance ()
 Camera::Camera() {
 	ratio=2.0f;
 	anglehor=0.0f;
-	anglevert= 3.1416 * 3 / 4;
+	anglevert= 3.1416 / 2;
 
 	calcPosition();
 }
 
 void Camera::setPosition(){
 	gluLookAt(eye[0],eye[1],eye[2],at[0],at[1],at[2],up[0],up[1],up[2]);
+	glGetFloatv (GL_MODELVIEW_MATRIX, viewMatrix);
+}
+
+float* Camera::transformViewCoord(float x, float y, float z){
+	cout << "Light:" << x << "; " << y << "; " << z << endl;
+	cout << "Eye:" << eye[0] << "; " << eye[1] << "; " << eye[2] << endl;
+	transf[0] = (viewMatrix[0] * x) + (viewMatrix[1] * y) + (viewMatrix[2] * z) + viewMatrix[3];
+	transf[1] = (viewMatrix[4] * x) + (viewMatrix[5] * y) + (viewMatrix[6] * z) + viewMatrix[7];
+	transf[2] = (viewMatrix[8] * x) + (viewMatrix[9] * y) + (viewMatrix[10] * z) + viewMatrix[11];
+	cout << endl;
+	cout << endl;
+	cout << viewMatrix[0] << "	" << viewMatrix[1] << "	" << viewMatrix[2] << "	" << viewMatrix[3] << endl;
+	cout << viewMatrix[4] << "	" << viewMatrix[5] << "	" << viewMatrix[6] << "	" << viewMatrix[7] << endl;
+	cout << viewMatrix[8] << "	" << viewMatrix[9] << "	" << viewMatrix[10] << "	" << viewMatrix[11] << endl;
+	cout << viewMatrix[12] << "	" << viewMatrix[13] << "	" << viewMatrix[14] << "	" << viewMatrix[15] << endl;
+	cout << endl;
+	cout << endl;
+	return transf;
 }
 
 void Camera::upz(){
