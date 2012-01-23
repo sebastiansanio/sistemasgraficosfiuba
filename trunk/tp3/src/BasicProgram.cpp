@@ -32,9 +32,9 @@ BasicProgram::BasicProgram() {
 
 	setActualProgram();
 
-	lightPos[0] = 0.2;
-	lightPos[1] = 0.2;
-	lightPos[2] = 1.0;
+	lightPos[0] = 0.0;
+	lightPos[1] = 0.0;
+	lightPos[2] = 2.0;
 
 }
 
@@ -60,6 +60,7 @@ void BasicProgram::setNormalValue(int position, float value){
 
 void BasicProgram::setLightPosition(){
 	float* data3 = Camera::Instance()->transformViewCoord(lightPos[0],lightPos[1],lightPos[2]);
+	cout << "Light: " << data3[0] << "  " << data3[1] << "  " << data3[2] << endl;
 	program->setUniformVec3(data3,"lightPos");
 }
 
