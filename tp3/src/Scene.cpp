@@ -18,7 +18,7 @@ Scene* Scene::Instance ()
 }
 
 Scene::Scene() {
-	this->cube = new Cube(0.5,0.5,0.5);
+	this->cube = new Cube(10,10,0.2);
 }
 
 void Scene::printScene(){

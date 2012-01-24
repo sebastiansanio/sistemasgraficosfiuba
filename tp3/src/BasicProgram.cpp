@@ -30,11 +30,20 @@ BasicProgram::BasicProgram() {
 
 	normalAttrib = program->AddAttribute(2,"VertexNormal");
 
+	lights[0]= new Light(5.0,0.0,3.0,5.0,0.0,0.0);
+
+	lights[1]= new Light(0.0,0.0,3.0,0.0,0.0,0.0);
+
 	setActualProgram();
 
-	lightPos[0] = 0.0;
+	lightPos[0] = 5.0;
 	lightPos[1] = 0.0;
-	lightPos[2] = 2.0;
+	lightPos[2] = 3.0;
+
+	lightSpotDir[0] = 5.0;
+	lightSpotDir[1] = 0.0;
+	lightSpotDir[2] = 0.0;
+
 
 }
 
@@ -59,9 +68,29 @@ void BasicProgram::setNormalValue(int position, float value){
 }
 
 void BasicProgram::setLightPosition(){
-	float* data3 = Camera::Instance()->transformViewCoord(lightPos[0],lightPos[1],lightPos[2]);
-	cout << "Light: " << data3[0] << "  " << data3[1] << "  " << data3[2] << endl;
-	program->setUniformVec3(data3,"lightPos");
+
+	int pos=0;
+
+	for(int i = 0; i < NUMLIGHT; i++){
+		float* data = lights[i]->getLightPosViewCoord();
+		arrayBuffer[pos++] = data[0];
+		arrayBuffer[pos++] = data[1];
+		arrayBuffer[pos++] = data[2];
+	}
+
+	program->setUniformVec3(arrayBuffer,"lightPos");
+
+	pos=0;
+
+	for(int i = 0; i < NUMLIGHT; i++){
+		float* data = lights[i]->getLightSpotDirViewCoord();
+		arrayBuffer[pos++] = data[0];
+		arrayBuffer[pos++] = data[1];
+		arrayBuffer[pos++] = data[2];
+	}
+
+	program->setUniformVec3(arrayBuffer,"lightSpotDir");
+
 }
 
 void BasicProgram::updateModelViewProjection(){

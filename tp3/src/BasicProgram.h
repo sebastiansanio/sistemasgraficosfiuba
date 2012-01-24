@@ -9,7 +9,7 @@
 #define BASICPROGRAM_H_
 
 #include "MainProgram.h"
-#include "Camera.h"
+#include "Light.h"
 
 class BasicProgram {
 public:
@@ -35,7 +35,10 @@ private:
 	Attribute* positionAttrib;
 	Attribute* colorAttrib;
 	Attribute* normalAttrib;
+	Light* lights[NUMLIGHT];
+	float arrayBuffer[NUMLIGHT * 3];
 	float lightPos[3];
+	float lightSpotDir[3];
 };
 
 #endif /* BASICPROGRAM_H_ */
