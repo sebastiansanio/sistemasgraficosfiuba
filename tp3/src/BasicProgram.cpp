@@ -32,7 +32,7 @@ BasicProgram::BasicProgram() {
 
 	lights[0]= new Light(5.0,0.0,3.0,5.0,0.0,0.0);
 
-	lights[1]= new Light(0.0,0.0,3.0,0.0,0.0,0.0);
+	lights[1]= new Light(-5.0,0.0,3.0,-5.0,0.0,0.0);
 
 	setActualProgram();
 

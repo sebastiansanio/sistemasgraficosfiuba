@@ -20,37 +20,40 @@ void main()
 	vec3 colorFinal = intAmbiente * Color;
 	
 	
+	for(int i = 0; i < NUMLIGHT ; i++){
 	
-	//Iluminacion difusa
+		//Iluminacion difusa
 	
-	vec3 lightDir = normalize( lightPos[0] - Position );
-	vec3 lightSpotDirection = normalize( lightSpotDir[0] - lightPos[0]);
-	
-	float intDifusa = dot(lightDir, Normal);
-	
-	//Si la cara esta del lado de la luz se aplica la iluminacion difusa y la especular
-	if(intDifusa > 0.0) {
-	
-		//Si esta en el cono de la luz spot
+		vec3 lightDir = normalize( lightPos[i] - Position );
+		vec3 lightSpotDirection = normalize( lightSpotDir[i] - lightPos[i]);
 		
-		float angle = acos(dot(-lightDir, lightSpotDirection));
-		float cutoff = radians( 90.0 );
-		if( angle < cutoff ) {
+		float intDifusa = dot(lightDir, Normal);
+	
+		//Si la cara esta del lado de la luz se aplica la iluminacion difusa y la especular
+		if(intDifusa > 0.0) {
+		
+			//Si esta en el cono de la luz spot
 			
-			float spotFactor = pow(dot(-lightDir, lightSpotDirection),1);
-			
-			colorFinal += intDifusa * spotFactor * Color;
-			
-			//Iluminacion especular
-			
-			//Vector de la posicion al ojo
-			vec3 vista = normalize(vec3(-Position));
-			
-			vec3 h = normalize(vista + lightDir);
-			
-			colorFinal += vec3(0.5,0.5,0.5) * spotFactor * pow( max( dot(h,Normal), 0.0 ), 2.0);
+			float angle = acos(dot(-lightDir, lightSpotDirection));
+			float cutoff = radians( 80.0 );
+			if( angle < cutoff ) {
 				
+				float spotFactor = pow(dot(-lightDir, lightSpotDirection),2);
+				
+				colorFinal += 0.7 * intDifusa * spotFactor * Color;
+				
+				//Iluminacion especular
+				
+				//Vector de la posicion al ojo
+				vec3 vista = normalize(vec3(-Position));
+				
+				vec3 h = normalize(vista + lightDir);
+				
+				colorFinal += vec3(0.5,0.5,0.5) * spotFactor * pow( max( dot(h,Normal), 0.0 ), 2.0);
+					
+			}
 		}
+	
 	}
 	
 	FragColor = vec4( colorFinal, 1.0) ;
