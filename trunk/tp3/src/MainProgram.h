@@ -8,6 +8,8 @@
 #ifndef MAINPROGRAM_H_
 #define MAINPROGRAM_H_
 
+#define NUMLIGHT 2
+
 #include "Shader.h"
 #include "Attribute.h"
 #include <list>
