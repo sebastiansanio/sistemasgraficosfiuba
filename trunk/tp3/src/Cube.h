@@ -9,6 +9,7 @@
 #define CUBE_H_
 
 #include "BasicProgram.h"
+#include "TextureProgram.h"
 
 class Cube {
 public:
@@ -20,7 +21,7 @@ private:
 	float x;
 	float y;
 	float z;
-	BasicProgram* program;
+	TextureProgram* program;
 
 	void drawRectangule();
 };

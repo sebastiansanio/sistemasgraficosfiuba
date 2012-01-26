@@ -24,26 +24,17 @@ BasicProgram::BasicProgram() {
 
 	program->addFragmentShader("basic.frag");
 
-	positionAttrib = program->AddAttribute(0,"VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
+	positionAttrib = program->AddAttribute(0, 9, "VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
 
-	colorAttrib = program->AddAttribute(1,"VertexColor");
+	colorAttrib = program->AddAttribute(1, 9, "VertexColor");
 
-	normalAttrib = program->AddAttribute(2,"VertexNormal");
+	normalAttrib = program->AddAttribute(2, 9, "VertexNormal");
 
 	lights[0]= new Light(5.0,0.0,3.0,5.0,0.0,0.0);
 
 	lights[1]= new Light(-5.0,0.0,3.0,-5.0,0.0,0.0);
 
 	setActualProgram();
-
-	lightPos[0] = 5.0;
-	lightPos[1] = 0.0;
-	lightPos[2] = 3.0;
-
-	lightSpotDir[0] = 5.0;
-	lightSpotDir[1] = 0.0;
-	lightSpotDir[2] = 0.0;
-
 
 }
 
@@ -121,3 +112,4 @@ void BasicProgram::drawTriangle(){
 BasicProgram::~BasicProgram() {
 	// TODO Auto-generated destructor stub
 }
+

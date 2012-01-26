@@ -19,13 +19,14 @@ using namespace std;
 
 class Attribute {
 public:
-	Attribute(int index, char* attribName, GLuint programHandler);
+	Attribute(int index, char* attribName, int tamData, GLuint programHandler);
 	void updateBuffer();
 	void setValue(int position, float value);
 	virtual ~Attribute();
 
 private:
-	float data[9];
+	int tamData;
+	float* data;
 	int index;
 	GLuint bufferHandler;
 	char* attribName;

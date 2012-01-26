@@ -15,8 +15,8 @@ MainProgram::MainProgram() {
 	}
 }
 
-Attribute* MainProgram::AddAttribute(int index, char* name){
-	return new Attribute(index, name, this->programHandler);
+Attribute* MainProgram::AddAttribute(int index, int tamData, char* name){
+	return new Attribute(index, name, tamData, this->programHandler);
 }
 
 void MainProgram::addVertexShader(char* name){
@@ -33,12 +33,6 @@ void MainProgram::setUniformMat4(GLfloat* data, char* name){
 	{
 		glUniformMatrix4fv(location, 1, GL_FALSE,data);
 	}
-
-	/*location = glGetUniformLocation(programHandler, "lightPos");
-	if( location >= 0 )
-	{
-		glUniform3f(location,0.0f,0.0f,1.0f);
-	}*/
 }
 
 void MainProgram::setUniformVec3(GLfloat* data, char* name){
@@ -46,6 +40,14 @@ void MainProgram::setUniformVec3(GLfloat* data, char* name){
 	if( location >= 0 )
 	{
 		glUniform3fv(location,NUMLIGHT,data);
+	}
+}
+
+void MainProgram::setUniformInt(GLint data, char* name){
+	GLuint location = glGetUniformLocation(programHandler, name);
+	if( location >= 0 )
+	{
+		glUniform1i(location,data);
 	}
 }
 
