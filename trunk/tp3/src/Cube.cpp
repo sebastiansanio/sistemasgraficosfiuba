@@ -12,9 +12,12 @@ Cube::Cube(float xSize, float ySize, float zSize) {
 	this->y = ySize;
 	this->z = zSize;
 	program = TextureProgram::Instance();
+	piso = new BitMap("piso.bmp");
 }
 
 void Cube::print(){
+	//ESTO RALENTIZA MUCHO LA APLICACION, HABRIA QUE HACER QUE SI LA TEXTURA YA ESTA CARGADA NO LA TENGA QUE VOLVER A CARGAR
+	program->setTexture(piso);
 	program->setActualProgram();
 	program->setColorValue(0,0.0);
 	program->setColorValue(1,1.0);

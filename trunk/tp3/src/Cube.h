@@ -22,6 +22,7 @@ private:
 	float y;
 	float z;
 	TextureProgram* program;
+	BitMap* piso;
 
 	void drawRectangule();
 };
