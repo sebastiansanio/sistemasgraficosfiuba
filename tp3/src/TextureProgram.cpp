@@ -32,18 +32,10 @@ TextureProgram::TextureProgram() {
 
 	textureAttrib = program->AddAttribute(3,6,"TextureCoord");
 
-	char imagen[]={
-			0,0,0, 0,0,0, 0,0,0, 0,0,0,
-			255,0,0, 255,0,0, 255,0,0, 255,0,0,
-			0,0,0, 0,0,0, 0,0,0, 0,0,0,
-			255,0,0, 255,0,0, 255,0,0, 255,0,0,
-	};
-
 	glActiveTexture(GL_TEXTURE0);
 	GLuint tid;
 	glGenTextures(1, &tid);
 	glBindTexture(GL_TEXTURE_2D, tid);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 4, 4, 0, GL_RGB, GL_UNSIGNED_BYTE, imagen);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -55,6 +47,10 @@ TextureProgram::TextureProgram() {
 
 	setActualProgram();
 
+}
+
+void TextureProgram::setTexture(BitMap* bitmap){
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap->getAncho(), bitmap->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap->getMatriz());
 }
 
 void TextureProgram::updateBuffer(){

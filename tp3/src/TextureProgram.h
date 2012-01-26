@@ -10,6 +10,7 @@
 
 #include "MainProgram.h"
 #include "Light.h"
+#include "BitMap.h"
 
 class TextureProgram {
 
@@ -21,6 +22,7 @@ public:
 	void setColorValue(int position, float value);
 	void setNormalValue(int position, float value);
 	void setTextureValue(int position, float value);
+	void setTexture(BitMap* bitmap);
 	void updateModelViewProjection();
 	void drawTriangle();
 	virtual ~TextureProgram();
