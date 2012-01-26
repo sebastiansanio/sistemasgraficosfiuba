@@ -25,7 +25,8 @@ void init(void)
 	glClearColor (0.02f, 0.02f, 0.04f, 0.0f);
 	glShadeModel (GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
-	BasicProgram::Instance();
+	TextureProgram::Instance();
+	//BasicProgram::Instance();
 }
 
 
@@ -89,14 +90,14 @@ void keyboard (unsigned char key, int x, int y) {
 		  glutPostRedisplay();
 		  break;
       case 'e':
-    	  BasicProgram::Instance()->setPositionValue(0,-0.5);
-    	  BasicProgram::Instance()->setPositionValue(3,0.5);
-    	  BasicProgram::Instance()->setPositionValue(7,0.5);
-    	  BasicProgram::Instance()->setColorValue(0,1.0);
-    	  BasicProgram::Instance()->setColorValue(2,1.0);
-    	  BasicProgram::Instance()->setColorValue(4,1.0);
-    	  BasicProgram::Instance()->setColorValue(6,1.0);
-    	  BasicProgram::Instance()->setColorValue(8,1.0);
+    	  TextureProgram::Instance()->setPositionValue(0,-0.5);
+    	  TextureProgram::Instance()->setPositionValue(3,0.5);
+    	  TextureProgram::Instance()->setPositionValue(7,0.5);
+    	  TextureProgram::Instance()->setColorValue(0,1.0);
+    	  TextureProgram::Instance()->setColorValue(2,1.0);
+    	  TextureProgram::Instance()->setColorValue(4,1.0);
+    	  TextureProgram::Instance()->setColorValue(6,1.0);
+    	  TextureProgram::Instance()->setColorValue(8,1.0);
     	  glutPostRedisplay();
     	  break;
      default:

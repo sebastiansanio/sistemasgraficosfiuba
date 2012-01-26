@@ -11,7 +11,7 @@ Cube::Cube(float xSize, float ySize, float zSize) {
 	this->x = xSize;
 	this->y = ySize;
 	this->z = zSize;
-	program = BasicProgram::Instance();
+	program = TextureProgram::Instance();
 }
 
 void Cube::print(){
@@ -41,6 +41,10 @@ void Cube::print(){
 	program->setNormalValue(6,0.0);
 	program->setNormalValue(7,0.0);
 	program->setNormalValue(8,1.0);
+	program->setTextureValue(0,0.0);
+	program->setTextureValue(1,0.0);
+	program->setTextureValue(4,1.0);
+	program->setTextureValue(5,1.0);
 	glPushMatrix();
 		glScalef(this->x,this->y,this->z);
 		glPushMatrix();
@@ -74,9 +78,13 @@ void Cube::drawRectangule(){
 	program->updateModelViewProjection();
 	program->setPositionValue(3,1.0);
 	program->setPositionValue(4,-1.0);
+	program->setTextureValue(2,1.0);
+	program->setTextureValue(3,0.0);
 	program->drawTriangle();
 	program->setPositionValue(3,-1.0);
 	program->setPositionValue(4,1.0);
+	program->setTextureValue(2,0.0);
+	program->setTextureValue(3,1.0);
 	program->drawTriangle();
 }
 

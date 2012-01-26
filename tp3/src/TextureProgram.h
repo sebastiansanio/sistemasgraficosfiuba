@@ -1,42 +1,46 @@
 /*
- * Program.h
+ * TextureProgram.h
  *
- *  Created on: 08/01/2012
+ *  Created on: 24/01/2012
  *      Author: damian
  */
 
-#ifndef BASICPROGRAM_H_
-#define BASICPROGRAM_H_
+#ifndef TEXTUREPROGRAM_H_
+#define TEXTUREPROGRAM_H_
 
 #include "MainProgram.h"
 #include "Light.h"
 
-class BasicProgram {
+class TextureProgram {
+
 public:
-	static BasicProgram* Instance();
+	static TextureProgram* Instance();
 	void setActualProgram();
 	void updateBuffer();
 	void setPositionValue(int position, float value);
 	void setColorValue(int position, float value);
 	void setNormalValue(int position, float value);
+	void setTextureValue(int position, float value);
 	void updateModelViewProjection();
 	void drawTriangle();
-	virtual ~BasicProgram();
+	virtual ~TextureProgram();
 
 protected:
-	BasicProgram();
-	BasicProgram(const BasicProgram & ) ;
-	BasicProgram &operator= (const BasicProgram & ) ;
+	TextureProgram();
+	TextureProgram(const TextureProgram & ) ;
+	TextureProgram &operator= (const TextureProgram & ) ;
 
 private:
-	static BasicProgram* instance;
+	static TextureProgram* instance;
 	void setLightPosition();
 	MainProgram* program;
 	Attribute* positionAttrib;
 	Attribute* colorAttrib;
 	Attribute* normalAttrib;
+	Attribute* textureAttrib;
+
 	Light* lights[NUMLIGHT];
 	float arrayBuffer[NUMLIGHT * 3];
 };
 
-#endif /* BASICPROGRAM_H_ */
+#endif /* TEXTUREPROGRAM_H_ */
