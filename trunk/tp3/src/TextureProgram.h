@@ -23,6 +23,7 @@ public:
 	void setNormalValue(int position, float value);
 	void setTextureValue(int position, float value);
 	void setTexture(int texId);
+	void setLightPosition();
 	void updateModelViewProjection();
 	void drawTriangle();
 	virtual ~TextureProgram();
@@ -34,7 +35,6 @@ protected:
 
 private:
 	static TextureProgram* instance;
-	void setLightPosition();
 	MainProgram* program;
 	Attribute* positionAttrib;
 	Attribute* colorAttrib;

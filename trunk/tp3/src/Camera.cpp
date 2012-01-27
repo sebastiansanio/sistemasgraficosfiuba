@@ -61,13 +61,13 @@ void Camera::right(){
 }
 
 void Camera::nearRatio(){
-	ratio-=0.05;
-	if(ratio < 0.05) ratio = 0.05;
+	ratio-=0.2;
+	if(ratio < 0.2) ratio = 0.2;
 	calcPosition();
 }
 
 void Camera::farRatio(){
-	ratio+=0.05;
+	ratio+=0.2;
 	calcPosition();
 }
 
@@ -78,7 +78,7 @@ void Camera::calcPosition(){
 
 	at[0] = 0.0;
 	at[1] = 0.0;
-	at[2] = 0.0;
+	at[2] = 5.0;
 
 	up[0] = 0.0;
 	up[1] = 0.0;

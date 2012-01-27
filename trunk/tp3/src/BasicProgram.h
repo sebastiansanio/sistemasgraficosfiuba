@@ -19,6 +19,7 @@ public:
 	void setPositionValue(int position, float value);
 	void setColorValue(int position, float value);
 	void setNormalValue(int position, float value);
+	void setLightPosition();
 	void updateModelViewProjection();
 	void drawTriangle();
 	virtual ~BasicProgram();
@@ -30,7 +31,6 @@ protected:
 
 private:
 	static BasicProgram* instance;
-	void setLightPosition();
 	MainProgram* program;
 	Attribute* positionAttrib;
 	Attribute* colorAttrib;

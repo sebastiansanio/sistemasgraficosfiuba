@@ -7,12 +7,16 @@
 
 #include "MainProgram.h"
 
+GLuint linkedProgramHandler;
+
 MainProgram::MainProgram() {
 	this->programHandler = glCreateProgram();
 	if ( 0 == programHandler )
 	{
 		cout << "Error creating program object" << endl;
 	}
+
+	linkedProgramHandler = 0;
 }
 
 Attribute* MainProgram::AddAttribute(int index, int tamData, char* name){
@@ -51,29 +55,39 @@ void MainProgram::setUniformInt(GLint data, char* name){
 	}
 }
 
-void MainProgram::linkProgramHandler(){
-	glLinkProgram( programHandler );
+bool MainProgram::linkProgramHandler(){
+	if(programHandler != linkedProgramHandler){
 
-	GLint status;
-	glGetProgramiv( programHandler, GL_LINK_STATUS, &status );
-	if( GL_FALSE == status )
-	{
-		cout << "Failed to link shader program!\n" << endl;
-		GLint logLen;
-		glGetProgramiv(programHandler, GL_INFO_LOG_LENGTH, &logLen);
-		if( logLen > 0 )
+		glLinkProgram( programHandler );
+
+		GLint status;
+		glGetProgramiv( programHandler, GL_LINK_STATUS, &status );
+		if( GL_FALSE == status )
 		{
-			char * log = (char *)malloc(logLen);
-			GLsizei written;
-			glGetProgramInfoLog(programHandler, logLen, &written, log);
-			cout << "Program log: \n%s" << endl;
-			free(log);
+			cout << "Failed to link shader program!\n" << endl;
+			GLint logLen;
+			glGetProgramiv(programHandler, GL_INFO_LOG_LENGTH, &logLen);
+			if( logLen > 0 )
+			{
+				char * log = (char *)malloc(logLen);
+				GLsizei written;
+				glGetProgramInfoLog(programHandler, logLen, &written, log);
+				cout << "Program log: \n%s" << endl;
+				free(log);
+			}
 		}
+		else
+		{
+			glUseProgram( programHandler );
+		}
+
+		linkedProgramHandler = programHandler;
+
+		return true;
 	}
-	else
-	{
-		glUseProgram( programHandler );
-	}
+
+	return false;
+
 }
 
 MainProgram::~MainProgram() {

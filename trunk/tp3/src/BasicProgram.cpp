@@ -30,9 +30,9 @@ BasicProgram::BasicProgram() {
 
 	normalAttrib = program->AddAttribute(2, 9, "VertexNormal");
 
-	lights[0]= new Light(5.0,0.0,3.0,5.0,0.0,0.0);
+	lights[0]= new Light(5.0,0.0,10.0,5.0,0.0,0.0);
 
-	lights[1]= new Light(-5.0,0.0,3.0,-5.0,0.0,0.0);
+	lights[1]= new Light(-5.0,0.0,10.0,-5.0,0.0,0.0);
 
 	setActualProgram();
 
@@ -99,9 +99,10 @@ void BasicProgram::updateModelViewProjection(){
 }
 
 void BasicProgram::setActualProgram(){
-	program->linkProgramHandler();
-	//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
-	setLightPosition();
+	if(program->linkProgramHandler()){
+		//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
+		setLightPosition();
+	}
 }
 
 void BasicProgram::drawTriangle(){
