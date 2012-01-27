@@ -13,7 +13,7 @@
 
 class Cube {
 public:
-	Cube(float xSize, float ySize, float zSize);
+	Cube(float xSize, float ySize, float zSize, int texId);
 	void print();
 	virtual ~Cube();
 
@@ -21,8 +21,8 @@ private:
 	float x;
 	float y;
 	float z;
+	int texId;
 	TextureProgram* program;
-	BitMap* piso;
 
 	void drawRectangule();
 };

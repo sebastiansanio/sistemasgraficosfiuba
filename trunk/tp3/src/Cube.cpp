@@ -7,17 +7,16 @@
 
 #include "Cube.h"
 
-Cube::Cube(float xSize, float ySize, float zSize) {
+Cube::Cube(float xSize, float ySize, float zSize, int texId) {
 	this->x = xSize;
 	this->y = ySize;
 	this->z = zSize;
+	this->texId = texId;
 	program = TextureProgram::Instance();
-	piso = new BitMap("piso.bmp");
 }
 
 void Cube::print(){
-	//ESTO RALENTIZA MUCHO LA APLICACION, HABRIA QUE HACER QUE SI LA TEXTURA YA ESTA CARGADA NO LA TENGA QUE VOLVER A CARGAR
-	program->setTexture(piso);
+	program->setTexture(this->texId);
 	program->setActualProgram();
 	program->setColorValue(0,0.0);
 	program->setColorValue(1,1.0);
