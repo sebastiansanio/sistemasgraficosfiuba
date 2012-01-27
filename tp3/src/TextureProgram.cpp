@@ -36,10 +36,21 @@ TextureProgram::TextureProgram() {
 	GLuint tid;
 	glGenTextures(1, &tid);
 	glBindTexture(GL_TEXTURE_2D, tid);
+	BitMap* bitmap1 = new BitMap("piso.bmp");
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap1->getAncho(), bitmap1->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap1->getMatriz());
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	program->setUniformInt(0,"Texture1");
+	glActiveTexture(GL_TEXTURE1);
+	GLuint tid2;
+	glGenTextures(1, &tid2);
+	glBindTexture(GL_TEXTURE_2D, tid2);
+	BitMap* bitmap2 = new BitMap("test.bmp");
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	this->actualTexId = 0;
 
 	lights[0]= new Light(5.0,0.0,3.0,5.0,0.0,0.0);
 
@@ -49,8 +60,8 @@ TextureProgram::TextureProgram() {
 
 }
 
-void TextureProgram::setTexture(BitMap* bitmap){
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap->getAncho(), bitmap->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap->getMatriz());
+void TextureProgram::setTexture(int texId){
+	this->actualTexId = texId;
 }
 
 void TextureProgram::updateBuffer(){
@@ -88,6 +99,8 @@ void TextureProgram::setLightPosition(){
 	}
 
 	program->setUniformVec3(arrayBuffer,"lightPos");
+
+	program->setUniformInt(this->actualTexId,"Texture1");
 
 	pos=0;
 

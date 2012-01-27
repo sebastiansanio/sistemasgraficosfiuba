@@ -15,6 +15,12 @@ void main()
 {
 	vec3 color = vec3(texture( Texture1, TexCoord ));
 	
+	/*vec3 color = vec3(1.0,0.0,0.0);
+	
+	if ( Texture1 == 0 ){
+		color = vec3(0.0,1.0,0.0);
+	}*/
+	
 	//Iluminacion ambiente
 	
 	float intAmbiente = 0.2;

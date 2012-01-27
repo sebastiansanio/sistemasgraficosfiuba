@@ -23,7 +23,8 @@ protected:
 
 private:
 	static Scene* instance;
-	Cube* cube;
+	Cube* cube1;
+	Cube* cube2;
 
 };
 

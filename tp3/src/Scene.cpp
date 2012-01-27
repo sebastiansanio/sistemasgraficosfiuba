@@ -18,11 +18,16 @@ Scene* Scene::Instance ()
 }
 
 Scene::Scene() {
-	this->cube = new Cube(10,10,0.2);
+	this->cube1 = new Cube(10,10,0.2,0);
+	this->cube2 = new Cube(2,2,1,1);
 }
 
 void Scene::printScene(){
-	this->cube->print();
+	glPushMatrix();
+		this->cube1->print();
+		glTranslatef(1.0,1.0,2.0);
+		this->cube2->print();
+	glPopMatrix();
 }
 
 Scene::~Scene() {
