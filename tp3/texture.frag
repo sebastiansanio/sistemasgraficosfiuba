@@ -43,10 +43,10 @@ void main()
 			//Si esta en el cono de la luz spot
 			
 			float angle = acos(dot(-lightDir, lightSpotDirection));
-			float cutoff = radians( 70.0 );
+			float cutoff = radians( 40.0 );
 			if( angle < cutoff ) {
 				
-				float spotFactor = pow(dot(-lightDir, lightSpotDirection),2);
+				float spotFactor = 0.8 * pow(dot(-lightDir, lightSpotDirection),8);
 				
 				colorFinal += 0.7 * intDifusa * spotFactor * color;
 				

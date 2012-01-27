@@ -116,6 +116,8 @@ int main(int argc, char** argv)
 	   fprintf(stderr, "Error initializing GLEW: %s\n", glewGetErrorString(err) );
    }
 
+  printVersion();
+
    //Iniciando la aplicacion
    init ();
 

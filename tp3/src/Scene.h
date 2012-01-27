@@ -8,7 +8,9 @@
 #ifndef Scene_H_
 #define Scene_H_
 
-#include "Cube.h"
+#include "CubeTex.h"
+#include "Rectang.h"
+#include "RectangTex.h"
 
 class Scene {
 public:
@@ -23,8 +25,9 @@ protected:
 
 private:
 	static Scene* instance;
-	Cube* cube1;
-	Cube* cube2;
+	RectangTex* piso;
+	RectangTex* pared;
+	CubeTex* cube1;
 
 };
 

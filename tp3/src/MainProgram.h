@@ -15,9 +15,10 @@
 #include <list>
 
 class MainProgram {
+
 public:
 	MainProgram();
-	void linkProgramHandler();
+	bool linkProgramHandler();
 	Attribute* AddAttribute(int index, int tamData, char* name);
 	void addVertexShader(char* name);
 	void addFragmentShader(char* name);
@@ -26,7 +27,7 @@ public:
 	void setUniformInt(GLint data, char* name);
 	virtual ~MainProgram();
 
-//private:
+private:
 	GLuint programHandler;
 };
 
