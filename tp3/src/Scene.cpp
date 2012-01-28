@@ -18,40 +18,36 @@ Scene* Scene::Instance ()
 }
 
 Scene::Scene() {
-	this->piso = new RectangTex(10.0,10.0,0);
-	this->pared = new RectangTex(10.0,10.0,1);
-	this->cube1 = new CubeTex(4.0,4.0,2.0,1);
+	this->piso = new RectangTex(10.0,10.0,0,2.5);
+	this->pared = new RectangTex(10.0,5.0,1,5.0);
 }
 
 void Scene::printScene(){
 	glPushMatrix();
-		glPushMatrix();
 			//Dibujando el escenario
-			glScalef(1.0,1.0,0.5);
 			piso->print();
 			glPushMatrix();
-				glTranslatef(0.0,10.0,10.0);
+				glTranslatef(0.0,10.0,5.0);
 				glRotatef(90,1.0,0.0,0.0);
 				pared->print();
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(0.0,-10.0,10.0);
+				glTranslatef(0.0,-10.0,5.0);
 				glRotatef(-90,1.0,0.0,0.0);
 				pared->print();
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(-10.0,0.0,10.0);
+				glTranslatef(-10.0,0.0,5.0);
 				glRotatef(90,0.0,1.0,0.0);
+				glRotatef(90,0.0,0.0,1.0);
 				pared->print();
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(10.0,0.0,10.0);
+				glTranslatef(10.0,0.0,5.0);
 				glRotatef(-90,0.0,1.0,0.0);
+				glRotatef(90,0.0,0.0,1.0);
 				pared->print();
 			glPopMatrix();
-		glPopMatrix();
-		glTranslatef(0.0,0.0,2.0);
-		cube1->print();
 	glPopMatrix();
 }
 
