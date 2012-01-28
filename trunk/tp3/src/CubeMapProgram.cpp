@@ -1,23 +1,23 @@
 /*
- * TextureProgram.cpp
+ * CubeMapProgram.cpp
  *
- *  Created on: 24/01/2012
+ *  Created on: 28/01/2012
  *      Author: damian
  */
 
-#include "TextureProgram.h"
+#include "CubeMapProgram.h"
 
-TextureProgram* TextureProgram::instance = 0;// Inicializar el puntero
-TextureProgram* TextureProgram::Instance ()
+CubeMapProgram* CubeMapProgram::instance = 0;// Inicializar el puntero
+CubeMapProgram* CubeMapProgram::Instance ()
 {
   if (instance == 0)  // ¿Es la primera llamada?
   {
-    instance = new TextureProgram; // Creamos la instancia
+    instance = new CubeMapProgram; // Creamos la instancia
   }
   return instance; // Retornamos la dirección de la instancia
 }
 
-TextureProgram::TextureProgram() {
+CubeMapProgram::CubeMapProgram() {
 	program = new MainProgram();
 
 	program->addVertexShader("texture.vert");
@@ -32,20 +32,11 @@ TextureProgram::TextureProgram() {
 
 	textureAttrib = program->AddAttribute(3,6,"TextureCoord");
 
-	glActiveTexture(GL_TEXTURE0);
-	GLuint tid;
-	glGenTextures(1, &tid);
-	glBindTexture(GL_TEXTURE_2D, tid);
-	BitMap* bitmap1 = new BitMap("floor.bmp");
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap1->getAncho(), bitmap1->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap1->getMatriz());
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	glActiveTexture(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE2);
 	GLuint tid2;
 	glGenTextures(1, &tid2);
 	glBindTexture(GL_TEXTURE_2D, tid2);
-	BitMap* bitmap2 = new BitMap("wall.bmp");
+	BitMap* bitmap2 = new BitMap("test.bmp");
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -68,34 +59,34 @@ TextureProgram::TextureProgram() {
 
 }
 
-void TextureProgram::setTexture(int texId){
+void CubeMapProgram::setTexture(int texId){
 	this->actualTexId = texId;
 }
 
-void TextureProgram::updateBuffer(){
+void CubeMapProgram::updateBuffer(){
 	positionAttrib->updateBuffer();
 	colorAttrib->updateBuffer();
 	normalAttrib->updateBuffer();
 	textureAttrib->updateBuffer();
 }
 
-void TextureProgram::setPositionValue(int position, float value){
+void CubeMapProgram::setPositionValue(int position, float value){
 	positionAttrib->setValue(position,value);
 }
 
-void TextureProgram::setColorValue(int position, float value){
+void CubeMapProgram::setColorValue(int position, float value){
 	colorAttrib->setValue(position,value);
 }
 
-void TextureProgram::setNormalValue(int position, float value){
+void CubeMapProgram::setNormalValue(int position, float value){
 	normalAttrib->setValue(position,value);
 }
 
-void TextureProgram::setTextureValue(int position, float value){
+void CubeMapProgram::setTextureValue(int position, float value){
 	textureAttrib->setValue(position,value);
 }
 
-void TextureProgram::setLightPosition(){
+void CubeMapProgram::setLightPosition(){
 
 	int pos=0;
 
@@ -123,7 +114,7 @@ void TextureProgram::setLightPosition(){
 
 }
 
-void TextureProgram::updateModelViewProjection(){
+void CubeMapProgram::updateModelViewProjection(){
 	GLfloat modelView[16];
 	glGetFloatv (GL_MODELVIEW_MATRIX, modelView);
 
@@ -137,23 +128,24 @@ void TextureProgram::updateModelViewProjection(){
 
 }
 
-void TextureProgram::setActualProgramFirstTime(){
+void CubeMapProgram::setActualProgramFirstTime(){
 	program->linkProgramHandlerFirstTime();
 	//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
 	setLightPosition();
 }
 
-void TextureProgram::setActualProgram(){
+void CubeMapProgram::setActualProgram(){
 	program->linkProgramHandler();
 		//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
 	setLightPosition();
 }
 
-void TextureProgram::drawTriangle(){
+void CubeMapProgram::drawTriangle(){
 	this->updateBuffer();
 	glDrawArrays( GL_TRIANGLES, 0, 3);
 }
 
-TextureProgram::~TextureProgram() {
+CubeMapProgram::~CubeMapProgram() {
 	// TODO Auto-generated destructor stub
 }
+

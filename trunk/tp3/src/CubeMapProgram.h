@@ -1,21 +1,21 @@
 /*
- * TextureProgram.h
+ * CubeMapProgram.h
  *
- *  Created on: 24/01/2012
+ *  Created on: 28/01/2012
  *      Author: damian
  */
 
-#ifndef TEXTUREPROGRAM_H_
-#define TEXTUREPROGRAM_H_
+#ifndef CUBEMAPPROGRAM_H_
+#define CUBEMAPPROGRAM_H_
 
 #include "MainProgram.h"
 #include "Light.h"
 #include "BitMap.h"
 
-class TextureProgram {
+class CubeMapProgram {
 
 public:
-	static TextureProgram* Instance();
+	static CubeMapProgram* Instance();
 	void setActualProgram();
 	void setActualProgramFirstTime();
 	void updateBuffer();
@@ -27,15 +27,15 @@ public:
 	void setLightPosition();
 	void updateModelViewProjection();
 	void drawTriangle();
-	virtual ~TextureProgram();
+	virtual ~CubeMapProgram();
 
 protected:
-	TextureProgram();
-	TextureProgram(const TextureProgram & ) ;
-	TextureProgram &operator= (const TextureProgram & ) ;
+	CubeMapProgram();
+	CubeMapProgram(const CubeMapProgram & ) ;
+	CubeMapProgram &operator= (const CubeMapProgram & ) ;
 
 private:
-	static TextureProgram* instance;
+	static CubeMapProgram* instance;
 	MainProgram* program;
 	Attribute* positionAttrib;
 	Attribute* colorAttrib;
@@ -47,4 +47,4 @@ private:
 	float arrayBuffer[NUMLIGHT * 3];
 };
 
-#endif /* TEXTUREPROGRAM_H_ */
+#endif /* CUBEMAPPROGRAM_H_ */

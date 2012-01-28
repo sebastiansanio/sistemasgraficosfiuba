@@ -19,6 +19,7 @@ class MainProgram {
 public:
 	MainProgram();
 	bool linkProgramHandler();
+	bool linkProgramHandlerFirstTime();
 	Attribute* AddAttribute(int index, int tamData, char* name);
 	void addVertexShader(char* name);
 	void addFragmentShader(char* name);
