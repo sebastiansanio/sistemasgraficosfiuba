@@ -12,13 +12,14 @@
 
 class Rectang {
 public:
-	Rectang(float xSize, float ySize);
+	Rectang(float xSize, float ySize,float tamPaso);
 	void print();
 	virtual ~Rectang();
 
 private:
 	float x;
 	float y;
+	float tamPaso;
 	BasicProgram* program;
 };
 

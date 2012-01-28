@@ -1,5 +1,5 @@
-#version 400
-#define NUMLIGHT 2
+#version 130
+#define NUMLIGHT 6
 
 in vec3 Color;
 in vec3 Normal;
@@ -35,12 +35,12 @@ void main()
 			//Si esta en el cono de la luz spot
 			
 			float angle = acos(dot(-lightDir, lightSpotDirection));
-			float cutoff = radians( 40.0 );
+			float cutoff = radians( 90.0 );
 			if( angle < cutoff ) {
 				
-				float spotFactor = 0.8 * pow(dot(-lightDir, lightSpotDirection),8);
+				float spotFactor = pow(dot(-lightDir, lightSpotDirection),16);
 				
-				colorFinal += 0.7 * intDifusa * spotFactor * Color;
+				colorFinal += intDifusa * spotFactor * Color;
 				
 				//Iluminacion especular
 				
@@ -49,7 +49,7 @@ void main()
 				
 				vec3 h = normalize(vista + lightDir);
 				
-				colorFinal += vec3(0.5,0.5,0.5) * spotFactor * pow( max( dot(h,Normal), 0.0 ), 2.0);
+				colorFinal += 0.5 * vec3(0.5,0.5,0.5) * spotFactor * pow( max( dot(h,Normal), 0.0 ), 2.0);
 					
 			}
 		}

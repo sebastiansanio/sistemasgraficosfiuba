@@ -13,7 +13,7 @@
 
 class RectangTex {
 public:
-	RectangTex(float xSize, float ySize, int texId);
+	RectangTex(float xSize, float ySize, int texId,float tamTex);
 	void print();
 	virtual ~RectangTex();
 
@@ -21,6 +21,7 @@ private:
 	float x;
 	float y;
 	int texId;
+	float tamTex;
 	TextureProgram* program;
 };
 

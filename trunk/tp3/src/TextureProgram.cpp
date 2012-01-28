@@ -45,16 +45,24 @@ TextureProgram::TextureProgram() {
 	GLuint tid2;
 	glGenTextures(1, &tid2);
 	glBindTexture(GL_TEXTURE_2D, tid2);
-	BitMap* bitmap2 = new BitMap("test.bmp");
+	BitMap* bitmap2 = new BitMap("wall.bmp");
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	this->actualTexId = 0;
 
-	lights[0]= new Light(5.0,0.0,20.0,5.0,0.0,0.0);
+	lights[0]= new Light(8.0,-5.0,10.0,8.0,-5.0,0.0);
 
-	lights[1]= new Light(-5.0,0.0,20.0,-5.0,0.0,0.0);
+	lights[1]= new Light(0.0,-5.0,10.0,-0.0,-5.0,0.0);
+
+	lights[2]= new Light(-8.0,-5.0,10.0,-8.0,-5.0,0.0);
+
+	lights[3]= new Light(8.0,5.0,10.0,8.0,5.0,0.0);
+
+	lights[4]= new Light(0.0,5.0,10.0,0.0,5.0,0.0);
+
+	lights[5]= new Light(-8.0,5.0,10.0,-8.0,5.0,0.0);
 
 	setActualProgram();
 
