@@ -55,8 +55,10 @@ void MainProgram::setUniformInt(GLint data, char* name){
 	}
 }
 
-bool MainProgram::linkProgramHandler(){
+bool MainProgram::linkProgramHandlerFirstTime(){
 	if(programHandler != linkedProgramHandler){
+
+		cout << "New program: " << programHandler << " Old program: " << linkedProgramHandler << endl;
 
 		glLinkProgram( programHandler );
 
@@ -80,6 +82,20 @@ bool MainProgram::linkProgramHandler(){
 		{
 			glUseProgram( programHandler );
 		}
+
+		linkedProgramHandler = programHandler;
+
+		return true;
+	}
+
+	return false;
+
+}
+
+bool MainProgram::linkProgramHandler(){
+	if(programHandler != linkedProgramHandler){
+
+			glUseProgram( programHandler );
 
 		linkedProgramHandler = programHandler;
 

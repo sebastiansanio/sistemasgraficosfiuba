@@ -15,6 +15,7 @@ class BasicProgram {
 public:
 	static BasicProgram* Instance();
 	void setActualProgram();
+	void setActualProgramFirstTime();
 	void updateBuffer();
 	void setPositionValue(int position, float value);
 	void setColorValue(int position, float value);

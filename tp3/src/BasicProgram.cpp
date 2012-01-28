@@ -42,7 +42,7 @@ BasicProgram::BasicProgram() {
 
 	lights[5]= new Light(-8.0,5.0,10.0,-8.0,5.0,0.0);
 
-	setActualProgram();
+	setActualProgramFirstTime();
 
 }
 
@@ -104,6 +104,12 @@ void BasicProgram::updateModelViewProjection(){
 
 	program->setUniformMat4(projection,"ProjectionMatrix");
 
+}
+
+void BasicProgram::setActualProgramFirstTime(){
+	program->linkProgramHandlerFirstTime();
+	//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
+	setLightPosition();
 }
 
 void BasicProgram::setActualProgram(){

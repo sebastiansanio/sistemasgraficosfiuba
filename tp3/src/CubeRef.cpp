@@ -5,17 +5,17 @@
  *      Author: damian
  */
 
-#include "Cube.h"
+#include "CubeRef.h"
 
-Cube::Cube(float xSize, float ySize, float zSize, int texId) {
+CubeRef::CubeRef(float xSize, float ySize, float zSize, int texId) {
 	this->x = xSize;
 	this->y = ySize;
 	this->z = zSize;
 	this->texId = texId;
-	program = TextureProgram::Instance();
+	program = CubeMapProgram::Instance();
 }
 
-void Cube::print(){
+void CubeRef::print(){
 	program->setTexture(this->texId);
 	program->setActualProgram();
 	program->setColorValue(0,0.0);
@@ -75,7 +75,7 @@ void Cube::print(){
 	glPopMatrix();
 }
 
-void Cube::drawRectangule(){
+void CubeRef::drawRectangule(){
 	//Se suponen que estan seteados los valores de las demas variables
 	program->updateModelViewProjection();
 	program->setPositionValue(3,1.0);
@@ -90,7 +90,7 @@ void Cube::drawRectangule(){
 	program->drawTriangle();
 }
 
-Cube::~Cube() {
+CubeRef::~CubeRef() {
 	// TODO Auto-generated destructor stub
 }
 
