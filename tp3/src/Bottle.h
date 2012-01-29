@@ -4,6 +4,7 @@
 #include "BasicProgram.h"
 #include "TextureProgram.h"
 #include "Curves/Bezier.h"
+#include <math.h>
 
 class Bottle{
 public:
@@ -13,6 +14,7 @@ public:
 
 private:
 	TextureProgram* program;
+	Bezier* bezier;
 };
 
 
