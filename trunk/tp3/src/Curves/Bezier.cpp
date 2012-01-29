@@ -1,6 +1,7 @@
 #include "Bezier.h"
 
 #include <iostream>
+#define INCREMENTO 0.01
 
 Bezier::Bezier(){
 	controlPoints = new vector<Coordinate*>;
@@ -24,8 +25,8 @@ void Bezier::calculate(){
 	if(size<4)
 		return;
 
-	for(int j=0;j<(size-3);j++){
-		for(float i=0;i <= 1.01;i+=0.1){
+	for(int j=0;j<(size-3);j=j+3){
+		for(float i=0;i <= 1.001;i+=INCREMENTO){
 			auxX=(1-i)*(1-i)*(1-i)*controlPoints->at(j)->getX()+3*(1-i)*(1-i)*i*controlPoints->at(j+1)->getX();
 			auxX+=3*(1-i)*i*i*controlPoints->at(j+2)->getX()+i*i*i*controlPoints->at(j+3)->getX();
 			auxY=(1-i)*(1-i)*(1-i)*controlPoints->at(j)->getY()+3*(1-i)*(1-i)*i*controlPoints->at(j+1)->getY();
@@ -36,6 +37,7 @@ void Bezier::calculate(){
 			curvePoints->push_back(curveCoordinate);
 
 		}
+
 	}
 }
 
