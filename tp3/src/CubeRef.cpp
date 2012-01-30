@@ -77,7 +77,7 @@ void CubeRef::print(){
 
 void CubeRef::drawRectangule(){
 	//Se suponen que estan seteados los valores de las demas variables
-	program->updateModelViewProjection();
+	//program->updateModelViewProjection();
 	program->setPositionValue(3,1.0);
 	program->setPositionValue(4,-1.0);
 	program->setTextureValue(2,1.0);

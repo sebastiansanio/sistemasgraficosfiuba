@@ -20,12 +20,15 @@ public:
 	static Camera* Instance();
 	void setPosition();
 	float* transformViewCoord(float x, float y, float z);
+	void invertViewMatrix();
 	void upz();
 	void downz();
 	void left();
 	void right();
 	void nearRatio();
 	void farRatio();
+	GLfloat inverseViewMatrix[16];
+	float eye[3];
 	virtual ~Camera();
 
 protected:
@@ -35,7 +38,6 @@ protected:
 
 private:
 	static Camera* instance;
-	float eye[3];
 	float at[3];
 	float up[3];
 	float transf[3];
@@ -43,8 +45,14 @@ private:
 	float anglehor;
 	float anglevert;
 	GLfloat viewMatrix[16];
+	float** inverseTemp;
+	float** matrixTemp;
 
 	void calcPosition();
+
+	void MatrixInversion(float **A, int order, float **Y);
+	int GetMinor(float **src, float **dest, int row, int col, int order);
+	double CalcDeterminant( float **mat, int order);
 };
 
 #endif /* CAMERA_H_ */
