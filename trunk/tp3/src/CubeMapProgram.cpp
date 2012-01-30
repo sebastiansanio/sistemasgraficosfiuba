@@ -100,6 +100,8 @@ void CubeMapProgram::setTextureValue(int position, float value){
 
 void CubeMapProgram::setLightPosition(){
 
+	program->setUniformVec3One(Camera::Instance()->eye,"camPos");
+
 	int pos=0;
 
 	for(int i = 0; i < NUMLIGHT; i++){
@@ -111,7 +113,7 @@ void CubeMapProgram::setLightPosition(){
 
 	program->setUniformVec3(arrayBuffer,"lightPos");
 
-	program->setUniformInt(this->actualTexId,"Texture2");
+	program->setUniformMat4(Camera::Instance()->inverseViewMatrix,"inverseMatrix");
 
 	pos=0;
 
@@ -123,6 +125,8 @@ void CubeMapProgram::setLightPosition(){
 	}
 
 	program->setUniformVec3(arrayBuffer,"lightSpotDir");
+
+	program->setUniformInt(this->actualTexId,"Texture2");
 
 }
 

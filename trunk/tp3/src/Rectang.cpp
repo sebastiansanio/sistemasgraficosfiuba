@@ -34,7 +34,7 @@ void Rectang::print(){
 	program->setNormalValue(6,0.0);
 	program->setNormalValue(7,0.0);
 	program->setNormalValue(8,1.0);
-	program->updateModelViewProjection();
+	//program->updateModelViewProjection();
 	for(float i = -(this->x); i < (this->x); i+=tamPaso){
 		for(float j = -(this->y); j < (this->y); j+=tamPaso){
 			//1

@@ -25,6 +25,7 @@ public:
 	void addFragmentShader(char* name);
 	void setUniformMat4(GLfloat* data, char* name);
 	void setUniformVec3(GLfloat* data, char* name);
+	void setUniformVec3One(GLfloat* data, char* name);
 	void setUniformInt(GLint data, char* name);
 	virtual ~MainProgram();
 
