@@ -8,7 +8,7 @@ in vec3 ReflectDir;
 
 out vec4 FragColor;
 
-uniform samplerCube Texture1;
+uniform samplerCube Texture2;
 uniform vec3 lightPos[NUMLIGHT];
 uniform vec3 lightSpotDir[NUMLIGHT];
 
@@ -16,7 +16,7 @@ void main()
 {
 	//vec3 color = vec3(texture( Texture1, TexCoord ));
 	
-	vec3 color = vec3(texture(Texture1,ReflectDir));
+	vec3 color = vec3(texture(Texture2,ReflectDir));
 	
 	//Iluminacion ambiente
 	
