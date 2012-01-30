@@ -49,6 +49,7 @@ void MainProgram::setUniformVec3(GLfloat* data, char* name){
 
 void MainProgram::setUniformInt(GLint data, char* name){
 	GLuint location = glGetUniformLocation(programHandler, name);
+
 	if( location >= 0 )
 	{
 		glUniform1i(location,data);
@@ -57,8 +58,6 @@ void MainProgram::setUniformInt(GLint data, char* name){
 
 bool MainProgram::linkProgramHandlerFirstTime(){
 	if(programHandler != linkedProgramHandler){
-
-		cout << "New program: " << programHandler << " Old program: " << linkedProgramHandler << endl;
 
 		glLinkProgram( programHandler );
 
