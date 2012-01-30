@@ -32,25 +32,21 @@ CubeMapProgram::CubeMapProgram() {
 
 	textureAttrib = program->AddAttribute(3,6,"TextureCoord");
 
+	GLuint tex_cube = SOIL_load_OGL_cubemap
+	(
+		"xp1.png",
+		"xn1.png",
+		"yp1.png",
+		"yn1.png",
+		"zp1.png",
+		"zn1.png",
+		SOIL_LOAD_RGB,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS
+	);
+
 	glActiveTexture(GL_TEXTURE15);
-	GLuint tid;
-	glGenTextures(1, &tid);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, tid);
-
-	BitMap* bitmap2 = new BitMap("piso.bmp");
-
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
-
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
-
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
-
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
-
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
-
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
-
+	glBindTexture(GL_TEXTURE_CUBE_MAP, tex_cube);
 	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER,	GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER,	GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S,	GL_CLAMP_TO_EDGE);
@@ -115,7 +111,7 @@ void CubeMapProgram::setLightPosition(){
 
 	program->setUniformVec3(arrayBuffer,"lightPos");
 
-	program->setUniformInt(this->actualTexId,"Texture1");
+	program->setUniformInt(this->actualTexId,"Texture2");
 
 	pos=0;
 

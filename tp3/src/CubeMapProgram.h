@@ -11,6 +11,7 @@
 #include "MainProgram.h"
 #include "Light.h"
 #include "BitMap.h"
+#include "soil/SOIL.h"
 
 class CubeMapProgram {
 
