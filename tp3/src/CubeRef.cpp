@@ -7,11 +7,11 @@
 
 #include "CubeRef.h"
 
-CubeRef::CubeRef(float xSize, float ySize, float zSize, int texId) {
+CubeRef::CubeRef(float xSize, float ySize, float zSize) {
 	this->x = xSize;
 	this->y = ySize;
 	this->z = zSize;
-	this->texId = texId;
+	this->texId = 15;
 	program = CubeMapProgram::Instance();
 }
 

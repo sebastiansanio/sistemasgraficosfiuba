@@ -8,7 +8,7 @@
 #ifndef Scene_H_
 #define Scene_H_
 
-#include "CubeTex.h"
+#include "CubeRef.h"
 #include "Rectang.h"
 #include "RectangTex.h"
 
@@ -27,7 +27,8 @@ private:
 	static Scene* instance;
 	RectangTex* piso;
 	RectangTex* pared;
-	CubeTex* cube1;
+	CubeRef* cube1;
+	Rectang* rectang;
 
 };
 

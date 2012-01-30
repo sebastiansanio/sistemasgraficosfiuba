@@ -14,7 +14,7 @@
 
 class CubeRef {
 public:
-	CubeRef(float xSize, float ySize, float zSize, int texId);
+	CubeRef(float xSize, float ySize, float zSize);
 	void print();
 	virtual ~CubeRef();
 
