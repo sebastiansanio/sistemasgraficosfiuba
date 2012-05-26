@@ -208,7 +208,7 @@ void Camera::calcPosition(){
 
 	at[0] = 0.0;
 	at[1] = 0.0;
-	at[2] = 2.0;
+	at[2] = 5.0;
 
 	up[0] = 0.0;
 	up[1] = 0.0;
