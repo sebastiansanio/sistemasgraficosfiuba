@@ -1,7 +1,7 @@
 #include "Bezier.h"
 
 #include <iostream>
-#define INCREMENTO 0.01
+#define INCREMENTO 0.05
 
 Bezier::Bezier(){
 	controlPoints = new vector<Coordinate*>;
