@@ -48,7 +48,7 @@ void Bottle::print(){
 		program->setPositionValue(6,coordinate1->getX());
 		program->setPositionValue(7,coordinate1->getY());
 		program->setPositionValue(8,coordinate1->getZ());
-		program->drawPoints();
+
 	}
 
 
