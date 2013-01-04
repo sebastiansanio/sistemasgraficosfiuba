@@ -13,6 +13,7 @@ public:
 	bool isEmpty();
 	Coordinate* getPoint();
 	void eraseAll();
+	vector<Coordinate*>* getPoints();
 	~Bezier();
 private:
 	vector<Coordinate*>* controlPoints;

@@ -10,11 +10,11 @@
 BasicProgram* BasicProgram::instance = 0;// Inicializar el puntero
 BasicProgram* BasicProgram::Instance ()
 {
-  if (instance == 0)  // ¿Es la primera llamada?
+  if (instance == 0)  // ï¿½Es la primera llamada?
   {
     instance = new BasicProgram; // Creamos la instancia
   }
-  return instance; // Retornamos la dirección de la instancia
+  return instance; // Retornamos la direcciï¿½n de la instancia
 }
 
 BasicProgram::BasicProgram() {
@@ -108,13 +108,13 @@ void BasicProgram::updateModelViewProjection(){
 
 void BasicProgram::setActualProgramFirstTime(){
 	program->linkProgramHandlerFirstTime();
-	//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
+	//Si se linkea el program handler se pierde la uniform asï¿½ que hay que pasarla aca
 	setLightPosition();
 }
 
 void BasicProgram::setActualProgram(){
 	program->linkProgramHandler();
-	//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
+	//Si se linkea el program handler se pierde la uniform asï¿½ que hay que pasarla aca
 	setLightPosition();
 }
 
