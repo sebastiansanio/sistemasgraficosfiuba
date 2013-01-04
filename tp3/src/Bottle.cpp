@@ -6,11 +6,14 @@ Bottle::Bottle(){
 	bezier=new Bezier();
 	bezier->addPoint(0,0,0);
 	bezier->addPoint(0,0.3,0);
-	bezier->addPoint(0,0.27,0.8);
-	bezier->addPoint(0,0.3,1.2);
-	bezier->addPoint(0,0.15,1.6);
-	bezier->addPoint(0,0.12,1.8);
-	bezier->addPoint(0,0.1,2);
+	bezier->addPoint(0,0.2,0.2);
+	bezier->addPoint(0,0.25,0.4);
+	bezier->addPoint(0,0.27,0.6);
+	bezier->addPoint(0,0.3,0.8);
+	bezier->addPoint(0,0.3,1.0);
+	bezier->addPoint(0,0.15,1.2);
+	bezier->addPoint(0,0.12,1.4);
+	bezier->addPoint(0,0.1,1.6);
 	bezier->calculate();
 }
 void Bottle::print(){
