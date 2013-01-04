@@ -13,7 +13,7 @@ public:
 	void print();
 
 private:
-	TextureProgram* program;
+	BasicProgram* program;
 	Bezier* bezier;
 };
 

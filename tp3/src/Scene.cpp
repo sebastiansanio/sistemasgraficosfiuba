@@ -10,11 +10,11 @@
 Scene* Scene::instance = 0;// Inicializar el puntero
 Scene* Scene::Instance ()
 {
-  if (instance == 0)  // ¿Es la primera llamada?
+  if (instance == 0)  // ï¿½Es la primera llamada?
   {
     instance = new Scene(); // Creamos la instancia
   }
-  return instance; // Retornamos la dirección de la instancia
+  return instance; // Retornamos la direcciï¿½n de la instancia
 }
 
 Scene::Scene() {
@@ -22,6 +22,7 @@ Scene::Scene() {
 	this->pared = new RectangTex(10.0,5.0,1,5.0);
 	this->cube1 = new CubeRef(1.0,1.0,1.0);
 	this->rectang = new Rectang(2.0,2.0,2.0);
+	this->bottle = new Bottle();
 }
 
 void Scene::printScene(){
@@ -51,7 +52,8 @@ void Scene::printScene(){
 				pared->print();
 			glPopMatrix();
 			glTranslatef(0.0,0.0,5.0);
-			cube1->print();
+			//cube1->print();
+			bottle->print();
 	glPopMatrix();
 }
 

@@ -11,6 +11,7 @@
 #include "CubeRef.h"
 #include "Rectang.h"
 #include "RectangTex.h"
+#include "Bottle.h"
 
 class Scene {
 public:
@@ -29,7 +30,7 @@ private:
 	RectangTex* pared;
 	CubeRef* cube1;
 	Rectang* rectang;
-
+	Bottle* bottle;
 };
 
 #endif /* Scene_H_ */
