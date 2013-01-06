@@ -5,15 +5,12 @@ Bottle::Bottle(){
 	program = TextureProgram::Instance();
 	bezier=new Bezier();
 	bezier->addPoint(0,0,0);
-	bezier->addPoint(0,0.3,0);
-	bezier->addPoint(0,0.3,0.1);
-	bezier->addPoint(0,0.3,0.4);
-	bezier->addPoint(0,0.27,0.6);
-	bezier->addPoint(0,0.3,0.8);
-	bezier->addPoint(0,0.3,1.0);
-	bezier->addPoint(0,0.35,1.1);
-	bezier->addPoint(0,0.1,1.4);
-	bezier->addPoint(0,0.07,1.6);
+	bezier->addPoint(0,0.25,0);
+	bezier->addPoint(0,0.25,0.1);
+	bezier->addPoint(0,0.25,0.8);
+	bezier->addPoint(0,0.25,0.9);
+	bezier->addPoint(0,0.08,1.1);
+	bezier->addPoint(0,0.04,1.2);
 	bezier->calculate();
 }
 void Bottle::print(){
@@ -23,7 +20,7 @@ void Bottle::print(){
 
 
 	vector<Coordinate*>* points= bezier->getPoints();
-	float step = 10;
+	float step = 20;
 	unsigned int size = points->size();
 
 	float ySize = points->at(size-1)->getZ() - points->at(0)->getZ();
