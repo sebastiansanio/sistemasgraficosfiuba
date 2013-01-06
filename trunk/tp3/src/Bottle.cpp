@@ -2,7 +2,7 @@
 #define PI 3.14159265
 
 Bottle::Bottle(){
-	program = BasicProgram::Instance();
+	program = TextureProgram::Instance();
 	bezier=new Bezier();
 	bezier->addPoint(0,0,0);
 	bezier->addPoint(0,0.3,0);
@@ -10,24 +10,29 @@ Bottle::Bottle(){
 	bezier->addPoint(0,0.25,0.4);
 	bezier->addPoint(0,0.27,0.6);
 	bezier->addPoint(0,0.3,0.8);
-	bezier->addPoint(0,0.3,1.0);
-	bezier->addPoint(0,0.15,1.2);
-	bezier->addPoint(0,0.12,1.4);
+	bezier->addPoint(0,0.25,1.0);
+	bezier->addPoint(0,0.25,1.2);
+	bezier->addPoint(0,0.2,1.4);
 	bezier->addPoint(0,0.1,1.6);
 	bezier->calculate();
 }
 void Bottle::print(){
-	//program->setTexture(0);
+	program->setTexture(2);
 	program->setActualProgram();
 	program->updateModelViewProjection();
 
 
 	vector<Coordinate*>* points= bezier->getPoints();
-	//Ver esto
 	float step = 10;
+	unsigned int size = points->size();
 
-	for(unsigned int i=0;i<points->size()-1;i++){
-		for(float j=0;j<=350;j=j+step){
+	float ySize = points->at(size-1)->getZ() - points->at(0)->getZ();
+
+	float labelXSize = 180;
+	float labelYSize = ySize;
+
+	for(unsigned int i=0;i<size-1;i++){
+		for(float j=0;j<360;j=j+step){
 			program->setPositionValue(0,points->at(i)->getY()*cos(PI*j/180));
 			program->setPositionValue(1,points->at(i)->getY()*sin(PI*j/180));
 			program->setPositionValue(2,points->at(i)->getZ());
@@ -37,17 +42,19 @@ void Bottle::print(){
 			program->setPositionValue(6,points->at(i+1)->getY()*cos(PI*j/180));
 			program->setPositionValue(7,points->at(i+1)->getY()*sin(PI*j/180));
 			program->setPositionValue(8,points->at(i+1)->getZ());
+			program->setTextureValue(0,j/labelXSize);
+			program->setTextureValue(1,labelYSize-points->at(i)->getZ()/labelYSize);
+			program->setTextureValue(2,(j+step)/labelXSize);
+			program->setTextureValue(3,labelYSize-points->at(i)->getZ()/labelYSize);
+			program->setTextureValue(4,j/labelXSize);
+			program->setTextureValue(5,labelYSize-points->at(i+1)->getZ()/labelYSize);
 			program->drawTriangle();
 
-			program->setPositionValue(0,points->at(i+1)->getY()*cos(PI*j/180));
-			program->setPositionValue(1,points->at(i+1)->getY()*sin(PI*j/180));
+			program->setPositionValue(0,points->at(i+1)->getY()*cos(PI*(j+step)/180));
+			program->setPositionValue(1,points->at(i+1)->getY()*sin(PI*(j+step)/180));
 			program->setPositionValue(2,points->at(i+1)->getZ());
-			program->setPositionValue(3,points->at(i)->getY()*cos(PI*(j+step)/180));
-			program->setPositionValue(4,points->at(i)->getY()*sin(PI*(j+step)/180));
-			program->setPositionValue(5,points->at(i)->getZ());
-			program->setPositionValue(6,points->at(i+1)->getY()*cos(PI*(j+step)/180));
-			program->setPositionValue(7,points->at(i+1)->getY()*sin(PI*(j+step)/180));
-			program->setPositionValue(8,points->at(i+1)->getZ());
+			program->setTextureValue(0,(j+step)/labelXSize);
+			program->setTextureValue(1,labelYSize-points->at(i+1)->getZ()/labelYSize);
 			program->drawTriangle();
 		}
 

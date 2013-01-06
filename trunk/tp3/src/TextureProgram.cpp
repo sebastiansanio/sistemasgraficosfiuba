@@ -10,11 +10,11 @@
 TextureProgram* TextureProgram::instance = 0;// Inicializar el puntero
 TextureProgram* TextureProgram::Instance ()
 {
-  if (instance == 0)  // ¿Es la primera llamada?
+  if (instance == 0)  // ï¿½Es la primera llamada?
   {
     instance = new TextureProgram; // Creamos la instancia
   }
-  return instance; // Retornamos la dirección de la instancia
+  return instance; // Retornamos la direcciï¿½n de la instancia
 }
 
 TextureProgram::TextureProgram() {
@@ -47,6 +47,15 @@ TextureProgram::TextureProgram() {
 	glBindTexture(GL_TEXTURE_2D, tid2);
 	BitMap* bitmap2 = new BitMap("wall.bmp");
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap2->getAncho(), bitmap2->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap2->getMatriz());
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glActiveTexture(GL_TEXTURE2);
+	GLuint tid3;
+	glGenTextures(1, &tid3);
+	glBindTexture(GL_TEXTURE_2D, tid3);
+	BitMap* bitmap3 = new BitMap("test.bmp");
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap3->getAncho(), bitmap3->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap3->getMatriz());
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -139,13 +148,13 @@ void TextureProgram::updateModelViewProjection(){
 
 void TextureProgram::setActualProgramFirstTime(){
 	program->linkProgramHandlerFirstTime();
-	//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
+	//Si se linkea el program handler se pierde la uniform asï¿½ que hay que pasarla aca
 	setLightPosition();
 }
 
 void TextureProgram::setActualProgram(){
 	program->linkProgramHandler();
-		//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
+		//Si se linkea el program handler se pierde la uniform asï¿½ que hay que pasarla aca
 	setLightPosition();
 }
 

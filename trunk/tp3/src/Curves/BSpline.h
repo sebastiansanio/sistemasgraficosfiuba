@@ -14,7 +14,7 @@ public:
 	Coordinate* getPoint();
 	void eraseAll();
 	vector<Coordinate*>* getPoints();
-	~Bezier();
+	~BSpline();
 private:
 	vector<Coordinate*>* controlPoints;
 	vector<Coordinate*>* curvePoints;
