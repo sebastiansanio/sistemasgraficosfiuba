@@ -24,6 +24,8 @@ void init(void)
 {
 	glClearColor (0.02f, 0.02f, 0.04f, 0.0f);
 	glShadeModel (GL_SMOOTH);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	//BasicProgram::Instance();
 }
