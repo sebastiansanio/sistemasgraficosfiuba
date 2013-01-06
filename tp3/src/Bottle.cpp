@@ -6,14 +6,14 @@ Bottle::Bottle(){
 	bezier=new Bezier();
 	bezier->addPoint(0,0,0);
 	bezier->addPoint(0,0.3,0);
-	bezier->addPoint(0,0.2,0.2);
-	bezier->addPoint(0,0.25,0.4);
+	bezier->addPoint(0,0.3,0.1);
+	bezier->addPoint(0,0.3,0.4);
 	bezier->addPoint(0,0.27,0.6);
 	bezier->addPoint(0,0.3,0.8);
-	bezier->addPoint(0,0.25,1.0);
-	bezier->addPoint(0,0.25,1.2);
-	bezier->addPoint(0,0.2,1.4);
-	bezier->addPoint(0,0.1,1.6);
+	bezier->addPoint(0,0.3,1.0);
+	bezier->addPoint(0,0.35,1.1);
+	bezier->addPoint(0,0.1,1.4);
+	bezier->addPoint(0,0.07,1.6);
 	bezier->calculate();
 }
 void Bottle::print(){
@@ -43,18 +43,18 @@ void Bottle::print(){
 			program->setPositionValue(7,points->at(i+1)->getY()*sin(PI*j/180));
 			program->setPositionValue(8,points->at(i+1)->getZ());
 			program->setTextureValue(0,j/labelXSize);
-			program->setTextureValue(1,labelYSize-points->at(i)->getZ()/labelYSize);
+			program->setTextureValue(1,1-points->at(i)->getZ()/labelYSize);
 			program->setTextureValue(2,(j+step)/labelXSize);
-			program->setTextureValue(3,labelYSize-points->at(i)->getZ()/labelYSize);
+			program->setTextureValue(3,1-points->at(i)->getZ()/labelYSize);
 			program->setTextureValue(4,j/labelXSize);
-			program->setTextureValue(5,labelYSize-points->at(i+1)->getZ()/labelYSize);
+			program->setTextureValue(5,1-points->at(i+1)->getZ()/labelYSize);
 			program->drawTriangle();
 
 			program->setPositionValue(0,points->at(i+1)->getY()*cos(PI*(j+step)/180));
 			program->setPositionValue(1,points->at(i+1)->getY()*sin(PI*(j+step)/180));
 			program->setPositionValue(2,points->at(i+1)->getZ());
 			program->setTextureValue(0,(j+step)/labelXSize);
-			program->setTextureValue(1,labelYSize-points->at(i+1)->getZ()/labelYSize);
+			program->setTextureValue(1,1-points->at(i+1)->getZ()/labelYSize);
 			program->drawTriangle();
 		}
 
