@@ -2,7 +2,7 @@
 #define PI 3.14159265
 
 Bottle::Bottle(){
-	program = TextureProgram::Instance();
+	program = BottleProgram::Instance();
 	bezier=new Bezier();
 	bezier->addPoint(0,0,0);
 	bezier->addPoint(0,0.25,0);
@@ -17,7 +17,6 @@ void Bottle::print(){
 	program->setTexture(2);
 	program->setActualProgram();
 	program->updateModelViewProjection();
-
 
 	vector<Coordinate*>* points= bezier->getPoints();
 	float step = 20;
