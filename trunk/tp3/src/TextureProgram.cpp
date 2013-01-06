@@ -54,7 +54,7 @@ TextureProgram::TextureProgram() {
 	GLuint tid3;
 	glGenTextures(1, &tid3);
 	glBindTexture(GL_TEXTURE_2D, tid3);
-	BitMap* bitmap3 = new BitMap("test.bmp");
+	BitMap* bitmap3 = new BitMap("cocacola.bmp");
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap3->getAncho(), bitmap3->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap3->getMatriz());
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
