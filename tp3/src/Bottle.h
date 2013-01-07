@@ -3,6 +3,7 @@
 
 #include "BasicProgram.h"
 #include "BottleProgram.h"
+#include "TextureProgram.h"
 #include "Curves/Bezier.h"
 #include <math.h>
 
@@ -16,8 +17,6 @@ private:
 	BottleProgram* program;
 	Bezier* bezier;
 };
-
-
 
 
 #endif /* BOTTLE_H_ */

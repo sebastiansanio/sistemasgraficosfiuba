@@ -4,20 +4,39 @@
 in vec3 Normal;
 in vec3 Position;
 in vec2 TexCoord;
+in float height;
 
 out vec4 FragColor;
 
 uniform sampler2D Texture1;
-uniform vec3 lightPos[NUMLIGHT];
-uniform vec3 lightSpotDir[NUMLIGHT];
+
+uniform vec3 liquidHeight;
+uniform vec3 lightPosition[NUMLIGHT];
+uniform vec3 lightSpotDirect[NUMLIGHT];
 
 void main()
 {
 	vec3 color = vec3(texture( Texture1, TexCoord ));
 	
-	//Iluminacion ambiente
 	
 	float intAmbiente = 0.2;
+	float alpha = 1;
+	float currentLiquidHeight = liquidHeight[0];
+	float hasLabel = liquidHeight[1];
+	 
+	if((color[0] == 0 && color[1] == 0 && color[2] == 0) || hasLabel == 0 ){
+		if(height< currentLiquidHeight){
+			color[0] = 0.4; 
+			color[1] = 0.25;
+			color[2] = 0.23;
+
+		}else{
+			color[0] = 1.0; 
+			color[1] = 1.0;
+			color[2] = 1.0;
+			alpha = 0.3;		
+		}	
+	}
 	
 	vec3 colorFinal = intAmbiente * color;
 	
@@ -26,8 +45,8 @@ void main()
 	
 		//Iluminacion difusa
 	
-		vec3 lightDir = normalize( lightPos[i] - Position );
-		vec3 lightSpotDirection = normalize( lightSpotDir[i] - lightPos[i]);
+		vec3 lightDir = normalize( lightPosition[i] - Position );
+		vec3 lightSpotDirection = normalize( lightSpotDirect[i] - lightPosition[i]);
 		
 		float intDifusa = dot(lightDir, Normal);
 	
@@ -58,11 +77,7 @@ void main()
 	
 	}
 	
-	
-	if(color[0] == 0 && color[1] == 0 && color[2] == 0){
-			FragColor = vec4( 0.5,0.5,0.5, 0.5);
-	}else{
-		FragColor = vec4( colorFinal, 1.0);
-	}
+	FragColor = vec4( colorFinal, alpha);
+
 	
 }
