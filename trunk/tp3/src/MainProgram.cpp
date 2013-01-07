@@ -50,7 +50,6 @@ void MainProgram::setUniformVec3(GLfloat* data, char* name){
 
 void MainProgram::setUniformVec3One(GLfloat* data, char* name){
 	GLuint location = glGetUniformLocation(programHandler, name);
-
 	if( location >= 0 )
 	{
 		glUniform3fv(location,1,data);

@@ -9,12 +9,14 @@ out vec3 Normal;
 out vec3 Position;
 out vec2 TexCoord;
 out vec3 OriginalPosition;
+out float height;
 
 void main()
 {
 	TexCoord = TextureCoord;
 	Normal = normalize( gl_NormalMatrix * VertexNormal );
 	Position = vec3(gl_ModelViewMatrix * vec4( VertexPosition, 1.0));
+	height = VertexPosition[2];
 
 	gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4( VertexPosition, 1.0);
 }

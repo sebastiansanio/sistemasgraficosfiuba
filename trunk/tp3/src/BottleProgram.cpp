@@ -1,20 +1,19 @@
 /*
- * TextureProgram.cpp
+ * BottleProgram.cpp
  *
- *  Created on: 24/01/2012
- *      Author: damian
+ *      Author: sebastian
  */
 
 #include "BottleProgram.h"
 
-BottleProgram* BottleProgram::instance = 0;// Inicializar el puntero
+BottleProgram* BottleProgram::instance = 0;
 BottleProgram* BottleProgram::Instance ()
 {
-  if (instance == 0)  // �Es la primera llamada?
+  if (instance == 0)
   {
-    instance = new BottleProgram; // Creamos la instancia
+    instance = new BottleProgram;
   }
-  return instance; // Retornamos la direcci�n de la instancia
+  return instance;
 }
 
 BottleProgram::BottleProgram() {
@@ -41,7 +40,6 @@ BottleProgram::BottleProgram() {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap3->getAncho(), bitmap3->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap3->getMatriz());
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
 
 
 	this->actualTexId = 0;
@@ -101,20 +99,22 @@ void BottleProgram::setLightPosition(){
 		arrayBuffer[pos++] = data[2];
 	}
 
-	program->setUniformVec3(arrayBuffer,"lightPos");
+	program->setUniformVec3(arrayBuffer,"lightPosition");
 
 	program->setUniformInt(this->actualTexId,"Texture1");
+
+	setLiquidHeight(0,false);
 
 	pos=0;
 
 	for(int i = 0; i < NUMLIGHT; i++){
 		float* data = lights[i]->getLightSpotDirViewCoord();
-		arrayBuffer[pos++] = data[0];
-		arrayBuffer[pos++] = data[1];
-		arrayBuffer[pos++] = data[2];
+		arrayBuffer2[pos++] = data[0];
+		arrayBuffer2[pos++] = data[1];
+		arrayBuffer2[pos++] = data[2];
 	}
 
-	program->setUniformVec3(arrayBuffer,"lightSpotDir");
+	program->setUniformVec3(arrayBuffer2,"lightSpotDirect");
 
 }
 
@@ -135,13 +135,26 @@ void BottleProgram::updateModelViewProjection(){
 void BottleProgram::setActualProgramFirstTime(){
 	program->linkProgramHandlerFirstTime();
 	//Si se linkea el program handler se pierde la uniform as� que hay que pasarla aca
+	setLiquidHeight(0,false);
 	setLightPosition();
 }
 
 void BottleProgram::setActualProgram(){
 	program->linkProgramHandler();
 		//Si se linkea el program handler se pierde la uniform as� que hay que pasarla aca
+	setLiquidHeight(0,false);
 	setLightPosition();
+}
+
+void BottleProgram::setLiquidHeight(float height,bool hasLabel){
+
+	arrayBufferLiquid[0] =  height;
+	if(hasLabel)
+		arrayBufferLiquid[1] =  1;
+	else
+		arrayBufferLiquid[1] =  0;
+	arrayBufferLiquid[2] =  height;
+	program->setUniformVec3One(arrayBufferLiquid,"liquidHeight");
 }
 
 void BottleProgram::drawTriangle(){

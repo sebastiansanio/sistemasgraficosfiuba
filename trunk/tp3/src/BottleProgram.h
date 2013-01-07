@@ -1,8 +1,7 @@
 /*
- * TextureProgram.h
+ * BottleProgram.h
  *
- *  Created on: 24/01/2012
- *      Author: damian
+ *      Author: sebastian
  */
 
 #ifndef BOTTLEPROGRAM_H_
@@ -27,6 +26,7 @@ public:
 	void setLightPosition();
 	void updateModelViewProjection();
 	void drawTriangle();
+	void setLiquidHeight(float height,bool hasLabel);
 	virtual ~BottleProgram();
 
 protected:
@@ -45,6 +45,8 @@ private:
 
 	Light* lights[NUMLIGHT];
 	float arrayBuffer[NUMLIGHT * 3];
+	float arrayBuffer2[NUMLIGHT * 3];
+	float arrayBufferLiquid[3];
 };
 
 #endif /* BOTTLEPROGRAM_H_ */

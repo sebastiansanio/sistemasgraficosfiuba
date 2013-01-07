@@ -51,7 +51,7 @@ void Scene::printScene(){
 				glRotatef(90,0.0,0.0,1.0);
 				pared->print();
 			glPopMatrix();
-			glTranslatef(0.0,0.0,5.0);
+			//glTranslatef(0.0,0.0,5.0);
 			//cube1->print();
 			bottle->print();
 			glTranslatef(0.0,3.0,0.0);
