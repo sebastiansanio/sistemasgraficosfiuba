@@ -41,7 +41,7 @@ void MainProgram::setUniformMat4(GLfloat* data, char* name){
 
 void MainProgram::setUniformVec3(GLfloat* data, char* name){
 	GLuint location = glGetUniformLocation(programHandler, name);
-	cout << name << " " << location << endl;
+//	cout << name << " " << location << endl;
 	if( location >= 0 )
 	{
 		glUniform3fv(location,NUMLIGHT,data);
