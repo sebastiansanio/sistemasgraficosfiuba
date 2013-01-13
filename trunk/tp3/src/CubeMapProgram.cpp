@@ -24,7 +24,7 @@ CubeMapProgram::CubeMapProgram() {
 
 	program->addFragmentShader("cubemap.frag");
 
-	positionAttrib = program->AddAttribute(VERTEX_POS_ATTR_INDEX,9,"VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
+	positionAttrib = program->AddAttribute(VERTEX_POS_ATTR_INDEX,9,"VertexPosition");
 
 	colorAttrib = program->AddAttribute(VERTEX_COL_ATTR_INDEX,9,"VertexColor");
 
