@@ -24,13 +24,13 @@ CubeMapProgram::CubeMapProgram() {
 
 	program->addFragmentShader("cubemap.frag");
 
-	positionAttrib = program->AddAttribute(0,9,"VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
+	positionAttrib = program->AddAttribute(VERTEX_POS_ATTR_INDEX,9,"VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
 
-	colorAttrib = program->AddAttribute(1,9,"VertexColor");
+	colorAttrib = program->AddAttribute(VERTEX_COL_ATTR_INDEX,9,"VertexColor");
 
-	normalAttrib = program->AddAttribute(2,9,"VertexNormal");
+	normalAttrib = program->AddAttribute(VERTEX_NOR_ATTR_INDEX,9,"VertexNormal");
 
-	textureAttrib = program->AddAttribute(3,6,"TextureCoord");
+	textureAttrib = program->AddAttribute(VERTEX_TEX_ATTR_INDEX,6,"TextureCoord");
 
 	GLuint tex_cube = SOIL_load_OGL_cubemap
 	(
