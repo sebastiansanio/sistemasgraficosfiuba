@@ -24,13 +24,10 @@ TextureProgram::TextureProgram() {
 
 	program->addFragmentShader("texture.frag");
 
-	positionAttrib = program->AddAttribute(VERTEX_POS_ATTR_INDEX,9,"VertexPosition");
-
-	colorAttrib = program->AddAttribute(VERTEX_COL_ATTR_INDEX,9,"VertexColor");
-
-	normalAttrib = program->AddAttribute(VERTEX_NOR_ATTR_INDEX,9,"VertexNormal");
-
-	textureAttrib = program->AddAttribute(VERTEX_TEX_ATTR_INDEX,6,"TextureCoord");
+	program->addAttributeLocationShader(VERTEX_POS_ATTR_INDEX,"VertexPosition");
+	program->addAttributeLocationShader(VERTEX_COL_ATTR_INDEX,"VertexColor");
+	program->addAttributeLocationShader(VERTEX_NOR_ATTR_INDEX,"VertexNormal");
+	program->addAttributeLocationShader(VERTEX_TEX_ATTR_INDEX,"TextureCoord");
 
 	glActiveTexture(GL_TEXTURE0);
 	GLuint tid;
@@ -70,29 +67,6 @@ TextureProgram::TextureProgram() {
 
 void TextureProgram::setTexture(int texId){
 	this->actualTexId = texId;
-}
-
-void TextureProgram::updateBuffer(){
-	positionAttrib->updateBuffer();
-	colorAttrib->updateBuffer();
-	normalAttrib->updateBuffer();
-	textureAttrib->updateBuffer();
-}
-
-void TextureProgram::setPositionValue(int position, float value){
-	positionAttrib->setValue(position,value);
-}
-
-void TextureProgram::setColorValue(int position, float value){
-	colorAttrib->setValue(position,value);
-}
-
-void TextureProgram::setNormalValue(int position, float value){
-	normalAttrib->setValue(position,value);
-}
-
-void TextureProgram::setTextureValue(int position, float value){
-	textureAttrib->setValue(position,value);
 }
 
 void TextureProgram::setLightPosition(){
@@ -147,11 +121,6 @@ void TextureProgram::setActualProgram(){
 	program->linkProgramHandler();
 		//Si se linkea el program handler se pierde la uniform as� que hay que pasarla aca
 	setLightPosition();
-}
-
-void TextureProgram::drawTriangle(){
-	this->updateBuffer();
-	glDrawArrays( GL_TRIANGLES, 0, 3);
 }
 
 TextureProgram::~TextureProgram() {

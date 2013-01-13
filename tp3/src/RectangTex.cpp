@@ -7,61 +7,118 @@
 
 #include "RectangTex.h"
 
-RectangTex::RectangTex(float xSize, float ySize, int texId,float tamTex) {
+RectangTex::RectangTex(float xSize, float ySize, int texId,double tamTex) {
 	// TODO Auto-generated constructor stub
 	this->x = xSize;
 	this->y = ySize;
 	this->texId = texId;
 	this->tamTex = tamTex;
 	this->program = TextureProgram::Instance();
+	this->cantTriangulos = 0;
+
+	int cantTriangulosEstimado = (xSize*2/tamTex)*(ySize*2/tamTex)*2;
+	cantTriangulosEstimado = cantTriangulosEstimado * 2;
+
+	this->positionArray = new float[cantTriangulosEstimado*9];
+	this->colorArray = new float[cantTriangulosEstimado*9];
+	this->normalArray = new float[cantTriangulosEstimado*9];
+	this->textureArray = new float[cantTriangulosEstimado*6];
+
+	int posCounter = 0;
+	int texPosCounter = 0;
+
+	for(float i = -(this->x); i < (this->x); i+=tamTex) {
+			for(float j = -(this->y); j < (this->y); j+=tamTex){
+				//Primer triangulo
+				//Vertice 1
+				positionArray[posCounter]=i;
+				positionArray[posCounter+1]=j;
+				positionArray[posCounter+2]=0.0;
+				textureArray[texPosCounter]=0.0;
+				textureArray[texPosCounter+1]=0.0;
+				//Vertice 2
+				positionArray[posCounter+3]=i+tamTex;
+				positionArray[posCounter+4]=j;
+				positionArray[posCounter+5]=0.0;
+				textureArray[texPosCounter+2]=1.0;
+				textureArray[texPosCounter+3]=0.0;
+				//Vertice 3
+				positionArray[posCounter+6]=i+tamTex;
+				positionArray[posCounter+7]=j+tamTex;
+				positionArray[posCounter+8]=0.0;
+				textureArray[texPosCounter+4]=1.0;
+				textureArray[texPosCounter+5]=1.0;
+
+				//Segundo triangulo
+				posCounter+=9;
+				texPosCounter+=6;
+				//Vertice 1
+				positionArray[posCounter]=i;
+				positionArray[posCounter+1]=j;
+				positionArray[posCounter+2]=0.0;
+				textureArray[texPosCounter]=0.0;
+				textureArray[texPosCounter+1]=0.0;
+				//Vertice 2
+				positionArray[posCounter+3]=i;
+				positionArray[posCounter+4]=j+tamTex;
+				positionArray[posCounter+5]=0.0;
+				textureArray[texPosCounter+2]=0.0;
+				textureArray[texPosCounter+3]=1.0;
+				//Vertice 3
+				positionArray[posCounter+6]=i+tamTex;
+				positionArray[posCounter+7]=j+tamTex;
+				positionArray[posCounter+8]=0.0;
+				textureArray[texPosCounter+4]=1.0;
+				textureArray[texPosCounter+5]=1.0;
+
+				posCounter+=9;
+				texPosCounter+=6;
+
+				cantTriangulos+=2;
+
+			}
+	}
+
+	for(int i = 0; i<(cantTriangulos*3); i++){
+		colorArray[i*3]=0.0;
+		colorArray[(i*3)+1]=1.0;
+		colorArray[(i*3)+2]=0.0;
+		normalArray[i*3]=0.0;
+		normalArray[(i*3)+1]=0.0;
+		normalArray[(i*3)+2]=1.0;
+	}
+
+	glGenBuffers(1, &bufferPositionHandler);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
+	glBufferData( GL_ARRAY_BUFFER, (cantTriangulos * 9) * sizeof (float), this->positionArray, GL_STATIC_DRAW );
+
+	glGenBuffers(1, &bufferColorHandler);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
+	glBufferData( GL_ARRAY_BUFFER, (cantTriangulos * 9) * sizeof (float), this->colorArray, GL_STATIC_DRAW );
+
+	glGenBuffers(1, &bufferNormalHandler);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
+	glBufferData( GL_ARRAY_BUFFER, (cantTriangulos * 9) * sizeof (float), this->normalArray, GL_STATIC_DRAW );
+
+	glGenBuffers(1, &bufferTextureHandler);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
+	glBufferData( GL_ARRAY_BUFFER, (cantTriangulos * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
 }
 
 void RectangTex::print(){
 	program->setTexture(this->texId);
 	program->setActualProgram();
-	program->setNormalValue(0,0.0);
-	program->setNormalValue(1,0.0);
-	program->setNormalValue(2,1.0);
-	program->setNormalValue(3,0.0);
-	program->setNormalValue(4,0.0);
-	program->setNormalValue(5,1.0);
-	program->setNormalValue(6,0.0);
-	program->setNormalValue(7,0.0);
-	program->setNormalValue(8,1.0);
-	//program->updateModelViewProjection();
-	for(float i = -(this->x); i < (this->x); i+=tamTex){
-		for(float j = -(this->y); j < (this->y); j+=tamTex){
-			//1
-			program->setPositionValue(0,i);
-			program->setPositionValue(1,j);
-			program->setPositionValue(2,0.0);
-			program->setTextureValue(0,0.0);
-			program->setTextureValue(1,0.0);
-			//2
-			program->setPositionValue(6,i+tamTex);
-			program->setPositionValue(7,j+tamTex);
-			program->setPositionValue(8,0.0);
-			program->setTextureValue(4,1.0);
-			program->setTextureValue(5,1.0);
-			//3
-			program->setPositionValue(3,i+tamTex);
-			program->setPositionValue(4,j);
-			program->setPositionValue(5,0.0);
-			program->setTextureValue(2,1.0);
-			program->setTextureValue(3,0.0);
 
-			program->drawTriangle();
+	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
+	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
+	glVertexAttribPointer( VERTEX_COL_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
+	glVertexAttribPointer( VERTEX_POS_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
+	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
-			//4
-			program->setPositionValue(3,i);
-			program->setPositionValue(4,j+tamTex);
-			program->setPositionValue(5,0.0);
-			program->setTextureValue(2,0.0);
-			program->setTextureValue(3,1.0);
-
-			program->drawTriangle();
-		}
-	}
+	glDrawArrays( GL_TRIANGLES, 0, cantTriangulos * 3);
 }
 
 RectangTex::~RectangTex() {

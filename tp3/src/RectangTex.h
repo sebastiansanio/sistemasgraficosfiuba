@@ -13,7 +13,7 @@
 
 class RectangTex {
 public:
-	RectangTex(float xSize, float ySize, int texId,float tamTex);
+	RectangTex(float xSize, float ySize, int texId,double tamTex);
 	void print();
 	virtual ~RectangTex();
 
@@ -21,8 +21,17 @@ private:
 	float x;
 	float y;
 	int texId;
-	float tamTex;
+	double tamTex;
+	int cantTriangulos;
+	float* positionArray;
+	float* colorArray;
+	float* normalArray;
+	float* textureArray;
 	TextureProgram* program;
+	GLuint bufferPositionHandler;
+	GLuint bufferColorHandler;
+	GLuint bufferNormalHandler;
+	GLuint bufferTextureHandler;
 };
 
 #endif /* RECTANGTEX_H_ */
