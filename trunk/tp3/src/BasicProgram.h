@@ -16,13 +16,8 @@ public:
 	static BasicProgram* Instance();
 	void setActualProgram();
 	void setActualProgramFirstTime();
-	void updateBuffer();
-	void setPositionValue(int position, float value);
-	void setColorValue(int position, float value);
-	void setNormalValue(int position, float value);
 	void setLightPosition();
 	void updateModelViewProjection();
-	void drawTriangle();
 	virtual ~BasicProgram();
 
 protected:
@@ -30,12 +25,9 @@ protected:
 	BasicProgram(const BasicProgram & ) ;
 	BasicProgram &operator= (const BasicProgram & ) ;
 
-private:
+//private:
 	static BasicProgram* instance;
 	MainProgram* program;
-	Attribute* positionAttrib;
-	Attribute* colorAttrib;
-	Attribute* normalAttrib;
 	Light* lights[NUMLIGHT];
 	float arrayBuffer[NUMLIGHT * 3];
 };

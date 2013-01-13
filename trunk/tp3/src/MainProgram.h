@@ -27,13 +27,14 @@ public:
 	Attribute* AddAttribute(int index, int tamData, char* name);
 	void addVertexShader(char* name);
 	void addFragmentShader(char* name);
+	void addAttributeLocationShader(int index, char* name);
 	void setUniformMat4(GLfloat* data, char* name);
 	void setUniformVec3(GLfloat* data, char* name);
 	void setUniformVec3One(GLfloat* data, char* name);
 	void setUniformInt(GLint data, char* name);
 	virtual ~MainProgram();
 
-private:
+//private:
 	GLuint programHandler;
 };
 
