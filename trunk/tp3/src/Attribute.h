@@ -16,12 +16,14 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <winbase.h>
 using namespace std;
 
 class Attribute {
 public:
 	Attribute(int index, char* attribName, int tamData, GLuint programHandler);
 	void updateBuffer();
+//	void updateBufferComentado();
 	void setValue(int position, float value);
 	virtual ~Attribute();
 

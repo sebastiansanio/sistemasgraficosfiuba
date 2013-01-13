@@ -21,7 +21,7 @@ Scene::Scene() {
 	this->piso = new RectangTex(10.0,10.0,0,2.5);
 	this->pared = new RectangTex(10.0,5.0,1,5.0);
 	this->cube1 = new CubeRef(1.0,1.0,1.0);
-	this->rectang = new Rectang(2.0,2.0,2.0);
+	this->rectang = new Rectang(1.0,1.0,0.1);
 	this->bottle = new Bottle();
 }
 
@@ -51,33 +51,40 @@ void Scene::printScene(){
 				glRotatef(90,0.0,0.0,1.0);
 				pared->print();
 			glPopMatrix();
+			//Dibujo muchos rectangulos para que ande un poco lento
+			glPushMatrix();
+				for(int i = 0; i<10; i++) {
+					glTranslatef(0.0,0.0,0.5);
+					rectang->print();
+				}
+			glPopMatrix();
 			//glTranslatef(0.0,0.0,5.0);
 			//cube1->print();
-			bottle->print();
-			glPushMatrix();
-				glTranslatef(0.0,3.0,0.0);
-				bottle->print();
-				glTranslatef(0.0,3.0,0.0);
-				bottle->print();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(0.0,-3.0,0.0);
-				bottle->print();
-				glTranslatef(0.0,-3.0,0.0);
-				bottle->print();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(3.0,0.0,0.0);
-				bottle->print();
-				glTranslatef(3.0,0.0,0.0);
-				bottle->print();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(-3.0,0.0,0.0);
-				bottle->print();
-				glTranslatef(-3.0,0.0,0.0);
-				bottle->print();
-			glPopMatrix();
+//			bottle->print();
+//			glPushMatrix();
+//				glTranslatef(0.0,3.0,0.0);
+//				bottle->print();
+//				glTranslatef(0.0,3.0,0.0);
+//				bottle->print();
+//			glPopMatrix();
+//			glPushMatrix();
+//				glTranslatef(0.0,-3.0,0.0);
+//				bottle->print();
+//				glTranslatef(0.0,-3.0,0.0);
+//				bottle->print();
+//			glPopMatrix();
+//			glPushMatrix();
+//				glTranslatef(3.0,0.0,0.0);
+//				bottle->print();
+//				glTranslatef(3.0,0.0,0.0);
+//				bottle->print();
+//			glPopMatrix();
+//			glPushMatrix();
+//				glTranslatef(-3.0,0.0,0.0);
+//				bottle->print();
+//				glTranslatef(-3.0,0.0,0.0);
+//				bottle->print();
+//			glPopMatrix();
 	glPopMatrix();
 }
 
