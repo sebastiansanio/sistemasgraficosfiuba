@@ -53,14 +53,17 @@ void Scene::printScene(){
 			glPopMatrix();
 			//Dibujo muchos rectangulos para que ande un poco lento
 			glPushMatrix();
+				glTranslatef(0.0,3.0,0.0);
 				for(int i = 0; i<10; i++) {
 					glTranslatef(0.0,0.0,0.5);
 					rectang->print();
 				}
 			glPopMatrix();
-			//glTranslatef(0.0,0.0,5.0);
-			//cube1->print();
-//			bottle->print();
+			glPushMatrix();
+			glTranslatef(0.0,0.0,5.0);
+			cube1->print();
+			glPopMatrix();
+			bottle->print();
 //			glPushMatrix();
 //				glTranslatef(0.0,3.0,0.0);
 //				bottle->print();
