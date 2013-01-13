@@ -18,15 +18,9 @@ public:
 	static TextureProgram* Instance();
 	void setActualProgram();
 	void setActualProgramFirstTime();
-	void updateBuffer();
-	void setPositionValue(int position, float value);
-	void setColorValue(int position, float value);
-	void setNormalValue(int position, float value);
-	void setTextureValue(int position, float value);
 	void setTexture(int texId);
 	void setLightPosition();
 	void updateModelViewProjection();
-	void drawTriangle();
 	virtual ~TextureProgram();
 
 protected:
@@ -37,10 +31,6 @@ protected:
 private:
 	static TextureProgram* instance;
 	MainProgram* program;
-	Attribute* positionAttrib;
-	Attribute* colorAttrib;
-	Attribute* normalAttrib;
-	Attribute* textureAttrib;
 	int actualTexId;
 
 	Light* lights[NUMLIGHT];
