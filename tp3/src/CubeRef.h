@@ -8,9 +8,7 @@
 #ifndef CUBEREF_H_
 #define CUBEREF_H_
 
-#include "BasicProgram.h"
-#include "CubeMapProgram.h"
-#include "Rectang.h"
+#include "RectangRef.h"
 
 class CubeRef {
 public:
@@ -22,10 +20,7 @@ private:
 	float x;
 	float y;
 	float z;
-	int texId;
-	CubeMapProgram* program;
-
-	void drawRectangule();
+	RectangRef* rectang;
 };
 
 #endif /* CUBEREF_H_ */

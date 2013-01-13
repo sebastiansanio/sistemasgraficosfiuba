@@ -60,7 +60,7 @@ void Scene::printScene(){
 				}
 			glPopMatrix();
 			glPushMatrix();
-			glTranslatef(0.0,0.0,5.0);
+			glTranslatef(0.0,0.0,3.0);
 			cube1->print();
 			glPopMatrix();
 			bottle->print();
