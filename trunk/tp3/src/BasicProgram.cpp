@@ -24,11 +24,11 @@ BasicProgram::BasicProgram() {
 
 	program->addFragmentShader("basic.frag");
 
-	positionAttrib = program->AddAttribute(0, 9, "VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
+	positionAttrib = program->AddAttribute(VERTEX_POS_ATTR_INDEX, 9, "VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
 
-	colorAttrib = program->AddAttribute(1, 9, "VertexColor");
+	colorAttrib = program->AddAttribute(VERTEX_COL_ATTR_INDEX, 9, "VertexColor");
 
-	normalAttrib = program->AddAttribute(2, 9, "VertexNormal");
+	normalAttrib = program->AddAttribute(VERTEX_NOR_ATTR_INDEX, 9, "VertexNormal");
 
 	lights[0]= new Light(8.0,-5.0,10.0,8.0,-5.0,0.0);
 
