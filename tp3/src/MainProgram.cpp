@@ -31,6 +31,11 @@ void MainProgram::addFragmentShader(char* name){
 	new Shader(GL_FRAGMENT_SHADER,name, programHandler);
 }
 
+void  MainProgram::addAttributeLocationShader(int index, char* name){
+	glBindAttribLocation( programHandler, index, name);
+	glEnableVertexAttribArray(index);
+}
+
 void MainProgram::setUniformMat4(GLfloat* data, char* name){
 	GLuint location = glGetUniformLocation(programHandler, name);
 	if( location >= 0 )

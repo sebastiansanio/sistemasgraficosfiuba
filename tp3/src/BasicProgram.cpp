@@ -24,11 +24,10 @@ BasicProgram::BasicProgram() {
 
 	program->addFragmentShader("basic.frag");
 
-	positionAttrib = program->AddAttribute(VERTEX_POS_ATTR_INDEX, 9, "VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
+	program->addAttributeLocationShader(VERTEX_POS_ATTR_INDEX,"VertexPosition");
+	program->addAttributeLocationShader(VERTEX_COL_ATTR_INDEX,"VertexColor");
+	program->addAttributeLocationShader(VERTEX_NOR_ATTR_INDEX,"VertexNormal");
 
-	colorAttrib = program->AddAttribute(VERTEX_COL_ATTR_INDEX, 9, "VertexColor");
-
-	normalAttrib = program->AddAttribute(VERTEX_NOR_ATTR_INDEX, 9, "VertexNormal");
 
 	lights[0]= new Light(8.0,-5.0,10.0,8.0,-5.0,0.0);
 
@@ -46,25 +45,6 @@ BasicProgram::BasicProgram() {
 
 }
 
-void BasicProgram::updateBuffer(){
-	positionAttrib->updateBuffer();
-	colorAttrib->updateBuffer();
-	normalAttrib->updateBuffer();
-	//Esto no tiene que estar hardcodeado en el program
-	//setLightPosition(0.0,0.0,1.0,"lightPos");
-}
-
-void BasicProgram::setPositionValue(int position, float value){
-	positionAttrib->setValue(position,value);
-}
-
-void BasicProgram::setColorValue(int position, float value){
-	colorAttrib->setValue(position,value);
-}
-
-void BasicProgram::setNormalValue(int position, float value){
-	normalAttrib->setValue(position,value);
-}
 
 void BasicProgram::setLightPosition(){
 
@@ -116,11 +96,6 @@ void BasicProgram::setActualProgram(){
 	program->linkProgramHandler();
 	//Si se linkea el program handler se pierde la uniform as� que hay que pasarla aca
 	setLightPosition();
-}
-
-void BasicProgram::drawTriangle(){
-	this->updateBuffer();
-	glDrawArrays( GL_TRIANGLES, 0, 3);
 }
 
 BasicProgram::~BasicProgram() {

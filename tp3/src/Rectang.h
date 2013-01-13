@@ -12,15 +12,22 @@
 
 class Rectang {
 public:
-	Rectang(float xSize, float ySize,float tamPaso);
+	Rectang(float xSize, float ySize,double tamPaso);
 	void print();
 	virtual ~Rectang();
 
 private:
 	float x;
 	float y;
-	float tamPaso;
+	double tamPaso;
+	int cantTriangulos;
+	float* positionArray;
+	float* colorArray;
+	float* normalArray;
 	BasicProgram* program;
+	GLuint bufferPositionHandler;
+	GLuint bufferColorHandler;
+	GLuint bufferNormalHandler;
 };
 
 #endif /* RECTANGLE_H_ */
