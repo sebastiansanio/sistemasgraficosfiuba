@@ -24,13 +24,10 @@ CubeMapProgram::CubeMapProgram() {
 
 	program->addFragmentShader("cubemap.frag");
 
-	positionAttrib = program->AddAttribute(VERTEX_POS_ATTR_INDEX,9,"VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
-
-	colorAttrib = program->AddAttribute(VERTEX_COL_ATTR_INDEX,9,"VertexColor");
-
-	normalAttrib = program->AddAttribute(VERTEX_NOR_ATTR_INDEX,9,"VertexNormal");
-
-	textureAttrib = program->AddAttribute(VERTEX_TEX_ATTR_INDEX,6,"TextureCoord");
+	program->addAttributeLocationShader(VERTEX_POS_ATTR_INDEX,"VertexPosition");
+	program->addAttributeLocationShader(VERTEX_COL_ATTR_INDEX,"VertexColor");
+	program->addAttributeLocationShader(VERTEX_NOR_ATTR_INDEX,"VertexNormal");
+	program->addAttributeLocationShader(VERTEX_TEX_ATTR_INDEX,"TextureCoord");
 
 	GLuint tex_cube = SOIL_load_OGL_cubemap
 	(
@@ -53,7 +50,7 @@ CubeMapProgram::CubeMapProgram() {
 	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T,	GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R,	GL_CLAMP_TO_EDGE);
 
-	this->actualTexId = 0;
+	this->actualTexId = 15;
 
 	lights[0]= new Light(8.0,-5.0,10.0,8.0,-5.0,0.0);
 
@@ -73,29 +70,6 @@ CubeMapProgram::CubeMapProgram() {
 
 void CubeMapProgram::setTexture(int texId){
 	this->actualTexId = texId;
-}
-
-void CubeMapProgram::updateBuffer(){
-	positionAttrib->updateBuffer();
-	colorAttrib->updateBuffer();
-	normalAttrib->updateBuffer();
-	textureAttrib->updateBuffer();
-}
-
-void CubeMapProgram::setPositionValue(int position, float value){
-	positionAttrib->setValue(position,value);
-}
-
-void CubeMapProgram::setColorValue(int position, float value){
-	colorAttrib->setValue(position,value);
-}
-
-void CubeMapProgram::setNormalValue(int position, float value){
-	normalAttrib->setValue(position,value);
-}
-
-void CubeMapProgram::setTextureValue(int position, float value){
-	textureAttrib->setValue(position,value);
 }
 
 void CubeMapProgram::setLightPosition(){
@@ -154,11 +128,6 @@ void CubeMapProgram::setActualProgram(){
 	program->linkProgramHandler();
 		//Si se linkea el program handler se pierde la uniform así que hay que pasarla aca
 	setLightPosition();
-}
-
-void CubeMapProgram::drawTriangle(){
-	this->updateBuffer();
-	glDrawArrays( GL_TRIANGLES, 0, 3);
 }
 
 CubeMapProgram::~CubeMapProgram() {
