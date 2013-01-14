@@ -14,6 +14,15 @@ public:
 	void print();
 
 private:
+	float* positionArray;
+	float* colorArray;
+	float* normalArray;
+	float* textureArray;
+	GLuint bufferPositionHandler;
+	GLuint bufferColorHandler;
+	GLuint bufferNormalHandler;
+	GLuint bufferTextureHandler;
+	int trianglesEstimated;
 	BottleProgram* program;
 	Bezier* bezier;
 };

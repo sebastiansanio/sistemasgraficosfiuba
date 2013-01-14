@@ -1,6 +1,6 @@
 #include "Bottle.h"
 #define PI 3.14159265
-
+#define STEP 20
 
 Bottle::Bottle(){
 	program = BottleProgram::Instance();
@@ -13,76 +13,112 @@ Bottle::Bottle(){
 	bezier->addPoint(0,0.03,1.1);
 	bezier->addPoint(0,0.04,1.2);
 	bezier->calculate();
-}
-void Bottle::print(){
-	program->setTexture(2);
-	program->setActualProgram();
-//	program->updateModelViewProjection();
+
 
 	vector<Coordinate*>* points= bezier->getPoints();
-	float step = 20;
 	unsigned int size = points->size();
 
 	float ySize = points->at(size-1)->getZ() - points->at(0)->getZ();
-
 	float labelXSize = 180;
 	float labelYSize = ySize;
 
-	program->setLiquidHeight(0.5,true);
+
+	trianglesEstimated = 2*(points->size()-1)*360/STEP;
+
+	this->positionArray = new float[trianglesEstimated*9];
+	this->colorArray = new float[trianglesEstimated*9];
+	this->normalArray = new float[trianglesEstimated*9];
+	this->textureArray = new float[trianglesEstimated*6];
+
+
+	int posCounter = 0;
+	int texPosCounter = 0;
 
 	for(unsigned int i=0;i<size-1;i++){
-		for(float j=0;j<360;j=j+step){
+		for(float j=0;j<360;j=j+STEP){
 
+			positionArray[posCounter]=points->at(i)->getY()*cos(PI*j/180);
+			positionArray[posCounter+1]=points->at(i)->getY()*sin(PI*j/180);
+			positionArray[posCounter+2]=points->at(i)->getZ();
+			textureArray[texPosCounter]=j/labelXSize;
+			textureArray[texPosCounter+1]=1-points->at(i)->getZ()/labelYSize;
 
-			float diff = points->at(i+1)->getZ() - points->at(i)->getZ();
-			float fxz = (points->at(i+1)->getY()*cos(PI*j/180) - points->at(i)->getY()*cos(PI*j/180))/diff;
-			float fyz = (points->at(i+1)->getY()*sin(PI*j/180) - points->at(i)->getY()*sin(PI*j/180))/diff;
-			float fzz = 1;
-			float fxj = (points->at(i)->getY()*cos(PI*(j+step)/180)-points->at(i)->getY()*cos(PI*j/180))/step;
-			float fyj = (points->at(i)->getY()*sin(PI*(j+step)/180)-points->at(i)->getY()*sin(PI*j/180))/step;
-			float fzj = 0;
+			positionArray[posCounter+3]=points->at(i)->getY()*cos(PI*(j+STEP)/180);
+			positionArray[posCounter+4]=points->at(i)->getY()*sin(PI*(j+STEP)/180);
+			positionArray[posCounter+5]=points->at(i)->getZ();
+			textureArray[texPosCounter+2]=(j+STEP)/labelXSize;
+			textureArray[texPosCounter+3]=1-points->at(i)->getZ()/labelYSize;
 
-			float n1 = fyz*fzj-fzz*fyz;
-			float n2 = -(fxz*fzj-fzz*fxj);
-			float n3 = fxz*fyj-fyz*fxj;
-			program->setNormalValue(0,n1);
-			program->setNormalValue(1,n2);
-			program->setNormalValue(2,n3);
-			program->setNormalValue(3,n1);
-			program->setNormalValue(4,n2);
-			program->setNormalValue(5,n3);
-			program->setNormalValue(6,n1);
-			program->setNormalValue(7,n2);
-			program->setNormalValue(8,n3);
+			positionArray[posCounter+6]=points->at(i+1)->getY()*cos(PI*j/180);
+			positionArray[posCounter+7]=points->at(i+1)->getY()*sin(PI*j/180);
+			positionArray[posCounter+8]=points->at(i+1)->getZ();
+			textureArray[texPosCounter+4]=j/labelXSize;
+			textureArray[texPosCounter+5]=1-points->at(i+1)->getZ()/labelYSize;
 
-			program->setPositionValue(0,points->at(i)->getY()*cos(PI*j/180));
-			program->setPositionValue(1,points->at(i)->getY()*sin(PI*j/180));
-			program->setPositionValue(2,points->at(i)->getZ());
-			program->setPositionValue(3,points->at(i)->getY()*cos(PI*(j+step)/180));
-			program->setPositionValue(4,points->at(i)->getY()*sin(PI*(j+step)/180));
-			program->setPositionValue(5,points->at(i)->getZ());
-			program->setPositionValue(6,points->at(i+1)->getY()*cos(PI*j/180));
-			program->setPositionValue(7,points->at(i+1)->getY()*sin(PI*j/180));
-			program->setPositionValue(8,points->at(i+1)->getZ());
-			program->setTextureValue(0,j/labelXSize);
-			program->setTextureValue(1,1-points->at(i)->getZ()/labelYSize);
-			program->setTextureValue(2,(j+step)/labelXSize);
-			program->setTextureValue(3,1-points->at(i)->getZ()/labelYSize);
-			program->setTextureValue(4,j/labelXSize);
-			program->setTextureValue(5,1-points->at(i+1)->getZ()/labelYSize);
-			program->drawTriangle();
+			posCounter+=9;
+			texPosCounter+=6;
 
-			program->setPositionValue(0,points->at(i+1)->getY()*cos(PI*(j+step)/180));
-			program->setPositionValue(1,points->at(i+1)->getY()*sin(PI*(j+step)/180));
-			program->setPositionValue(2,points->at(i+1)->getZ());
-			program->setTextureValue(0,(j+step)/labelXSize);
-			program->setTextureValue(1,1-points->at(i+1)->getZ()/labelYSize);
-			program->drawTriangle();
+			positionArray[posCounter]=points->at(i+1)->getY()*cos(PI*(j+STEP)/180);
+			positionArray[posCounter+1]=points->at(i+1)->getY()*sin(PI*(j+STEP)/180);
+			positionArray[posCounter+2]=points->at(i+1)->getZ();
+			textureArray[texPosCounter]=(j+STEP)/labelXSize;
+			textureArray[texPosCounter+1]=1-points->at(i+1)->getZ()/labelYSize;
+
+			positionArray[posCounter+3]=points->at(i)->getY()*cos(PI*(j+STEP)/180);
+			positionArray[posCounter+4]=points->at(i)->getY()*sin(PI*(j+STEP)/180);
+			positionArray[posCounter+5]=points->at(i)->getZ();
+			textureArray[texPosCounter+2]=(j+STEP)/labelXSize;
+			textureArray[texPosCounter+3]=1-points->at(i)->getZ()/labelYSize;
+
+			positionArray[posCounter+6]=points->at(i+1)->getY()*cos(PI*j/180);
+			positionArray[posCounter+7]=points->at(i+1)->getY()*sin(PI*j/180);
+			positionArray[posCounter+8]=points->at(i+1)->getZ();
+			textureArray[texPosCounter+4]=j/labelXSize;
+			textureArray[texPosCounter+5]=1-points->at(i+1)->getZ()/labelYSize;
+
+			posCounter+=9;
+			texPosCounter+=6;
 		}
 
+
 	}
+	glGenBuffers(1, &bufferPositionHandler);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
+	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 9) * sizeof (float), this->positionArray, GL_STATIC_DRAW );
+
+	glGenBuffers(1, &bufferColorHandler);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
+	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 9) * sizeof (float), this->colorArray, GL_STATIC_DRAW );
+
+	glGenBuffers(1, &bufferNormalHandler);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
+	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 9) * sizeof (float), this->normalArray, GL_STATIC_DRAW );
+
+	glGenBuffers(1, &bufferTextureHandler);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
+	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
+
 
 }
+
+void Bottle::print(){
+	program->setTexture(2);
+	program->setActualProgram();
+
+	program->setLiquidHeight(0.5,true);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
+	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
+	glVertexAttribPointer( VERTEX_COL_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
+	glVertexAttribPointer( VERTEX_POS_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
+	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
+
+}
+
 Bottle::~Bottle(){
 
 }
