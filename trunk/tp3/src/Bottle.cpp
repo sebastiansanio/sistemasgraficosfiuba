@@ -17,7 +17,7 @@ Bottle::Bottle(){
 void Bottle::print(){
 	program->setTexture(2);
 	program->setActualProgram();
-	program->updateModelViewProjection();
+//	program->updateModelViewProjection();
 
 	vector<Coordinate*>* points= bezier->getPoints();
 	float step = 20;
