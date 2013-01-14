@@ -15,7 +15,6 @@
 #define VERTEX_TEX_ATTR_INDEX 3
 
 #include "Shader.h"
-#include "Attribute.h"
 #include <list>
 
 class MainProgram {
@@ -24,7 +23,6 @@ public:
 	MainProgram();
 	bool linkProgramHandler();
 	bool linkProgramHandlerFirstTime();
-	Attribute* AddAttribute(int index, int tamData, char* name);
 	void addVertexShader(char* name);
 	void addFragmentShader(char* name);
 	void addAttributeLocationShader(int index, char* name);

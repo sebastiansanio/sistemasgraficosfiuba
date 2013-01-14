@@ -19,10 +19,6 @@ MainProgram::MainProgram() {
 	linkedProgramHandler = 0;
 }
 
-Attribute* MainProgram::AddAttribute(int index, int tamData, char* name){
-	return new Attribute(index, name, tamData, this->programHandler);
-}
-
 void MainProgram::addVertexShader(char* name){
 	new Shader(GL_VERTEX_SHADER,name, programHandler);
 }

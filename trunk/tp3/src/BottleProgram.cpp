@@ -23,16 +23,12 @@ BottleProgram::BottleProgram() {
 
 	program->addFragmentShader("bottle.frag");
 
-	positionAttrib = program->AddAttribute(VERTEX_POS_ATTR_INDEX,9,"VertexPosition");//new  Attribute(0, "VertexPosition", program->programHandler);
+	program->addAttributeLocationShader(VERTEX_POS_ATTR_INDEX,"VertexPosition");
+	program->addAttributeLocationShader(VERTEX_COL_ATTR_INDEX,"VertexColor");
+	program->addAttributeLocationShader(VERTEX_NOR_ATTR_INDEX,"VertexNormal");
+	program->addAttributeLocationShader(VERTEX_TEX_ATTR_INDEX,"TextureCoord");
 
-	colorAttrib = program->AddAttribute(VERTEX_COL_ATTR_INDEX,9,"VertexColor");
-
-	normalAttrib = program->AddAttribute(VERTEX_NOR_ATTR_INDEX,9,"VertexNormal");
-
-	textureAttrib = program->AddAttribute(VERTEX_TEX_ATTR_INDEX,6,"TextureCoord");
-
-
-	glActiveTexture(GL_TEXTURE2);
+	glActiveTexture(GL_TEXTURE14);
 	GLuint tid3;
 	glGenTextures(1, &tid3);
 	glBindTexture(GL_TEXTURE_2D, tid3);
@@ -63,29 +59,6 @@ BottleProgram::BottleProgram() {
 
 void BottleProgram::setTexture(int texId){
 	this->actualTexId = texId;
-}
-
-void BottleProgram::updateBuffer(){
-	positionAttrib->updateBuffer();
-	colorAttrib->updateBuffer();
-	normalAttrib->updateBuffer();
-	textureAttrib->updateBuffer();
-}
-
-void BottleProgram::setPositionValue(int position, float value){
-	positionAttrib->setValue(position,value);
-}
-
-void BottleProgram::setColorValue(int position, float value){
-	colorAttrib->setValue(position,value);
-}
-
-void BottleProgram::setNormalValue(int position, float value){
-	normalAttrib->setValue(position,value);
-}
-
-void BottleProgram::setTextureValue(int position, float value){
-	textureAttrib->setValue(position,value);
 }
 
 void BottleProgram::setLightPosition(){
@@ -155,11 +128,6 @@ void BottleProgram::setLiquidHeight(float height,bool hasLabel){
 		arrayBufferLiquid[1] =  0;
 	arrayBufferLiquid[2] =  height;
 	program->setUniformVec3One(arrayBufferLiquid,"liquidHeight");
-}
-
-void BottleProgram::drawTriangle(){
-	this->updateBuffer();
-	glDrawArrays( GL_TRIANGLES, 0, 3);
 }
 
 BottleProgram::~BottleProgram() {
