@@ -102,7 +102,7 @@ Bottle::Bottle(){
 }
 
 void Bottle::print(){
-	program->setTexture(2);
+	program->setTexture(14);
 	program->setActualProgram();
 
 	program->setLiquidHeight(0.5,true);
