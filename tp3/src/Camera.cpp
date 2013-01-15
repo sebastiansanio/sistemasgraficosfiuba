@@ -169,35 +169,35 @@ double Camera::CalcDeterminant( float **mat, int order)
 }
 
 void Camera::upz(){
-	anglevert+=0.05;
+	anglevert+=0.01;
 	if(anglevert > 3.14) anglevert = 3.14;
 	calcPosition();
 }
 void Camera::downz(){
-	anglevert-=0.05;
+	anglevert-=0.01;
 	if(anglevert < 0.05) anglevert = 0.05;
 	calcPosition();
 }
 void Camera::left(){
-	anglehor-=0.05;
+	anglehor-=0.01;
 	if(anglehor < 0) anglehor = (3.14 * 2);
 	calcPosition();
 }
 
 void Camera::right(){
-	anglehor+=0.05;
+	anglehor+=0.01;
 	if(anglehor > (3.14 * 2)) anglehor = 0;
 	calcPosition();
 }
 
 void Camera::nearRatio(){
-	ratio-=0.2;
+	ratio-=0.05;
 	if(ratio < 0.2) ratio = 0.2;
 	calcPosition();
 }
 
 void Camera::farRatio(){
-	ratio+=0.2;
+	ratio+=0.05;
 	calcPosition();
 }
 
@@ -208,7 +208,7 @@ void Camera::calcPosition(){
 
 	at[0] = 0.0;
 	at[1] = 0.0;
-	at[2] = 5.0;
+	at[2] = 2.0;
 
 	up[0] = 0.0;
 	up[1] = 0.0;

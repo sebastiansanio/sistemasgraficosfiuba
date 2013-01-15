@@ -1,6 +1,6 @@
 #include "Bottle.h"
 #define PI 3.14159265
-#define STEP 20
+#define STEP 10
 
 Coordinate* Bottle::calculateNormal(vector<Coordinate*>* points,unsigned int i,float j){
 
