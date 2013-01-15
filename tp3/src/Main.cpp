@@ -83,11 +83,11 @@ void keyboard (unsigned char key, int x, int y) {
 		  glutPostRedisplay();
 		  break;
       case 'z':
-    	  Camera::Instance()->nearRatio();
+    	  Camera::Instance()->forward();
 		  glutPostRedisplay();
 		  break;
       case 'x':
-    	  Camera::Instance()->farRatio();
+    	  Camera::Instance()->backward();
 		  glutPostRedisplay();
 		  break;
       case 'e':

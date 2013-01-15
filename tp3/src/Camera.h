@@ -11,8 +11,8 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <GL/freeglut.h>
-#include <math.h>
 #include <iostream>
+#include "Observador.h"
 using namespace std;
 
 class Camera {
@@ -25,10 +25,10 @@ public:
 	void downz();
 	void left();
 	void right();
-	void nearRatio();
-	void farRatio();
+	void forward();
+	void backward();
 	GLfloat inverseViewMatrix[16];
-	float eye[3];
+	Observador* observador;
 	virtual ~Camera();
 
 protected:
@@ -38,12 +38,7 @@ protected:
 
 private:
 	static Camera* instance;
-	float at[3];
-	float up[3];
 	float transf[3];
-	float ratio;
-	float anglehor;
-	float anglevert;
 	GLfloat viewMatrix[16];
 	float** inverseTemp;
 	float** matrixTemp;

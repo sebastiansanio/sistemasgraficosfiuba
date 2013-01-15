@@ -74,7 +74,7 @@ void CubeMapProgram::setTexture(int texId){
 
 void CubeMapProgram::setLightPosition(){
 
-	program->setUniformVec3One(Camera::Instance()->eye,"camPos");
+	program->setUniformVec3One(Camera::Instance()->observador->getEye(),"camPos");
 
 	int pos=0;
 
