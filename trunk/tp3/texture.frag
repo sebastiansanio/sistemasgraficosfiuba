@@ -17,7 +17,7 @@ void main()
 	
 	//Iluminacion ambiente
 	
-	float intAmbiente = 0.2;
+	float intAmbiente = 0.1;
 	
 	vec3 colorFinal = intAmbiente * color;
 	

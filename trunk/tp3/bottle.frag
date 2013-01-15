@@ -19,7 +19,7 @@ void main()
 	vec3 color = vec3(texture( Texture1, TexCoord ));
 	
 	
-	float intAmbiente = 0.2;
+	float intAmbiente = 0.1;
 	float alpha = 1;
 	float currentLiquidHeight = liquidHeight[0];
 	float hasLabel = liquidHeight[1];
@@ -73,6 +73,7 @@ void main()
 				colorFinal += vec3(0.5,0.5,0.5) * spotFactor * pow( max( dot(h,Normal), 0.0 ), 3.0);
 					
 			}
+			
 		}
 	
 	}

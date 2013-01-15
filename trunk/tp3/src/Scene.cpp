@@ -51,10 +51,10 @@ void Scene::printScene(){
 				glRotatef(90,0.0,0.0,1.0);
 				pared->print();
 			glPopMatrix();
-			glPushMatrix();
-			glTranslatef(0.0,5.0,0.5);
-			rectang->print();
-			glPopMatrix();
+//			glPushMatrix();
+//			glTranslatef(0.0,5.0,0.5);
+//			rectang->print();
+//			glPopMatrix();
 			bottle->print();
 			glPushMatrix();
 				glTranslatef(0.0,3.0,0.0);
