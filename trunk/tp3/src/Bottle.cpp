@@ -29,7 +29,7 @@ Bottle::Bottle(){
 	program = BottleProgram::Instance();
 	bezier=new Bezier();
 	bezier->addPoint(0,0,0);
-	bezier->addPoint(0,0.25,0);
+	bezier->addPoint(0,0.28,0);
 	bezier->addPoint(0,0.23,0.1);
 	bezier->addPoint(0,0.22,0.8);
 	bezier->addPoint(0,0.20,0.9);
