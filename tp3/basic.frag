@@ -38,9 +38,9 @@ void main()
 			float cutoff = radians( 90.0 );
 			if( angle < cutoff ) {
 				
-				float spotFactor = pow(dot(-lightDir, lightSpotDirection),16);
+				float spotFactor = pow(dot(-lightDir, lightSpotDirection),8);
 				
-				colorFinal += intDifusa * spotFactor * Color;
+				colorFinal += 0.5 * intDifusa * spotFactor * Color;
 				
 				//Iluminacion especular
 				
@@ -49,7 +49,7 @@ void main()
 				
 				vec3 h = normalize(vista + lightDir);
 				
-				colorFinal += 0.5 * vec3(0.5,0.5,0.5) * spotFactor * pow( max( dot(h,Normal), 0.0 ), 2.0);
+				colorFinal += vec3(0.5,0.5,0.5) * spotFactor * pow( max( dot(h,Normal), 0.0 ), 3.0);
 					
 			}
 		}

@@ -9,6 +9,7 @@
 #define RECTANGREF_H_
 
 #include "CubeMapProgram.h"
+#include "GenericRef.h"
 
 class RectangRef {
 public:
@@ -17,20 +18,7 @@ public:
 	virtual ~RectangRef();
 
 private:
-	float x;
-	float y;
-	int texId;
-	double tamTex;
-	int cantTriangulos;
-	float* positionArray;
-	float* colorArray;
-	float* normalArray;
-	float* textureArray;
-	CubeMapProgram* program;
-	GLuint bufferPositionHandler;
-	GLuint bufferColorHandler;
-	GLuint bufferNormalHandler;
-	GLuint bufferTextureHandler;
+	GenericRef* genericRef;
 };
 
 #endif /* RECTANGREF_H_ */
