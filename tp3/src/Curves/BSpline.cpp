@@ -1,7 +1,8 @@
 #include "BSpline.h"
 
 #include <iostream>
-#define INCREMENTO 0.1
+#include "math.h"
+#define BSSTEP 0.05
 
 BSpline::BSpline(){
 	controlPoints = new vector<Coordinate*>;
@@ -25,17 +26,19 @@ void BSpline::calculate(){
 	if(size<3)
 		return;
 
-	for(int j=0;j<(size-2);j=j+2){
-		for(float i=0;i <= 1.001;i+=INCREMENTO){
-			auxX=((1/2)*(1-i)*(1-i))*controlPoints->at(j)->getX()+(-i*i+i+1/2)*controlPoints->at(j+1)->getX();
-			auxX+=(i*i/2)*controlPoints->at(j+2)->getX();
-			auxY=((1/2)*(1-i)*(1-i))*controlPoints->at(j)->getY()+(-i*i+i+1/2)*controlPoints->at(j+1)->getY();
-			auxY+=(i*i/2)*controlPoints->at(j+2)->getY();
-			auxZ=((1/2)*(1-i)*(1-i))*controlPoints->at(j)->getZ()+(-i*i+i+1/2)*controlPoints->at(j+1)->getZ();
-			auxZ+=(i*i/2)*controlPoints->at(j+2)->getZ();
-			Coordinate* curveCoordinate=new Coordinate(auxX,auxY,auxZ);
-			curvePoints->push_back(curveCoordinate);
-		}
+	for(float i=1;i < size-1+0.001;i+=BSSTEP){
+
+		int intPart = (int) i;
+		float u= i - intPart;
+
+		auxX=(1/2)*pow(u,2)*controlPoints->at(i)->getX()+(-pow(u,2)+u+(1/2))*controlPoints->at(i+1)->getX();
+		auxX+=(1/2)*pow(1-u,2)*controlPoints->at(i+2)->getX();
+		auxY=(1/2)*pow(u,2)*controlPoints->at(i)->getY()+(-pow(u,2)+u+(1/2))*controlPoints->at(i+1)->getY();
+		auxY+=(1/2)*pow(1-u,2)*controlPoints->at(i+2)->getY();
+		auxZ=(1/2)*pow(u,2)*controlPoints->at(i)->getZ()+(-pow(u,2)+u+(1/2))*controlPoints->at(i+1)->getZ();
+		auxZ+=(1/2)*pow(1-u,2)*controlPoints->at(i+2)->getZ();
+		Coordinate* curveCoordinate=new Coordinate(auxX,auxY,auxZ);
+		curvePoints->push_back(curveCoordinate);
 	}
 }
 
