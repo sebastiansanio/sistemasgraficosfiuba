@@ -18,9 +18,6 @@ Camera* Camera::Instance ()
 }
 
 Camera::Camera() {
-	ratio=10.0f;
-	anglehor=0.0f;
-	anglevert= 3.1416/2; //(3.1416 * 3) / 4;
 
 	inverseTemp = new float*[4];
 	for(int i=0;i<4; i++){
@@ -32,11 +29,18 @@ Camera::Camera() {
 		matrixTemp[i] = new float[4];
 	}
 
-	calcPosition();
+	this->observador = new Observador();
 }
 
 void Camera::setPosition(){
-	gluLookAt(eye[0],eye[1],eye[2],at[0],at[1],at[2],up[0],up[1],up[2]);
+	float* eyeTemp = this->observador->getEye();
+	float* atTemp = this->observador->getAt();
+	float* upTemp = this->observador->getUp();
+	cout << "Camara" << endl;
+	cout << eyeTemp[0] << " " << eyeTemp[1] << " " << eyeTemp[2] << endl;
+	cout << atTemp[0] << " " << atTemp[1] << " " << atTemp[2] << endl;
+	cout << upTemp[0] << " " << upTemp[1] << " " << upTemp[2] << endl;
+	gluLookAt(eyeTemp[0],eyeTemp[1],eyeTemp[2],atTemp[0],atTemp[1],atTemp[2],upTemp[0],upTemp[1],upTemp[2]);
 	glGetFloatv (GL_MODELVIEW_MATRIX, viewMatrix);
 	invertViewMatrix();
 }
@@ -169,50 +173,25 @@ double Camera::CalcDeterminant( float **mat, int order)
 }
 
 void Camera::upz(){
-	anglevert+=0.01;
-	if(anglevert > 3.14) anglevert = 3.14;
-	calcPosition();
+	this->observador->upz();
 }
 void Camera::downz(){
-	anglevert-=0.01;
-	if(anglevert < 0.05) anglevert = 0.05;
-	calcPosition();
+	this->observador->downz();
 }
 void Camera::left(){
-	anglehor-=0.01;
-	if(anglehor < 0) anglehor = (3.14 * 2);
-	calcPosition();
+	this->observador->left();
 }
 
 void Camera::right(){
-	anglehor+=0.01;
-	if(anglehor > (3.14 * 2)) anglehor = 0;
-	calcPosition();
+	this->observador->right();
 }
 
-void Camera::nearRatio(){
-	ratio-=0.05;
-	if(ratio < 0.2) ratio = 0.2;
-	calcPosition();
+void Camera::forward(){
+	this->observador->forward();
 }
 
-void Camera::farRatio(){
-	ratio+=0.05;
-	calcPosition();
-}
-
-void Camera::calcPosition(){
-	eye[0]= ratio * cos(anglehor) * sin(anglevert);
-	eye[1]= ratio * sin(anglehor) * sin(anglevert);
-	eye[2]= -ratio * cos(anglevert);
-
-	at[0] = 0.0;
-	at[1] = 0.0;
-	at[2] = 2.0;
-
-	up[0] = 0.0;
-	up[1] = 0.0;
-	up[2] = 1.0;
+void Camera::backward(){
+	this->observador->backward();
 }
 
 Camera::~Camera() {
