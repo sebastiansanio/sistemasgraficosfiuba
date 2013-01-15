@@ -2,6 +2,29 @@
 #define PI 3.14159265
 #define STEP 20
 
+Coordinate* Bottle::calculateNormal(vector<Coordinate*>* points,unsigned int i,float j){
+
+	if(i==0){
+		Coordinate* coordinate = new Coordinate(0,0,-1);
+		return coordinate;
+	}
+
+	float prevY = points->at(i-1)->getY();
+	float prevZ = points->at(i-1)->getZ();
+	float actualY = points->at(i)->getY();
+	float actualZ = points->at(i)->getZ();
+	float deltaY = actualY - prevY;
+	float deltaZ = actualZ - prevZ;
+	float normalY = deltaZ;
+	float normalZ = - deltaY;
+
+
+	Coordinate* coordinate = new Coordinate(normalY*cos(PI*j/180),normalY*sin(PI*j/180),normalZ);
+	coordinate->normalize();
+
+	return coordinate;
+}
+
 Bottle::Bottle(){
 	program = BottleProgram::Instance();
 	bezier=new Bezier();
@@ -42,18 +65,32 @@ Bottle::Bottle(){
 			positionArray[posCounter+2]=points->at(i)->getZ();
 			textureArray[texPosCounter]=j/labelXSize;
 			textureArray[texPosCounter+1]=1-points->at(i)->getZ()/labelYSize;
+			Coordinate* normal = calculateNormal(points,i,j);
+			normalArray[posCounter]=normal->getX();
+			normalArray[posCounter+1]=normal->getY();
+			normalArray[posCounter+2]=normal->getZ();
+
 
 			positionArray[posCounter+3]=points->at(i)->getY()*cos(PI*(j+STEP)/180);
 			positionArray[posCounter+4]=points->at(i)->getY()*sin(PI*(j+STEP)/180);
 			positionArray[posCounter+5]=points->at(i)->getZ();
 			textureArray[texPosCounter+2]=(j+STEP)/labelXSize;
 			textureArray[texPosCounter+3]=1-points->at(i)->getZ()/labelYSize;
+			normal = calculateNormal(points,i,j+STEP);
+			normalArray[posCounter+3]=normal->getX();
+			normalArray[posCounter+4]=normal->getY();
+			normalArray[posCounter+5]=normal->getZ();
+
 
 			positionArray[posCounter+6]=points->at(i+1)->getY()*cos(PI*j/180);
 			positionArray[posCounter+7]=points->at(i+1)->getY()*sin(PI*j/180);
 			positionArray[posCounter+8]=points->at(i+1)->getZ();
 			textureArray[texPosCounter+4]=j/labelXSize;
 			textureArray[texPosCounter+5]=1-points->at(i+1)->getZ()/labelYSize;
+			normal = calculateNormal(points,i+1,j);
+			normalArray[posCounter+6]=normal->getX();
+			normalArray[posCounter+7]=normal->getY();
+			normalArray[posCounter+8]=normal->getZ();
 
 			posCounter+=9;
 			texPosCounter+=6;
@@ -63,18 +100,30 @@ Bottle::Bottle(){
 			positionArray[posCounter+2]=points->at(i+1)->getZ();
 			textureArray[texPosCounter]=(j+STEP)/labelXSize;
 			textureArray[texPosCounter+1]=1-points->at(i+1)->getZ()/labelYSize;
+			normal = calculateNormal(points,i+1,j+STEP);
+			normalArray[posCounter]=normal->getX();
+			normalArray[posCounter+1]=normal->getY();
+			normalArray[posCounter+2]=normal->getZ();
 
 			positionArray[posCounter+3]=points->at(i)->getY()*cos(PI*(j+STEP)/180);
 			positionArray[posCounter+4]=points->at(i)->getY()*sin(PI*(j+STEP)/180);
 			positionArray[posCounter+5]=points->at(i)->getZ();
 			textureArray[texPosCounter+2]=(j+STEP)/labelXSize;
 			textureArray[texPosCounter+3]=1-points->at(i)->getZ()/labelYSize;
+			normal = calculateNormal(points,i,j+STEP);
+			normalArray[posCounter+3]=normal->getX();
+			normalArray[posCounter+4]=normal->getY();
+			normalArray[posCounter+5]=normal->getZ();
 
 			positionArray[posCounter+6]=points->at(i+1)->getY()*cos(PI*j/180);
 			positionArray[posCounter+7]=points->at(i+1)->getY()*sin(PI*j/180);
 			positionArray[posCounter+8]=points->at(i+1)->getZ();
 			textureArray[texPosCounter+4]=j/labelXSize;
 			textureArray[texPosCounter+5]=1-points->at(i+1)->getZ()/labelYSize;
+			normal = calculateNormal(points,i+1,j);
+			normalArray[posCounter+6]=normal->getX();
+			normalArray[posCounter+7]=normal->getY();
+			normalArray[posCounter+8]=normal->getZ();
 
 			posCounter+=9;
 			texPosCounter+=6;
@@ -105,7 +154,7 @@ void Bottle::print(){
 	program->setTexture(14);
 	program->setActualProgram();
 
-	program->setLiquidHeight(0.5,true);
+	program->setLiquidHeight(0.8,true);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
 	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
