@@ -5,6 +5,7 @@ class Coordinate{
 public:
 	Coordinate(float x,float y,float z);
 	~Coordinate();
+	void normalize();
 	float getX();
 	float getY();
 	float getZ();

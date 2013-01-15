@@ -34,7 +34,7 @@ void main()
 			color[0] = 1.0; 
 			color[1] = 1.0;
 			color[2] = 1.0;
-			alpha = 0.3;		
+			alpha = 0.4;		
 		}	
 	}
 	

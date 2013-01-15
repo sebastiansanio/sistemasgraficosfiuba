@@ -14,6 +14,7 @@ public:
 	void print();
 
 private:
+	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int i,float j);
 	float* positionArray;
 	float* colorArray;
 	float* normalArray;
