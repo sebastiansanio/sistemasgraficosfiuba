@@ -32,10 +32,6 @@ void Scene::printScene(){
 			//Dibujando el escenario
 			piso->print();
 			glPushMatrix();
-			glTranslatef(0.0,0.0,2.0);
-			rectang->print();
-			glPopMatrix();
-			glPushMatrix();
 				glTranslatef(0.0,10.0,5.0);
 				glRotatef(90,1.0,0.0,0.0);
 				pared->print();
@@ -61,6 +57,9 @@ void Scene::printScene(){
 				glTranslatef(0.0,0.0,10.0);
 				glRotatef(180,0.0,1.0,0.0);
 				techo->print();
+			glPopMatrix();
+			glPushMatrix();
+//				rectang->print();
 			glPopMatrix();
 			bottle->print();
 			glPushMatrix();
