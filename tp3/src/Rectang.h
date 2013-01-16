@@ -8,7 +8,7 @@
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 
-#include "BasicProgram.h"
+#include "Generic.h"
 
 class Rectang {
 public:
@@ -17,17 +17,7 @@ public:
 	virtual ~Rectang();
 
 private:
-	float x;
-	float y;
-	double tamPaso;
-	int cantTriangulos;
-	float* positionArray;
-	float* colorArray;
-	float* normalArray;
-	BasicProgram* program;
-	GLuint bufferPositionHandler;
-	GLuint bufferColorHandler;
-	GLuint bufferNormalHandler;
+	Generic* generic;
 };
 
 #endif /* RECTANGLE_H_ */
