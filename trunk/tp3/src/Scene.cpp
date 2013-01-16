@@ -18,8 +18,9 @@ Scene* Scene::Instance ()
 }
 
 Scene::Scene() {
-	this->piso = new RectangTex(10.0,10.0,0,2.5);
-	this->pared = new RectangTex(10.0,5.0,1,5.0);
+	this->piso = new RectangTex(10.0,10.0,0,2.0);
+	this->pared = new RectangTex(10.0,5.0,1,2.0);
+	this->techo = new RectangTex(10.0,10.0,2,2.0);
 	this->cube1 = new CubeRef(1.0,1.0,1.0);
 	this->rectang = new Rectang(1.0,1.0,0.5);
 	this->bottle = new Bottle();
@@ -52,10 +53,11 @@ void Scene::printScene(){
 				glRotatef(90,0.0,0.0,1.0);
 				pared->print();
 			glPopMatrix();
-//			glPushMatrix();
-//			glTranslatef(0.0,5.0,0.5);
-//			rectang->print();
-//			glPopMatrix();
+			glPushMatrix();
+				glTranslatef(0.0,0.0,10.0);
+				glRotatef(180,0.0,1.0,0.0);
+				techo->print();
+			glPopMatrix();
 			bottle->print();
 			glPushMatrix();
 				glTranslatef(0.0,3.0,0.0);
