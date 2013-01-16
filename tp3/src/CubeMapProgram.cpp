@@ -52,17 +52,17 @@ CubeMapProgram::CubeMapProgram() {
 
 	this->actualTexId = 15;
 
-	lights[0]= new Light(8.0,-5.0,10.0,8.0,-5.0,0.0);
+	lights[0]= new Light(8.0,-5.0,6.0,8.0,-5.0,0.0);
 
-	lights[1]= new Light(0.0,-5.0,10.0,-0.0,-5.0,0.0);
+	lights[1]= new Light(0.0,-5.0,6.0,-0.0,-5.0,0.0);
 
-	lights[2]= new Light(-8.0,-5.0,10.0,-8.0,-5.0,0.0);
+	lights[2]= new Light(-8.0,-5.0,6.0,-8.0,-5.0,0.0);
 
-	lights[3]= new Light(8.0,5.0,10.0,8.0,5.0,0.0);
+	lights[3]= new Light(8.0,5.0,6.0,8.0,5.0,0.0);
 
-	lights[4]= new Light(0.0,5.0,10.0,0.0,5.0,0.0);
+	lights[4]= new Light(0.0,5.0,6.0,0.0,5.0,0.0);
 
-	lights[5]= new Light(-8.0,5.0,10.0,-8.0,5.0,0.0);
+	lights[5]= new Light(-8.0,5.0,6.0,-8.0,5.0,0.0);
 
 	setActualProgramFirstTime();
 

@@ -43,7 +43,7 @@ void main()
 			float cutoff = radians( 90.0 );
 			if( angle < cutoff ) {
 				
-				float spotFactor = pow(dot(-lightDir, lightSpotDirection),8);
+				float spotFactor = pow(dot(-lightDir, lightSpotDirection),7);
 				
 				colorFinal += 0.5 * intDifusa * spotFactor * color;
 				

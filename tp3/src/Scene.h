@@ -29,6 +29,7 @@ private:
 	static Scene* instance;
 	RectangTex* piso;
 	RectangTex* pared;
+	RectangTex* techo;
 	CubeRef* cube1;
 	Rectang* rectang;
 	Bottle* bottle;

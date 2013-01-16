@@ -47,19 +47,28 @@ TextureProgram::TextureProgram() {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
+	glActiveTexture(GL_TEXTURE2);
+	GLuint tid3;
+	glGenTextures(1, &tid3);
+	glBindTexture(GL_TEXTURE_2D, tid3);
+	BitMap* bitmap3 = new BitMap("ceiling.bmp");
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap3->getAncho(), bitmap3->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap3->getMatriz());
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
 	this->actualTexId = 0;
 
-	lights[0]= new Light(8.0,-5.0,10.0,8.0,-5.0,0.0);
+	lights[0]= new Light(8.0,-5.0,6.0,8.0,-5.0,0.0);
 
-	lights[1]= new Light(0.0,-5.0,10.0,-0.0,-5.0,0.0);
+	lights[1]= new Light(0.0,-5.0,6.0,-0.0,-5.0,0.0);
 
-	lights[2]= new Light(-8.0,-5.0,10.0,-8.0,-5.0,0.0);
+	lights[2]= new Light(-8.0,-5.0,6.0,-8.0,-5.0,0.0);
 
-	lights[3]= new Light(8.0,5.0,10.0,8.0,5.0,0.0);
+	lights[3]= new Light(8.0,5.0,6.0,8.0,5.0,0.0);
 
-	lights[4]= new Light(0.0,5.0,10.0,0.0,5.0,0.0);
+	lights[4]= new Light(0.0,5.0,6.0,0.0,5.0,0.0);
 
-	lights[5]= new Light(-8.0,5.0,10.0,-8.0,5.0,0.0);
+	lights[5]= new Light(-8.0,5.0,6.0,-8.0,5.0,0.0);
 
 	setActualProgramFirstTime();
 
