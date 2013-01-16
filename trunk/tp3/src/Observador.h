@@ -14,24 +14,20 @@ class Observador {
 public:
 	Observador();
 	virtual ~Observador();
-	void upz();
-	void downz();
-	void left();
-	void right();
-	void forward();
-	void backward();
+	virtual void upz();
+	virtual void downz();
+	virtual void left();
+	virtual void right();
+	virtual void forward();
+	virtual void backward();
 	float* getEye();
 	float* getAt();
 	float* getUp();
 
 protected:
-	float ratio;
-	float anglehor;
-	float anglevert;
 	float eye[3];
 	float at[3];
 	float up[3];
-	void calcPosition();
 };
 
 #endif /* OBSERVADOR_H_ */
