@@ -63,7 +63,7 @@ void reshape (int w, int h) {
 
 void keyboard (unsigned char key, int x, int y) {
    switch (key) {
-      case 'q':
+      case 'r':
          exit(0);
          break;
       case 'w':
@@ -82,17 +82,22 @@ void keyboard (unsigned char key, int x, int y) {
     	  Camera::Instance()->right();
 		  glutPostRedisplay();
 		  break;
-      case 'z':
+      case 'q':
     	  Camera::Instance()->forward();
 		  glutPostRedisplay();
 		  break;
-      case 'x':
+      case 'e':
     	  Camera::Instance()->backward();
 		  glutPostRedisplay();
 		  break;
-      case 'e':
-    	  glutPostRedisplay();
-    	  break;
+      case 'z':
+		  Camera::Instance()->toCaminante();
+		  glutPostRedisplay();
+		  break;
+      case 'x':
+		  Camera::Instance()->toCentro();
+		  glutPostRedisplay();
+		  break;
      default:
          break;
    }

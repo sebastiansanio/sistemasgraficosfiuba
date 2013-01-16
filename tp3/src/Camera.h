@@ -12,7 +12,8 @@
 #include <GL/glut.h>
 #include <GL/freeglut.h>
 #include <iostream>
-#include "Observador.h"
+#include "ObservadorCentro.h"
+#include "ObservadorCaminante.h"
 using namespace std;
 
 class Camera {
@@ -27,6 +28,8 @@ public:
 	void right();
 	void forward();
 	void backward();
+	void toCaminante();
+	void toCentro();
 	GLfloat inverseViewMatrix[16];
 	Observador* observador;
 	virtual ~Camera();

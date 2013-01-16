@@ -29,7 +29,7 @@ Camera::Camera() {
 		matrixTemp[i] = new float[4];
 	}
 
-	this->observador = new Observador();
+	this->observador = new ObservadorCaminante();
 }
 
 void Camera::setPosition(){
@@ -192,6 +192,14 @@ void Camera::forward(){
 
 void Camera::backward(){
 	this->observador->backward();
+}
+
+void Camera::toCaminante(){
+	this->observador = new ObservadorCaminante();
+}
+
+void Camera::toCentro(){
+	this->observador = new ObservadorCentro();
 }
 
 Camera::~Camera() {
