@@ -12,6 +12,7 @@
 #include "Rectang.h"
 #include "RectangTex.h"
 #include "Bottle.h"
+#include "AssemblyLine.h"
 
 class Scene {
 public:
@@ -31,6 +32,7 @@ private:
 	CubeRef* cube1;
 	Rectang* rectang;
 	Bottle* bottle;
+	AssemblyLine* assemblyLine;
 };
 
 #endif /* Scene_H_ */

@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Scene.h"
+#include "Curves/BSpline.h"
 
 void OnIdle (void)
 {
@@ -102,6 +103,7 @@ void keyboard (unsigned char key, int x, int y) {
          break;
    }
 }
+
 
 int main(int argc, char** argv)
 {

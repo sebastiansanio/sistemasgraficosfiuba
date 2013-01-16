@@ -17,26 +17,26 @@ void BSpline::addPoint(float x,float y, float z){
 }
 
 void BSpline::calculate(){
-	float auxX;
-	float auxY;
-	float auxZ;
+	double auxX;
+	double auxY;
+	double auxZ;
 
 	int size=controlPoints->size();
 
 	if(size<3)
 		return;
 
-	for(float i=1;i < size-1+0.001;i+=BSSTEP){
+	for(double i=1;i <= size-1;i+=BSSTEP){
 
 		int intPart = (int) i;
-		float u= i - intPart;
+		float u = i - intPart;
 
-		auxX=(1/2)*pow(u,2)*controlPoints->at(i)->getX()+(-pow(u,2)+u+(1/2))*controlPoints->at(i+1)->getX();
-		auxX+=(1/2)*pow(1-u,2)*controlPoints->at(i+2)->getX();
-		auxY=(1/2)*pow(u,2)*controlPoints->at(i)->getY()+(-pow(u,2)+u+(1/2))*controlPoints->at(i+1)->getY();
-		auxY+=(1/2)*pow(1-u,2)*controlPoints->at(i+2)->getY();
-		auxZ=(1/2)*pow(u,2)*controlPoints->at(i)->getZ()+(-pow(u,2)+u+(1/2))*controlPoints->at(i+1)->getZ();
-		auxZ+=(1/2)*pow(1-u,2)*controlPoints->at(i+2)->getZ();
+		auxX=0.5*pow(1-u,2)*controlPoints->at(i-1)->getX()+(-pow(u,2)+u+0.5)*controlPoints->at(i)->getX();
+		auxX+=0.5*pow(u,2)*controlPoints->at(i+1)->getX();
+		auxY=0.5*pow(1-u,2)*controlPoints->at(i-1)->getY()+(-pow(u,2)+u+0.5)*controlPoints->at(i)->getY();
+		auxY+=0.5*pow(u,2)*controlPoints->at(i+1)->getY();
+		auxZ=0.5*pow(1-u,2)*controlPoints->at(i-1)->getZ()+(-pow(u,2)+u+0.5)*controlPoints->at(i)->getZ();
+		auxZ+=0.5*pow(u,2)*controlPoints->at(i+1)->getZ();
 		Coordinate* curveCoordinate=new Coordinate(auxX,auxY,auxZ);
 		curvePoints->push_back(curveCoordinate);
 	}

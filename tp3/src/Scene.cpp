@@ -23,6 +23,7 @@ Scene::Scene() {
 	this->cube1 = new CubeRef(1.0,1.0,1.0);
 	this->rectang = new Rectang(1.0,1.0,0.5);
 	this->bottle = new Bottle();
+	this->assemblyLine = new AssemblyLine();
 }
 
 void Scene::printScene(){
@@ -80,6 +81,12 @@ void Scene::printScene(){
 				glTranslatef(-3.0,0.0,0.0);
 				bottle->print();
 			glPopMatrix();
+
+			glPushMatrix();
+				glTranslatef(0.0,0.0,2.0);
+				assemblyLine->print();
+			glPopMatrix();
+
 	glPopMatrix();
 }
 
