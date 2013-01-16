@@ -8,8 +8,7 @@
 #ifndef RECTANGTEX_H_
 #define RECTANGTEX_H_
 
-#include "BasicProgram.h"
-#include "TextureProgram.h"
+#include "GenericTex.h"
 
 class RectangTex {
 public:
@@ -18,20 +17,21 @@ public:
 	virtual ~RectangTex();
 
 private:
-	float x;
-	float y;
-	int texId;
-	double tamTex;
-	int cantTriangulos;
-	float* positionArray;
-	float* colorArray;
-	float* normalArray;
-	float* textureArray;
-	TextureProgram* program;
-	GLuint bufferPositionHandler;
-	GLuint bufferColorHandler;
-	GLuint bufferNormalHandler;
-	GLuint bufferTextureHandler;
+	GenericTex* genericTex;
+//	float x;
+//	float y;
+//	int texId;
+//	double tamTex;
+//	int cantTriangulos;
+//	float* positionArray;
+//	float* colorArray;
+//	float* normalArray;
+//	float* textureArray;
+//	TextureProgram* program;
+//	GLuint bufferPositionHandler;
+//	GLuint bufferColorHandler;
+//	GLuint bufferNormalHandler;
+//	GLuint bufferTextureHandler;
 };
 
 #endif /* RECTANGTEX_H_ */

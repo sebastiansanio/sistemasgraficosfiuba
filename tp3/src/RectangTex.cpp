@@ -9,26 +9,21 @@
 
 RectangTex::RectangTex(float xSize, float ySize, int texId,double tamTex) {
 	// TODO Auto-generated constructor stub
-	this->x = xSize;
-	this->y = ySize;
-	this->texId = texId;
-	this->tamTex = tamTex;
-	this->program = TextureProgram::Instance();
-	this->cantTriangulos = 0;
+	int cantTriangulos = 0;
 
 	int cantTriangulosEstimado = (xSize*2/tamTex)*(ySize*2/tamTex)*2;
 	cantTriangulosEstimado = cantTriangulosEstimado * 2;
 
-	this->positionArray = new float[cantTriangulosEstimado*9];
-	this->colorArray = new float[cantTriangulosEstimado*9];
-	this->normalArray = new float[cantTriangulosEstimado*9];
-	this->textureArray = new float[cantTriangulosEstimado*6];
+	float* positionArray = new float[cantTriangulosEstimado*9];
+	float* colorArray = new float[cantTriangulosEstimado*9];
+	float* normalArray = new float[cantTriangulosEstimado*9];
+	float* textureArray = new float[cantTriangulosEstimado*6];
 
 	int posCounter = 0;
 	int texPosCounter = 0;
 
-	for(float i = -(this->x); i < (this->x); i+=tamTex) {
-			for(float j = -(this->y); j < (this->y); j+=tamTex){
+	for(float i = -(xSize); i < (xSize); i+=tamTex) {
+			for(float j = -(ySize); j < (ySize); j+=tamTex){
 				//Primer triangulo
 				//Vertice 1
 				positionArray[posCounter]=i;
@@ -88,37 +83,11 @@ RectangTex::RectangTex(float xSize, float ySize, int texId,double tamTex) {
 		normalArray[(i*3)+2]=1.0;
 	}
 
-	glGenBuffers(1, &bufferPositionHandler);
-	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
-	glBufferData( GL_ARRAY_BUFFER, (cantTriangulos * 9) * sizeof (float), this->positionArray, GL_STATIC_DRAW );
-
-	glGenBuffers(1, &bufferColorHandler);
-	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
-	glBufferData( GL_ARRAY_BUFFER, (cantTriangulos * 9) * sizeof (float), this->colorArray, GL_STATIC_DRAW );
-
-	glGenBuffers(1, &bufferNormalHandler);
-	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
-	glBufferData( GL_ARRAY_BUFFER, (cantTriangulos * 9) * sizeof (float), this->normalArray, GL_STATIC_DRAW );
-
-	glGenBuffers(1, &bufferTextureHandler);
-	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
-	glBufferData( GL_ARRAY_BUFFER, (cantTriangulos * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
+	this->genericTex = new GenericTex(cantTriangulos,positionArray,colorArray,normalArray,textureArray,texId);
 }
 
 void RectangTex::print(){
-	program->setTexture(this->texId);
-	program->setActualProgram();
-
-	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
-	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
-	glVertexAttribPointer( VERTEX_COL_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
-	glVertexAttribPointer( VERTEX_POS_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
-	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-
-	glDrawArrays( GL_TRIANGLES, 0, cantTriangulos * 3);
+	this->genericTex->print();
 }
 
 RectangTex::~RectangTex() {
