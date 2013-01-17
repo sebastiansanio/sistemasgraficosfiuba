@@ -11,6 +11,7 @@
 #include "CubeRef.h"
 #include "Rectang.h"
 #include "RectangTex.h"
+#include "Lampara.h"
 #include "Bottle.h"
 #include "AssemblyLine.h"
 
@@ -32,6 +33,7 @@ private:
 	RectangTex* techo;
 	CubeRef* cube1;
 	Rectang* rectang;
+	Lampara* lampara;
 	Bottle* bottle;
 	AssemblyLine* assemblyLine;
 };
