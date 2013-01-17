@@ -9,21 +9,28 @@
 
 
 AssemblyLine::AssemblyLine(){
+
+	Coordinate*  coordinate1= new Coordinate(0.5,0,0);
+	Coordinate*  coordinate2= new Coordinate(0.5,0,0.2);
+	Coordinate*  coordinate3= new Coordinate(-0.5,0,0.2);
+	Coordinate*  coordinate4= new Coordinate(-0.5,0,0);
+
+
 	program = AssemblyLineProgram::Instance();
 	BSpline* bspline = new BSpline();
 	bspline->addPoint(0,0,0);
-	bspline->addPoint(0,1,0);
-	bspline->addPoint(1,1,0);
-	bspline->addPoint(1,0,0);
-	bspline->addPoint(0,0,0);
-	bspline->addPoint(0,1,0);
+	bspline->addPoint(0,2,0);
+	bspline->addPoint(0,4,0);
+	bspline->addPoint(0,6,0);
+
 
 	bspline->calculate();
 
 	vector<Coordinate*>* points= bspline->getPoints();
+
 	unsigned int size = points->size();
 
-	trianglesEstimated = points->size();
+	trianglesEstimated = (points->size()-1)*8;
 
 	this->positionArray = new float[trianglesEstimated*9];
 	this->colorArray = new float[trianglesEstimated*9];
@@ -33,12 +40,108 @@ AssemblyLine::AssemblyLine(){
 	int posCounter = 0;
 	int texPosCounter = 0;
 
-	for(unsigned int i = 0;i<size;i++){
-		positionArray[posCounter]=points->at(i)->getX();
-		positionArray[posCounter+1]=points->at(i)->getY();
-		positionArray[posCounter+2]=points->at(i)->getZ();
+	for(unsigned int i = 0;i<size-1;i++){
 
-		posCounter = posCounter + 3;
+		double deltaX = points->at(i+1)->getX()-points->at(i)->getX();
+		double deltaY = points->at(i+1)->getY()-points->at(i)->getY();
+		Coordinate* coordinate1New = new Coordinate(coordinate1->getX()+deltaX,coordinate1->getY()+deltaY,coordinate1->getZ());
+		Coordinate* coordinate2New = new Coordinate(coordinate2->getX()+deltaX,coordinate2->getY()+deltaY,coordinate2->getZ());
+		Coordinate* coordinate3New = new Coordinate(coordinate3->getX()+deltaX,coordinate3->getY()+deltaY,coordinate3->getZ());
+		Coordinate* coordinate4New = new Coordinate(coordinate4->getX()+deltaX,coordinate4->getY()+deltaY,coordinate4->getZ());
+
+		positionArray[posCounter]=coordinate1->getX();
+		positionArray[posCounter+1]=coordinate1->getY();
+		positionArray[posCounter+2]=coordinate1->getZ();
+		positionArray[posCounter+3]=coordinate2New->getX();
+		positionArray[posCounter+4]=coordinate2New->getY();
+		positionArray[posCounter+5]=coordinate2New->getZ();
+		positionArray[posCounter+6]=coordinate1New->getX();
+		positionArray[posCounter+7]=coordinate1New->getY();
+		positionArray[posCounter+8]=coordinate1New->getZ();
+		posCounter = posCounter + 9;
+
+		positionArray[posCounter]=coordinate1->getX();
+		positionArray[posCounter+1]=coordinate1->getY();
+		positionArray[posCounter+2]=coordinate1->getZ();
+		positionArray[posCounter+3]=coordinate2New->getX();
+		positionArray[posCounter+4]=coordinate2New->getY();
+		positionArray[posCounter+5]=coordinate2New->getZ();
+		positionArray[posCounter+6]=coordinate2->getX();
+		positionArray[posCounter+7]=coordinate2->getY();
+		positionArray[posCounter+8]=coordinate2->getZ();
+		posCounter = posCounter + 9;
+
+		positionArray[posCounter]=coordinate2->getX();
+		positionArray[posCounter+1]=coordinate2->getY();
+		positionArray[posCounter+2]=coordinate2->getZ();
+		positionArray[posCounter+3]=coordinate3New->getX();
+		positionArray[posCounter+4]=coordinate3New->getY();
+		positionArray[posCounter+5]=coordinate3New->getZ();
+		positionArray[posCounter+6]=coordinate2New->getX();
+		positionArray[posCounter+7]=coordinate2New->getY();
+		positionArray[posCounter+8]=coordinate2New->getZ();
+		posCounter = posCounter + 9;
+
+		positionArray[posCounter]=coordinate2->getX();
+		positionArray[posCounter+1]=coordinate2->getY();
+		positionArray[posCounter+2]=coordinate2->getZ();
+		positionArray[posCounter+3]=coordinate3New->getX();
+		positionArray[posCounter+4]=coordinate3New->getY();
+		positionArray[posCounter+5]=coordinate3New->getZ();
+		positionArray[posCounter+6]=coordinate3->getX();
+		positionArray[posCounter+7]=coordinate3->getY();
+		positionArray[posCounter+8]=coordinate3->getZ();
+		posCounter = posCounter + 9;
+
+		positionArray[posCounter]=coordinate3->getX();
+		positionArray[posCounter+1]=coordinate3->getY();
+		positionArray[posCounter+2]=coordinate3->getZ();
+		positionArray[posCounter+3]=coordinate4New->getX();
+		positionArray[posCounter+4]=coordinate4New->getY();
+		positionArray[posCounter+5]=coordinate4New->getZ();
+		positionArray[posCounter+6]=coordinate3New->getX();
+		positionArray[posCounter+7]=coordinate3New->getY();
+		positionArray[posCounter+8]=coordinate3New->getZ();
+		posCounter = posCounter + 9;
+
+		positionArray[posCounter]=coordinate3->getX();
+		positionArray[posCounter+1]=coordinate3->getY();
+		positionArray[posCounter+2]=coordinate3->getZ();
+		positionArray[posCounter+3]=coordinate4New->getX();
+		positionArray[posCounter+4]=coordinate4New->getY();
+		positionArray[posCounter+5]=coordinate4New->getZ();
+		positionArray[posCounter+6]=coordinate4->getX();
+		positionArray[posCounter+7]=coordinate4->getY();
+		positionArray[posCounter+8]=coordinate4->getZ();
+		posCounter = posCounter + 9;
+
+		positionArray[posCounter]=coordinate4->getX();
+		positionArray[posCounter+1]=coordinate4->getY();
+		positionArray[posCounter+2]=coordinate4->getZ();
+		positionArray[posCounter+3]=coordinate1New->getX();
+		positionArray[posCounter+4]=coordinate1New->getY();
+		positionArray[posCounter+5]=coordinate1New->getZ();
+		positionArray[posCounter+6]=coordinate4New->getX();
+		positionArray[posCounter+7]=coordinate4New->getY();
+		positionArray[posCounter+8]=coordinate4New->getZ();
+		posCounter = posCounter + 9;
+
+		positionArray[posCounter]=coordinate4->getX();
+		positionArray[posCounter+1]=coordinate4->getY();
+		positionArray[posCounter+2]=coordinate4->getZ();
+		positionArray[posCounter+3]=coordinate1New->getX();
+		positionArray[posCounter+4]=coordinate1New->getY();
+		positionArray[posCounter+5]=coordinate1New->getZ();
+		positionArray[posCounter+6]=coordinate1->getX();
+		positionArray[posCounter+7]=coordinate1->getY();
+		positionArray[posCounter+8]=coordinate1->getZ();
+		posCounter = posCounter + 9;
+
+
+		coordinate1 = coordinate1New;
+		coordinate2 = coordinate2New;
+		coordinate3 = coordinate3New;
+		coordinate4 = coordinate4New;
 	}
 
 
@@ -73,7 +176,7 @@ void AssemblyLine::print(){
 	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
 	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
-	glDrawArrays( GL_POINTS, 0, trianglesEstimated * 3);
+	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
 
 }
 
