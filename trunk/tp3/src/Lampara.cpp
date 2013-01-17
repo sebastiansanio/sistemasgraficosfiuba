@@ -41,8 +41,6 @@ Lampara::Lampara() {
 
 		zNormal = -1/pendiente;
 
-		cout << "Pendiente: " << pendiente << " Normal: " << -1/pendiente << endl;
-
 			for(float j=0;j<360;j=j+STEP_LAMP){
 				//Primer triangulo
 				//Vertice 1
