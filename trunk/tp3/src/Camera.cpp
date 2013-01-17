@@ -36,10 +36,6 @@ void Camera::setPosition(){
 	float* eyeTemp = this->observador->getEye();
 	float* atTemp = this->observador->getAt();
 	float* upTemp = this->observador->getUp();
-	cout << "Camara" << endl;
-	cout << eyeTemp[0] << " " << eyeTemp[1] << " " << eyeTemp[2] << endl;
-	cout << atTemp[0] << " " << atTemp[1] << " " << atTemp[2] << endl;
-	cout << upTemp[0] << " " << upTemp[1] << " " << upTemp[2] << endl;
 	gluLookAt(eyeTemp[0],eyeTemp[1],eyeTemp[2],atTemp[0],atTemp[1],atTemp[2],upTemp[0],upTemp[1],upTemp[2]);
 	glGetFloatv (GL_MODELVIEW_MATRIX, viewMatrix);
 	invertViewMatrix();
