@@ -23,19 +23,25 @@ void AssemblyLine::rotate(Coordinate* coordinate, double angle){
 AssemblyLine::AssemblyLine(){
 
 	program = TextureProgram::Instance();
+
 	BSpline* bspline = new BSpline();
 	bspline->addPoint(-5,-5,0);
 	bspline->addPoint(-5,5,0);
 	bspline->addPoint(0,5,0);
 	bspline->addPoint(5,5,0);
 	bspline->addPoint(5,-5,0);
-
 	bspline->calculate();
 	vector<Coordinate*>* points= bspline->getPoints();
 	unsigned int size = points->size();
 
-	trianglesEstimated = (points->size()-1)*8;
+	vector<Coordinate*>* section = new vector<Coordinate*>;
+	section->push_back(new Coordinate(0.5,0,0));
+	section->push_back(new Coordinate(0.5,0,-0.2));
+	section->push_back(new Coordinate(-0.5,0,-0.2));
+	section->push_back(new Coordinate(-0.5,0,0));
+	unsigned int sectionSize = section->size();
 
+	trianglesEstimated = (points->size()-1)*sectionSize*2;
 	this->positionArray = new float[trianglesEstimated*9];
 	this->colorArray = new float[trianglesEstimated*9];
 	this->normalArray = new float[trianglesEstimated*9];
@@ -44,10 +50,10 @@ AssemblyLine::AssemblyLine(){
 	int posCounter = 0;
 	int texPosCounter = 0;
 
-	Coordinate* coordinate1 = new Coordinate(0,0,0.2);
-	Coordinate* coordinate2 = new Coordinate(0,0,0);
-	Coordinate* coordinate3 = new Coordinate(0,0,0);
-	Coordinate* coordinate4 = new Coordinate(0,0,0.2);
+	Coordinate* coordinate1 = new Coordinate(0,0,section->at(0)->getZ());
+	Coordinate* coordinate2 = new Coordinate(0,0,section->at(1)->getZ());
+	Coordinate* coordinate3 = new Coordinate(0,0,section->at(2)->getZ());
+	Coordinate* coordinate4 = new Coordinate(0,0,section->at(3)->getZ());
 
 	Coordinate* coordinate1New = new Coordinate(0,0,coordinate1->getZ());
 	Coordinate* coordinate2New = new Coordinate(0,0,coordinate2->getZ());
@@ -63,15 +69,14 @@ AssemblyLine::AssemblyLine(){
 	double normalX = -tangentY;
 	double normalY = tangentX;
 
-
-	coordinate1->setX(points->at(0)->getX()+normalX*0.5);
-	coordinate1->setY(points->at(0)->getY()+tangentX*0.5);
-	coordinate2->setX(points->at(0)->getX()+normalX*0.5);
-	coordinate2->setY(points->at(0)->getY()+tangentX*0.5);
-	coordinate3->setX(points->at(0)->getX()-normalX*0.5);
-	coordinate3->setY(points->at(0)->getY()-tangentX*0.5);
-	coordinate4->setX(points->at(0)->getX()-normalX*0.5);
-	coordinate4->setY(points->at(0)->getY()-tangentX*0.5);
+	coordinate1->setX(points->at(0)->getX()+normalX*section->at(0)->getX());
+	coordinate1->setY(points->at(0)->getY()+tangentX*section->at(0)->getX());
+	coordinate2->setX(points->at(0)->getX()+normalX*section->at(1)->getX());
+	coordinate2->setY(points->at(0)->getY()+tangentX*section->at(1)->getX());
+	coordinate3->setX(points->at(0)->getX()+normalX*section->at(2)->getX());
+	coordinate3->setY(points->at(0)->getY()+tangentX*section->at(2)->getX());
+	coordinate4->setX(points->at(0)->getX()+normalX*section->at(3)->getX());
+	coordinate4->setY(points->at(0)->getY()+tangentX*section->at(3)->getX());
 
 
 
@@ -82,18 +87,20 @@ AssemblyLine::AssemblyLine(){
 		norm = sqrt(pow(deltaX,2)+pow(deltaY,2));
 		tangentX = deltaX / norm;
 		tangentY = deltaY / norm;
-
 		normalX = -tangentY;
 		normalY = tangentX;
 
-		coordinate1New->setX(points->at(i+1)->getX()+normalX*0.5);
-		coordinate1New->setY(points->at(i+1)->getY()+tangentX*0.5);
-		coordinate2New->setX(points->at(i+1)->getX()+normalX*0.5);
-		coordinate2New->setY(points->at(i+1)->getY()+tangentX*0.5);
-		coordinate3New->setX(points->at(i+1)->getX()-normalX*0.5);
-		coordinate3New->setY(points->at(i+1)->getY()-tangentX*0.5);
-		coordinate4New->setX(points->at(i+1)->getX()-normalX*0.5);
-		coordinate4New->setY(points->at(i+1)->getY()-tangentX*0.5);
+
+
+		coordinate1New->setX(points->at(i+1)->getX()+normalX*section->at(0)->getX());
+		coordinate1New->setY(points->at(i+1)->getY()+tangentX*section->at(0)->getX());
+		coordinate2New->setX(points->at(i+1)->getX()+normalX*section->at(1)->getX());
+		coordinate2New->setY(points->at(i+1)->getY()+tangentX*section->at(1)->getX());
+		coordinate3New->setX(points->at(i+1)->getX()+normalX*section->at(2)->getX());
+		coordinate3New->setY(points->at(i+1)->getY()+tangentX*section->at(2)->getX());
+		coordinate4New->setX(points->at(i+1)->getX()+normalX*section->at(3)->getX());
+		coordinate4New->setY(points->at(i+1)->getY()+tangentX*section->at(3)->getX());
+
 
 		positionArray[posCounter]=coordinate1->getX();
 		positionArray[posCounter+1]=coordinate1->getY();
