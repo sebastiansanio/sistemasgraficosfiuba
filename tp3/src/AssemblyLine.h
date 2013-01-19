@@ -20,7 +20,7 @@ public:
 	void print();
 
 private:
-	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int i,float j);
+	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int j);
 	float* positionArray;
 	float* colorArray;
 	float* normalArray;
@@ -32,7 +32,6 @@ private:
 	int trianglesEstimated;
 	TextureProgram* program;
 	BSpline* bezier;
-	void rotate(Coordinate* coordinate, double angle);
 };
 
 
