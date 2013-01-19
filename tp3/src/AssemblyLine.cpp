@@ -38,6 +38,13 @@ void AssemblyLine::advance(double speed){
 	for(unsigned int i = 0;i<bottlesDistance->size();i++){
 		bottlesDistance->at(i) = bottlesDistance->at(i)+speed;
 	}
+	if(bottlesDistance->at(bottlesDistance->size()-1) >= pointsDistance->at(pointsDistance->size()-1))
+		bottlesDistance->erase(bottlesDistance->end());
+
+
+	setTexture();
+	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
+	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
 
 }
 
@@ -238,8 +245,6 @@ AssemblyLine::AssemblyLine(){
 	glGenBuffers(1, &bufferTextureHandler);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
 	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
-
-
 }
 
 void AssemblyLine::calculateDistances(){
@@ -250,14 +255,10 @@ void AssemblyLine::calculateDistances(){
 		distance += sqrt(pow(points->at(i+1)->getX()-points->at(i)->getX(),2)+pow(points->at(i+1)->getY()-points->at(i)->getY(),2));
 		pointsDistance->push_back(distance);
 	}
-
 }
-
-
 
 void AssemblyLine::print(){
 
-	setTexture();
 
 	program->setTexture(3);
 	program->setActualProgram();
@@ -269,7 +270,6 @@ void AssemblyLine::print(){
 	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
 	glVertexAttribPointer( VERTEX_POS_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
-	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
 	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
@@ -280,22 +280,18 @@ void AssemblyLine::print(){
 
 void AssemblyLine::drawBottles(){
 
-	if(bottlesDistance->at(bottlesDistance->size()-1) >= pointsDistance->at(pointsDistance->size()-1))
-				bottlesDistance->erase(bottlesDistance->end());
-
 	for(unsigned int i = 0;i<bottlesDistance->size();i++){
-
 		for (unsigned int j = 0;j<pointsDistance->size()-1;j++){
 			if(bottlesDistance->at(i) >= pointsDistance->at(j) && bottlesDistance->at(i) <  pointsDistance->at(j+1)){
 
 				double proportion = (bottlesDistance->at(i)-pointsDistance->at(j))/(pointsDistance->at(j+1)-pointsDistance->at(j));
-
 				double posX = points->at(j)->getX()*(1-proportion) + points->at(j+1)->getX() * (proportion);
 				double posY = points->at(j)->getY()*(1-proportion) + points->at(j+1)->getY() * (proportion);
 				glPushMatrix();
 					glTranslatef(posX,posY,0);
 					Bottle::Instance()->print();
 				glPopMatrix();
+				break;
 			}
 
 		}

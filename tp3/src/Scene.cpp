@@ -29,7 +29,6 @@ Scene::Scene() {
 	this->bottle = new Bottle();
 
 	assemblyLine = new AssemblyLine();
-	assemblyLine->addBottle();
 }
 
 void Scene::printScene(){
@@ -112,8 +111,6 @@ void Scene::advanceMotion(){
 	}else{
 		generateBottleTime --;
 	}
-
-
 	assemblyLine->advance(0.05);
 
 }
