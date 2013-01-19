@@ -39,25 +39,33 @@ void AssemblyLine::setTexture(){
 	int texPosCounter = 0;
 	for(unsigned int i = 0;i<size-1;i++){
 		for(unsigned j = 0;j<sectionSize;j++){
-			textureArray[texPosCounter]=0;
-			textureArray[texPosCounter+1]=0+advanceParameter;
-			textureArray[texPosCounter+2]=1;
-			textureArray[texPosCounter+3]=1+advanceParameter;
-			textureArray[texPosCounter+4]=0;
-			textureArray[texPosCounter+5]=1+advanceParameter;
+			double horizontalParameterFrom;
+			double horizontalParameterTo;
+			if(j!=3){
+				horizontalParameterFrom = 0;
+				horizontalParameterTo = 0.1;
+			}else{
+				horizontalParameterFrom = 0.9;
+				horizontalParameterTo = 1;
+			}
+
+			textureArray[texPosCounter+1]=horizontalParameterFrom;
+			textureArray[texPosCounter]=0+advanceParameter;
+			textureArray[texPosCounter+3]=horizontalParameterTo;
+			textureArray[texPosCounter+2]=1+advanceParameter;
+			textureArray[texPosCounter+5]=horizontalParameterFrom;
+			textureArray[texPosCounter+4]=1+advanceParameter;
 			texPosCounter = texPosCounter+6;
 
-			textureArray[texPosCounter]=0;
-			textureArray[texPosCounter+1]=0+advanceParameter;
-			textureArray[texPosCounter+2]=1;
-			textureArray[texPosCounter+3]=1+advanceParameter;
-			textureArray[texPosCounter+4]=1;
-			textureArray[texPosCounter+5]=0+advanceParameter;
+			textureArray[texPosCounter+1]=horizontalParameterFrom;
+			textureArray[texPosCounter]=0+advanceParameter;
+			textureArray[texPosCounter+3]=horizontalParameterTo;
+			textureArray[texPosCounter+2]=1+advanceParameter;
+			textureArray[texPosCounter+5]=horizontalParameterTo;
+			textureArray[texPosCounter+4]=0+advanceParameter;
 			texPosCounter = texPosCounter+6;
-
 		}
 	}
-
 }
 
 AssemblyLine::AssemblyLine(){
@@ -74,7 +82,6 @@ AssemblyLine::AssemblyLine(){
 	bspline->addPoint(2,5,0);
 	bspline->addPoint(4,5,0);
 	bspline->addPoint(6,2,0);
-
 	bspline->calculate();
 	vector<Coordinate*>* points= bspline->getPoints();
 	size = points->size();
