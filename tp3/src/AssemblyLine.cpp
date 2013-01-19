@@ -35,6 +35,10 @@ void AssemblyLine::advance(double speed){
 		advanceParameter -= 50;
 	}
 	advanceParameter += speed;
+	for(unsigned int i = 0;i<bottlesDistance->size();i++){
+		bottlesDistance->at(i) = bottlesDistance->at(i)+speed;
+	}
+
 }
 
 
@@ -42,7 +46,15 @@ void AssemblyLine::setTexture(){
 
 	int texPosCounter = 0;
 
+	double sectionLen = 1;
+	double texFrom = 0.0;
+	double texTo;
+
 	for(unsigned int i = 0;i<size-1;i++){
+
+		texTo = texFrom + (pointsDistance->at(i+1)-pointsDistance->at(i))*sectionLen;
+
+
 		for(unsigned j = 0;j<sectionSize;j++){
 			double horizontalParameterFrom;
 			double horizontalParameterTo;
@@ -55,28 +67,29 @@ void AssemblyLine::setTexture(){
 			}
 
 			textureArray[texPosCounter+1]=horizontalParameterFrom;
-			textureArray[texPosCounter]=0-advanceParameter;
+			textureArray[texPosCounter]=texFrom-advanceParameter;
 			textureArray[texPosCounter+3]=horizontalParameterTo;
-			textureArray[texPosCounter+2]=1-advanceParameter;
+			textureArray[texPosCounter+2]=texTo-advanceParameter;
 			textureArray[texPosCounter+5]=horizontalParameterFrom;
-			textureArray[texPosCounter+4]=1-advanceParameter;
+			textureArray[texPosCounter+4]=texTo-advanceParameter;
 			texPosCounter = texPosCounter+6;
 
 			textureArray[texPosCounter+1]=horizontalParameterFrom;
-			textureArray[texPosCounter]=0-advanceParameter;
+			textureArray[texPosCounter]=texFrom-advanceParameter;
 			textureArray[texPosCounter+3]=horizontalParameterTo;
-			textureArray[texPosCounter+2]=1-advanceParameter;
+			textureArray[texPosCounter+2]=texTo-advanceParameter;
 			textureArray[texPosCounter+5]=horizontalParameterTo;
-			textureArray[texPosCounter+4]=0-advanceParameter;
+			textureArray[texPosCounter+4]=texFrom-advanceParameter;
 			texPosCounter = texPosCounter+6;
 		}
+		texFrom = texTo;
 	}
 }
 
 AssemblyLine::AssemblyLine(){
 
 	advanceParameter = 0;
-
+	bottlesDistance = new vector<double>;
 	program = TextureProgram::Instance();
 
 	BSpline* bspline = new BSpline();
@@ -261,9 +274,33 @@ void AssemblyLine::print(){
 
 	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
 
-	glTranslatef(points->at(0)->getX(),points->at(0)->getY(),points->at(0)->getZ());
-	Bottle::Instance()->print();
+	drawBottles();
 
+}
+
+void AssemblyLine::drawBottles(){
+
+	for(unsigned int i = 0;i<bottlesDistance->size();i++){
+		for (unsigned int j = 0;j<pointsDistance->size()-1;j++){
+			if(bottlesDistance->at(i) >= pointsDistance->at(j) && bottlesDistance->at(i) <  pointsDistance->at(j+1)){
+
+				double proportion = (bottlesDistance->at(i)-pointsDistance->at(j))/(pointsDistance->at(j+1)-pointsDistance->at(j));
+				cout <<"proportion:" <<proportion <<endl;
+
+				double posX = points->at(j)->getX()*(1-proportion) + points->at(j+1)->getX() * (proportion);
+				double posY = points->at(j)->getY()*(1-proportion) + points->at(j+1)->getY() * (proportion);
+				glTranslatef(posX,posY,0);
+				Bottle::Instance()->print();
+			}
+
+		}
+
+	}
+
+}
+
+void AssemblyLine::addBottle(){
+	bottlesDistance->push_back(0);
 }
 
 AssemblyLine::~AssemblyLine(){
