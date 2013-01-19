@@ -92,39 +92,18 @@ void Scene::printScene(){
 					lampara->print();
 				glPopMatrix();
 			glPopMatrix();
-			bottle->print();
+
 			glPushMatrix();
-				glTranslatef(0.0,3.0,0.0);
-				bottle->print();
-				glTranslatef(0.0,3.0,0.0);
-				bottle->print();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(0.0,-3.0,0.0);
-				bottle->print();
-				glTranslatef(0.0,-3.0,0.0);
-				bottle->print();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(3.0,0.0,0.0);
-				bottle->print();
-				glTranslatef(3.0,0.0,0.0);
-				bottle->print();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(0.0,0.0,2.0);
-				assemblyLine->advance(0.1);
+				glTranslatef(0.0,0.0,0.8);
 				assemblyLine->print();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(-3.0,0.0,0.0);
-				bottle->print();
-				glTranslatef(-3.0,0.0,0.0);
-				bottle->print();
 			glPopMatrix();
 
 
 	glPopMatrix();
+}
+
+void Scene::advanceMotion(){
+	assemblyLine->advance(0.1);
 }
 
 Scene::~Scene() {

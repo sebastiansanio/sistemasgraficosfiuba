@@ -9,11 +9,13 @@
 
 class Bottle{
 public:
+	static Bottle* Instance();
 	Bottle();
 	~Bottle();
 	void print();
 
 private:
+	static Bottle* instance;
 	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int i,float j);
 	float* positionArray;
 	float* colorArray;

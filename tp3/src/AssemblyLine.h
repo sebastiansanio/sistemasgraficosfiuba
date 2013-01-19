@@ -21,6 +21,9 @@ public:
 	void advance(double speed);
 
 private:
+	vector<Coordinate*>* points;
+	vector<double>* pointsDistance;
+	void calculateDistances();
 	void setTexture();
 	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int j);
 	unsigned int size;

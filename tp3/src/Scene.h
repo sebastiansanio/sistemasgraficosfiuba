@@ -20,6 +20,7 @@ public:
 	static Scene* Instance();
 	void printScene();
 	virtual ~Scene();
+	void advanceMotion();
 
 protected:
 	Scene();
