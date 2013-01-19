@@ -30,7 +30,6 @@ Coordinate* AssemblyLine::calculateNormal(vector<Coordinate*>* points,unsigned i
 
 void AssemblyLine::advance(double speed){
 
-
 	advanceParameter += speed;
 }
 
@@ -68,16 +67,14 @@ AssemblyLine::AssemblyLine(){
 	program = TextureProgram::Instance();
 
 	BSpline* bspline = new BSpline();
-//	bspline->addPoint(-7,-7,0);
-//	bspline->addPoint(-5,-7,0);
-//	bspline->addPoint(-5,5,0);
-//	bspline->addPoint(0,2,0);
-//	bspline->addPoint(2,5,0);
-//	bspline->addPoint(4,5,0);
-//	bspline->addPoint(6,2,0);
-	bspline->addPoint(-4,0,0);
-	bspline->addPoint(4,0,0);
-	bspline->addPoint(6,0,0);
+	bspline->addPoint(-7,-7,0);
+	bspline->addPoint(-5,-7,0);
+	bspline->addPoint(-5,5,0);
+	bspline->addPoint(0,2,0);
+	bspline->addPoint(2,5,0);
+	bspline->addPoint(4,5,0);
+	bspline->addPoint(6,2,0);
+
 	bspline->calculate();
 	vector<Coordinate*>* points= bspline->getPoints();
 	size = points->size();
@@ -206,15 +203,12 @@ AssemblyLine::AssemblyLine(){
 	glGenBuffers(1, &bufferPositionHandler);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
 	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 9) * sizeof (float), this->positionArray, GL_STATIC_DRAW );
-
 	glGenBuffers(1, &bufferColorHandler);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
 	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 9) * sizeof (float), this->colorArray, GL_STATIC_DRAW );
-
 	glGenBuffers(1, &bufferNormalHandler);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
 	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 9) * sizeof (float), this->normalArray, GL_STATIC_DRAW );
-
 	glGenBuffers(1, &bufferTextureHandler);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
 	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
@@ -228,7 +222,6 @@ void AssemblyLine::print(){
 	program->setTexture(3);
 	program->setActualProgram();
 
-
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
 	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
@@ -236,6 +229,7 @@ void AssemblyLine::print(){
 	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
 	glVertexAttribPointer( VERTEX_POS_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
+	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
 	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
