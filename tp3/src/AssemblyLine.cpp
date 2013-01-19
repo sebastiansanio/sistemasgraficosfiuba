@@ -39,7 +39,8 @@ AssemblyLine::AssemblyLine(){
 	section->push_back(new Coordinate(0.5,0,-0.2));
 	section->push_back(new Coordinate(-0.5,0,-0.2));
 	section->push_back(new Coordinate(-0.5,0,0));
-	unsigned int sectionSize = section->size();
+	section->push_back(new Coordinate(0.5,0,0));
+	unsigned int sectionSize = section->size()-1;
 
 	trianglesEstimated = (points->size()-1)*sectionSize*2;
 	this->positionArray = new float[trianglesEstimated*9];
@@ -52,224 +53,92 @@ AssemblyLine::AssemblyLine(){
 
 	Coordinate* coordinate1 = new Coordinate(0,0,section->at(0)->getZ());
 	Coordinate* coordinate2 = new Coordinate(0,0,section->at(1)->getZ());
-	Coordinate* coordinate3 = new Coordinate(0,0,section->at(2)->getZ());
-	Coordinate* coordinate4 = new Coordinate(0,0,section->at(3)->getZ());
 
 	Coordinate* coordinate1New = new Coordinate(0,0,coordinate1->getZ());
 	Coordinate* coordinate2New = new Coordinate(0,0,coordinate2->getZ());
-	Coordinate* coordinate3New = new Coordinate(0,0,coordinate3->getZ());
-	Coordinate* coordinate4New = new Coordinate(0,0,coordinate4->getZ());
 
-	double deltaX = points->at(1)->getX()-points->at(0)->getX();
-	double deltaY = points->at(1)->getY()-points->at(0)->getY();
-	double norm = sqrt(pow(deltaX,2)+pow(deltaY,2));
-	double tangentX = deltaX / norm;
-	double tangentY = deltaY / norm;
-
-	double normalX = -tangentY;
-	double normalY = tangentX;
-
-	coordinate1->setX(points->at(0)->getX()+normalX*section->at(0)->getX());
-	coordinate1->setY(points->at(0)->getY()+tangentX*section->at(0)->getX());
-	coordinate2->setX(points->at(0)->getX()+normalX*section->at(1)->getX());
-	coordinate2->setY(points->at(0)->getY()+tangentX*section->at(1)->getX());
-	coordinate3->setX(points->at(0)->getX()+normalX*section->at(2)->getX());
-	coordinate3->setY(points->at(0)->getY()+tangentX*section->at(2)->getX());
-	coordinate4->setX(points->at(0)->getX()+normalX*section->at(3)->getX());
-	coordinate4->setY(points->at(0)->getY()+tangentX*section->at(3)->getX());
-
-
+	double deltaX;
+	double deltaY;
+	double norm;
+	double tangentX;
+	double tangentY;
+	double normalX;
 
 	for(unsigned int i = 0;i<size-1;i++){
+		for(unsigned j = 0;j<sectionSize;j++){
+			if(i!=0){
+				deltaX = points->at(i)->getX()-points->at(i-1)->getX();
+				deltaY = points->at(i)->getY()-points->at(i-1)->getY();
+			}else{
+				deltaX = points->at(i+1)->getX()-points->at(i)->getX();
+				deltaY = points->at(i+1)->getY()-points->at(i)->getY();
+			}
 
-		deltaX = points->at(i+1)->getX()-points->at(i)->getX();
-		deltaY = points->at(i+1)->getY()-points->at(i)->getY();
-		norm = sqrt(pow(deltaX,2)+pow(deltaY,2));
-		tangentX = deltaX / norm;
-		tangentY = deltaY / norm;
-		normalX = -tangentY;
-		normalY = tangentX;
+			norm = sqrt(pow(deltaX,2)+pow(deltaY,2));
+			tangentX = deltaX / norm;
+			tangentY = deltaY / norm;
+			normalX = -tangentY;
+			coordinate1->setX(points->at(i)->getX()+normalX*section->at(j)->getX());
+			coordinate1->setY(points->at(i)->getY()+tangentX*section->at(j)->getX());
+			coordinate1->setZ(section->at(j)->getZ());
+			coordinate2->setX(points->at(i)->getX()+normalX*section->at(j+1)->getX());
+			coordinate2->setY(points->at(i)->getY()+tangentX*section->at(j+1)->getX());
+			coordinate2->setZ(section->at(j+1)->getZ());
 
+			deltaX = points->at(i+1)->getX()-points->at(i)->getX();
+			deltaY = points->at(i+1)->getY()-points->at(i)->getY();
+			norm = sqrt(pow(deltaX,2)+pow(deltaY,2));
+			tangentX = deltaX / norm;
+			tangentY = deltaY / norm;
+			normalX = -tangentY;
+			coordinate1New->setX(points->at(i+1)->getX()+normalX*section->at(j)->getX());
+			coordinate1New->setY(points->at(i+1)->getY()+tangentX*section->at(j)->getX());
+			coordinate1New->setZ(section->at(j)->getZ());
+			coordinate2New->setX(points->at(i+1)->getX()+normalX*section->at(j+1)->getX());
+			coordinate2New->setY(points->at(i+1)->getY()+tangentX*section->at(j+1)->getX());
+			coordinate2New->setZ(section->at(j+1)->getZ());
 
+			positionArray[posCounter]=coordinate1->getX();
+			positionArray[posCounter+1]=coordinate1->getY();
+			positionArray[posCounter+2]=coordinate1->getZ();
+			positionArray[posCounter+3]=coordinate2New->getX();
+			positionArray[posCounter+4]=coordinate2New->getY();
+			positionArray[posCounter+5]=coordinate2New->getZ();
+			positionArray[posCounter+6]=coordinate1New->getX();
+			positionArray[posCounter+7]=coordinate1New->getY();
+			positionArray[posCounter+8]=coordinate1New->getZ();
+			normalArray[posCounter]=0;
+			normalArray[posCounter+1]=0;
+			normalArray[posCounter+2]=1;
+			normalArray[posCounter+3]=0;
+			normalArray[posCounter+4]=0;
+			normalArray[posCounter+5]=1;
+			normalArray[posCounter+6]=0;
+			normalArray[posCounter+7]=0;
+			normalArray[posCounter+8]=1;
+			posCounter = posCounter + 9;
 
-		coordinate1New->setX(points->at(i+1)->getX()+normalX*section->at(0)->getX());
-		coordinate1New->setY(points->at(i+1)->getY()+tangentX*section->at(0)->getX());
-		coordinate2New->setX(points->at(i+1)->getX()+normalX*section->at(1)->getX());
-		coordinate2New->setY(points->at(i+1)->getY()+tangentX*section->at(1)->getX());
-		coordinate3New->setX(points->at(i+1)->getX()+normalX*section->at(2)->getX());
-		coordinate3New->setY(points->at(i+1)->getY()+tangentX*section->at(2)->getX());
-		coordinate4New->setX(points->at(i+1)->getX()+normalX*section->at(3)->getX());
-		coordinate4New->setY(points->at(i+1)->getY()+tangentX*section->at(3)->getX());
+			positionArray[posCounter]=coordinate1->getX();
+			positionArray[posCounter+1]=coordinate1->getY();
+			positionArray[posCounter+2]=coordinate1->getZ();
+			positionArray[posCounter+3]=coordinate2New->getX();
+			positionArray[posCounter+4]=coordinate2New->getY();
+			positionArray[posCounter+5]=coordinate2New->getZ();
+			positionArray[posCounter+6]=coordinate2->getX();
+			positionArray[posCounter+7]=coordinate2->getY();
+			positionArray[posCounter+8]=coordinate2->getZ();
+			normalArray[posCounter]=0;
+			normalArray[posCounter+1]=0;
+			normalArray[posCounter+2]=1;
+			normalArray[posCounter+3]=0;
+			normalArray[posCounter+4]=0;
+			normalArray[posCounter+5]=1;
+			normalArray[posCounter+6]=0;
+			normalArray[posCounter+7]=0;
+			normalArray[posCounter+8]=1;
+			posCounter = posCounter + 9;
+		}
 
-
-		positionArray[posCounter]=coordinate1->getX();
-		positionArray[posCounter+1]=coordinate1->getY();
-		positionArray[posCounter+2]=coordinate1->getZ();
-		positionArray[posCounter+3]=coordinate2New->getX();
-		positionArray[posCounter+4]=coordinate2New->getY();
-		positionArray[posCounter+5]=coordinate2New->getZ();
-		positionArray[posCounter+6]=coordinate1New->getX();
-		positionArray[posCounter+7]=coordinate1New->getY();
-		positionArray[posCounter+8]=coordinate1New->getZ();
-		normalArray[posCounter]=0;
-		normalArray[posCounter+1]=0;
-		normalArray[posCounter+2]=1;
-		normalArray[posCounter+3]=0;
-		normalArray[posCounter+4]=0;
-		normalArray[posCounter+5]=1;
-		normalArray[posCounter+6]=0;
-		normalArray[posCounter+7]=0;
-		normalArray[posCounter+8]=1;
-		posCounter = posCounter + 9;
-
-		positionArray[posCounter]=coordinate1->getX();
-		positionArray[posCounter+1]=coordinate1->getY();
-		positionArray[posCounter+2]=coordinate1->getZ();
-		positionArray[posCounter+3]=coordinate2New->getX();
-		positionArray[posCounter+4]=coordinate2New->getY();
-		positionArray[posCounter+5]=coordinate2New->getZ();
-		positionArray[posCounter+6]=coordinate2->getX();
-		positionArray[posCounter+7]=coordinate2->getY();
-		positionArray[posCounter+8]=coordinate2->getZ();
-		normalArray[posCounter]=0;
-		normalArray[posCounter+1]=0;
-		normalArray[posCounter+2]=1;
-		normalArray[posCounter+3]=0;
-		normalArray[posCounter+4]=0;
-		normalArray[posCounter+5]=1;
-		normalArray[posCounter+6]=0;
-		normalArray[posCounter+7]=0;
-		normalArray[posCounter+8]=1;
-		posCounter = posCounter + 9;
-
-		positionArray[posCounter]=coordinate2->getX();
-		positionArray[posCounter+1]=coordinate2->getY();
-		positionArray[posCounter+2]=coordinate2->getZ();
-		positionArray[posCounter+3]=coordinate3New->getX();
-		positionArray[posCounter+4]=coordinate3New->getY();
-		positionArray[posCounter+5]=coordinate3New->getZ();
-		positionArray[posCounter+6]=coordinate2New->getX();
-		positionArray[posCounter+7]=coordinate2New->getY();
-		positionArray[posCounter+8]=coordinate2New->getZ();
-		normalArray[posCounter]=0;
-		normalArray[posCounter+1]=0;
-		normalArray[posCounter+2]=1;
-		normalArray[posCounter+3]=0;
-		normalArray[posCounter+4]=0;
-		normalArray[posCounter+5]=1;
-		normalArray[posCounter+6]=0;
-		normalArray[posCounter+7]=0;
-		normalArray[posCounter+8]=1;
-		posCounter = posCounter + 9;
-
-		positionArray[posCounter]=coordinate2->getX();
-		positionArray[posCounter+1]=coordinate2->getY();
-		positionArray[posCounter+2]=coordinate2->getZ();
-		positionArray[posCounter+3]=coordinate3New->getX();
-		positionArray[posCounter+4]=coordinate3New->getY();
-		positionArray[posCounter+5]=coordinate3New->getZ();
-		positionArray[posCounter+6]=coordinate3->getX();
-		positionArray[posCounter+7]=coordinate3->getY();
-		positionArray[posCounter+8]=coordinate3->getZ();
-		normalArray[posCounter]=0;
-		normalArray[posCounter+1]=0;
-		normalArray[posCounter+2]=1;
-		normalArray[posCounter+3]=0;
-		normalArray[posCounter+4]=0;
-		normalArray[posCounter+5]=1;
-		normalArray[posCounter+6]=0;
-		normalArray[posCounter+7]=0;
-		normalArray[posCounter+8]=1;
-		posCounter = posCounter + 9;
-
-		positionArray[posCounter]=coordinate3->getX();
-		positionArray[posCounter+1]=coordinate3->getY();
-		positionArray[posCounter+2]=coordinate3->getZ();
-		positionArray[posCounter+3]=coordinate4New->getX();
-		positionArray[posCounter+4]=coordinate4New->getY();
-		positionArray[posCounter+5]=coordinate4New->getZ();
-		positionArray[posCounter+6]=coordinate3New->getX();
-		positionArray[posCounter+7]=coordinate3New->getY();
-		positionArray[posCounter+8]=coordinate3New->getZ();
-		normalArray[posCounter]=0;
-		normalArray[posCounter+1]=0;
-		normalArray[posCounter+2]=1;
-		normalArray[posCounter+3]=0;
-		normalArray[posCounter+4]=0;
-		normalArray[posCounter+5]=1;
-		normalArray[posCounter+6]=0;
-		normalArray[posCounter+7]=0;
-		normalArray[posCounter+8]=1;
-		posCounter = posCounter + 9;
-
-		positionArray[posCounter]=coordinate3->getX();
-		positionArray[posCounter+1]=coordinate3->getY();
-		positionArray[posCounter+2]=coordinate3->getZ();
-		positionArray[posCounter+3]=coordinate4New->getX();
-		positionArray[posCounter+4]=coordinate4New->getY();
-		positionArray[posCounter+5]=coordinate4New->getZ();
-		positionArray[posCounter+6]=coordinate4->getX();
-		positionArray[posCounter+7]=coordinate4->getY();
-		positionArray[posCounter+8]=coordinate4->getZ();
-		normalArray[posCounter]=0;
-		normalArray[posCounter+1]=0;
-		normalArray[posCounter+2]=1;
-		normalArray[posCounter+3]=0;
-		normalArray[posCounter+4]=0;
-		normalArray[posCounter+5]=1;
-		normalArray[posCounter+6]=0;
-		normalArray[posCounter+7]=0;
-		normalArray[posCounter+8]=1;
-		posCounter = posCounter + 9;
-
-		positionArray[posCounter]=coordinate4->getX();
-		positionArray[posCounter+1]=coordinate4->getY();
-		positionArray[posCounter+2]=coordinate4->getZ();
-		positionArray[posCounter+3]=coordinate1New->getX();
-		positionArray[posCounter+4]=coordinate1New->getY();
-		positionArray[posCounter+5]=coordinate1New->getZ();
-		positionArray[posCounter+6]=coordinate4New->getX();
-		positionArray[posCounter+7]=coordinate4New->getY();
-		positionArray[posCounter+8]=coordinate4New->getZ();
-		normalArray[posCounter]=0;
-		normalArray[posCounter+1]=0;
-		normalArray[posCounter+2]=1;
-		normalArray[posCounter+3]=0;
-		normalArray[posCounter+4]=0;
-		normalArray[posCounter+5]=1;
-		normalArray[posCounter+6]=0;
-		normalArray[posCounter+7]=0;
-		normalArray[posCounter+8]=1;
-		posCounter = posCounter + 9;
-
-		positionArray[posCounter]=coordinate4->getX();
-		positionArray[posCounter+1]=coordinate4->getY();
-		positionArray[posCounter+2]=coordinate4->getZ();
-		positionArray[posCounter+3]=coordinate1New->getX();
-		positionArray[posCounter+4]=coordinate1New->getY();
-		positionArray[posCounter+5]=coordinate1New->getZ();
-		positionArray[posCounter+6]=coordinate1->getX();
-		positionArray[posCounter+7]=coordinate1->getY();
-		positionArray[posCounter+8]=coordinate1->getZ();
-		normalArray[posCounter]=0;
-		normalArray[posCounter+1]=0;
-		normalArray[posCounter+2]=1;
-		normalArray[posCounter+3]=0;
-		normalArray[posCounter+4]=0;
-		normalArray[posCounter+5]=1;
-		normalArray[posCounter+6]=0;
-		normalArray[posCounter+7]=0;
-		normalArray[posCounter+8]=1;
-		posCounter = posCounter + 9;
-
-		coordinate1->setX(coordinate1New->getX());
-		coordinate1->setY(coordinate1New->getY());
-		coordinate2->setX(coordinate2New->getX());
-		coordinate2->setY(coordinate2New->getY());
-		coordinate3->setX(coordinate3New->getX());
-		coordinate3->setY(coordinate3New->getY());
-		coordinate4->setX(coordinate4New->getX());
-		coordinate4->setY(coordinate4New->getY());
 	}
 
 
