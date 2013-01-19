@@ -104,6 +104,13 @@ void keyboard (unsigned char key, int x, int y) {
    }
 }
 
+void timerFunc(int value){
+	Scene::Instance()->advanceMotion();
+	glutTimerFunc(50,timerFunc,0);
+	glutPostRedisplay();
+
+}
+
 
 int main(int argc, char** argv)
 {
@@ -118,6 +125,7 @@ int main(int argc, char** argv)
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutIdleFunc(OnIdle);
+   glutTimerFunc(50,timerFunc,0);
 
    //Inicializando GLEW
    GLenum err = glewInit();

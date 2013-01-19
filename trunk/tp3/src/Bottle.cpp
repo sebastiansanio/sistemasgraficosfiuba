@@ -2,6 +2,16 @@
 #define PI 3.14159265
 #define STEP 10
 
+Bottle* Bottle::instance = 0;
+Bottle* Bottle::Instance ()
+{
+  if (instance == 0)
+  {
+    instance = new Bottle();
+  }
+  return instance;
+}
+
 Coordinate* Bottle::calculateNormal(vector<Coordinate*>* points,unsigned int i,float j){
 
 	if(i==0){

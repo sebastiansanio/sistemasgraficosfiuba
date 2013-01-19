@@ -6,7 +6,9 @@
  */
 
 #include "AssemblyLine.h"
+#include "Bottle.h"
 #define PI 3.14159265
+
 
 
 Coordinate* AssemblyLine::calculateNormal(vector<Coordinate*>* points,unsigned int j){
@@ -29,7 +31,9 @@ Coordinate* AssemblyLine::calculateNormal(vector<Coordinate*>* points,unsigned i
 }
 
 void AssemblyLine::advance(double speed){
-
+	if(advanceParameter>50){
+		advanceParameter -= 50;
+	}
 	advanceParameter += speed;
 }
 
@@ -37,6 +41,7 @@ void AssemblyLine::advance(double speed){
 void AssemblyLine::setTexture(){
 
 	int texPosCounter = 0;
+
 	for(unsigned int i = 0;i<size-1;i++){
 		for(unsigned j = 0;j<sectionSize;j++){
 			double horizontalParameterFrom;
@@ -50,19 +55,19 @@ void AssemblyLine::setTexture(){
 			}
 
 			textureArray[texPosCounter+1]=horizontalParameterFrom;
-			textureArray[texPosCounter]=0+advanceParameter;
+			textureArray[texPosCounter]=0-advanceParameter;
 			textureArray[texPosCounter+3]=horizontalParameterTo;
-			textureArray[texPosCounter+2]=1+advanceParameter;
+			textureArray[texPosCounter+2]=1-advanceParameter;
 			textureArray[texPosCounter+5]=horizontalParameterFrom;
-			textureArray[texPosCounter+4]=1+advanceParameter;
+			textureArray[texPosCounter+4]=1-advanceParameter;
 			texPosCounter = texPosCounter+6;
 
 			textureArray[texPosCounter+1]=horizontalParameterFrom;
-			textureArray[texPosCounter]=0+advanceParameter;
+			textureArray[texPosCounter]=0-advanceParameter;
 			textureArray[texPosCounter+3]=horizontalParameterTo;
-			textureArray[texPosCounter+2]=1+advanceParameter;
+			textureArray[texPosCounter+2]=1-advanceParameter;
 			textureArray[texPosCounter+5]=horizontalParameterTo;
-			textureArray[texPosCounter+4]=0+advanceParameter;
+			textureArray[texPosCounter+4]=0-advanceParameter;
 			texPosCounter = texPosCounter+6;
 		}
 	}
@@ -83,19 +88,19 @@ AssemblyLine::AssemblyLine(){
 	bspline->addPoint(4,5,0);
 	bspline->addPoint(6,2,0);
 	bspline->calculate();
-	vector<Coordinate*>* points= bspline->getPoints();
+	points= bspline->getPoints();
 	size = points->size();
 
 	vector<Coordinate*>* section = new vector<Coordinate*>;
-	section->push_back(new Coordinate(-0.6,0,-0.2));
+	section->push_back(new Coordinate(-0.6,0,-0.79));
 	section->push_back(new Coordinate(-0.6,0,0.2));
 	section->push_back(new Coordinate(-0.5,0,0.2));
 	section->push_back(new Coordinate(-0.5,0,0));
 	section->push_back(new Coordinate(0.5,0,0));
 	section->push_back(new Coordinate(0.5,0,0.2));
 	section->push_back(new Coordinate(0.6,0,0.2));
-	section->push_back(new Coordinate(0.6,0,-0.2));
-	section->push_back(new Coordinate(-0.6,0,-0.2));
+	section->push_back(new Coordinate(0.6,0,-0.79));
+	section->push_back(new Coordinate(-0.6,0,-0.79));
 	sectionSize = section->size()-1;
 
 	trianglesEstimated = (points->size()-1)*sectionSize*2;
@@ -117,9 +122,10 @@ AssemblyLine::AssemblyLine(){
 	double tangentY;
 	double normalX;
 	double normalY;
-
 	for(unsigned int i = 0;i<size-1;i++){
+
 		for(unsigned j = 0;j<sectionSize;j++){
+
 			if(i!=0){
 				deltaX = points->at(i)->getX()-points->at(i-1)->getX();
 				deltaY = points->at(i)->getY()-points->at(i-1)->getY();
@@ -204,7 +210,7 @@ AssemblyLine::AssemblyLine(){
 
 		}
 	}
-
+	calculateDistances();
 	setTexture();
 
 	glGenBuffers(1, &bufferPositionHandler);
@@ -220,7 +226,21 @@ AssemblyLine::AssemblyLine(){
 	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
 	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
 
+
 }
+
+void AssemblyLine::calculateDistances(){
+	pointsDistance = new vector<double>;
+	double distance = 0;
+	pointsDistance->push_back(distance);
+	for (unsigned int i=0;i<points->size()-1;i++){
+		distance += sqrt(pow(points->at(i+1)->getX()-points->at(i)->getX(),2)+pow(points->at(i+1)->getY()-points->at(i)->getY(),2));
+		pointsDistance->push_back(distance);
+	}
+
+}
+
+
 
 void AssemblyLine::print(){
 
@@ -240,6 +260,9 @@ void AssemblyLine::print(){
 	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
+
+	glTranslatef(points->at(0)->getX(),points->at(0)->getY(),points->at(0)->getZ());
+	Bottle::Instance()->print();
 
 }
 
