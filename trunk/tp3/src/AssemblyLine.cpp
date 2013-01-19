@@ -34,11 +34,13 @@ AssemblyLine::AssemblyLine(){
 	program = TextureProgram::Instance();
 
 	BSpline* bspline = new BSpline();
-	bspline->addPoint(-5,-5,0);
+	bspline->addPoint(-7,-7,0);
+	bspline->addPoint(-5,-7,0);
 	bspline->addPoint(-5,5,0);
-	bspline->addPoint(0,5,0);
-	bspline->addPoint(5,5,0);
-	bspline->addPoint(5,-5,0);
+	bspline->addPoint(0,2,0);
+	bspline->addPoint(2,5,0);
+	bspline->addPoint(4,5,0);
+	bspline->addPoint(6,-5,0);
 	bspline->calculate();
 	vector<Coordinate*>* points= bspline->getPoints();
 	unsigned int size = points->size();
