@@ -27,15 +27,16 @@ void Bezier::calculate(){
 
 	for(int j=0;j<(size-3);j=j+3){
 		for(float i=0;i <= 1.001;i+=BEZIERSTEP){
-			auxX=(1-i)*(1-i)*(1-i)*controlPoints->at(j)->getX()+3*(1-i)*(1-i)*i*controlPoints->at(j+1)->getX();
-			auxX+=3*(1-i)*i*i*controlPoints->at(j+2)->getX()+i*i*i*controlPoints->at(j+3)->getX();
-			auxY=(1-i)*(1-i)*(1-i)*controlPoints->at(j)->getY()+3*(1-i)*(1-i)*i*controlPoints->at(j+1)->getY();
-			auxY+=3*(1-i)*i*i*controlPoints->at(j+2)->getY()+i*i*i*controlPoints->at(j+3)->getY();
-			auxZ=(1-i)*(1-i)*(1-i)*controlPoints->at(j)->getZ()+3*(1-i)*(1-i)*i*controlPoints->at(j+1)->getZ();
-			auxZ+=3*(1-i)*i*i*controlPoints->at(j+2)->getZ()+i*i*i*controlPoints->at(j+3)->getZ();
-			Coordinate* curveCoordinate=new Coordinate(auxX,auxY,auxZ);
-			curvePoints->push_back(curveCoordinate);
-
+			if(j==0 || i>0){
+				auxX=(1-i)*(1-i)*(1-i)*controlPoints->at(j)->getX()+3*(1-i)*(1-i)*i*controlPoints->at(j+1)->getX();
+				auxX+=3*(1-i)*i*i*controlPoints->at(j+2)->getX()+i*i*i*controlPoints->at(j+3)->getX();
+				auxY=(1-i)*(1-i)*(1-i)*controlPoints->at(j)->getY()+3*(1-i)*(1-i)*i*controlPoints->at(j+1)->getY();
+				auxY+=3*(1-i)*i*i*controlPoints->at(j+2)->getY()+i*i*i*controlPoints->at(j+3)->getY();
+				auxZ=(1-i)*(1-i)*(1-i)*controlPoints->at(j)->getZ()+3*(1-i)*(1-i)*i*controlPoints->at(j+1)->getZ();
+				auxZ+=3*(1-i)*i*i*controlPoints->at(j+2)->getZ()+i*i*i*controlPoints->at(j+3)->getZ();
+				Coordinate* curveCoordinate=new Coordinate(auxX,auxY,auxZ);
+				curvePoints->push_back(curveCoordinate);
+			}
 		}
 
 	}
