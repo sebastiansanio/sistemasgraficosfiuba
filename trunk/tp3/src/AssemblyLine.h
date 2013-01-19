@@ -19,10 +19,13 @@ public:
 	~AssemblyLine();
 	void print();
 	void advance(double speed);
+	void addBottle();
+	void drawBottles();
 
 private:
 	vector<Coordinate*>* points;
 	vector<double>* pointsDistance;
+	vector<double>* bottlesDistance;
 	void calculateDistances();
 	void setTexture();
 	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int j);

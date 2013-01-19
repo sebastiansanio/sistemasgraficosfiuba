@@ -25,8 +25,9 @@ Scene::Scene() {
 	this->rectang = new Rectang(1.0,1.0,0.5);
 	this->lampara = new Lampara();
 	this->bottle = new Bottle();
-	assemblyLine = new AssemblyLine();
 
+	assemblyLine = new AssemblyLine();
+	assemblyLine->addBottle();
 }
 
 void Scene::printScene(){
@@ -104,6 +105,7 @@ void Scene::printScene(){
 
 void Scene::advanceMotion(){
 	assemblyLine->advance(0.1);
+
 }
 
 Scene::~Scene() {
