@@ -25,7 +25,8 @@ Scene::Scene() {
 	this->rectang = new Rectang(1.0,1.0,0.5);
 	this->lampara = new Lampara();
 	this->bottle = new Bottle();
-	this->assemblyLine = new AssemblyLine();
+	assemblyLine = new AssemblyLine();
+
 }
 
 void Scene::printScene(){
@@ -111,16 +112,17 @@ void Scene::printScene(){
 				bottle->print();
 			glPopMatrix();
 			glPushMatrix();
+				glTranslatef(0.0,0.0,2.0);
+				assemblyLine->advance(0.1);
+				assemblyLine->print();
+			glPopMatrix();
+			glPushMatrix();
 				glTranslatef(-3.0,0.0,0.0);
 				bottle->print();
 				glTranslatef(-3.0,0.0,0.0);
 				bottle->print();
 			glPopMatrix();
 
-			glPushMatrix();
-				glTranslatef(0.0,0.0,2.0);
-				assemblyLine->print();
-			glPopMatrix();
 
 	glPopMatrix();
 }

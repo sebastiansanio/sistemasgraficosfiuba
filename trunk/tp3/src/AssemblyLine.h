@@ -18,9 +18,14 @@ public:
 	AssemblyLine();
 	~AssemblyLine();
 	void print();
+	void advance(double speed);
 
 private:
+	void setTexture();
 	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int j);
+	unsigned int size;
+	unsigned int sectionSize;
+	double advanceParameter;
 	float* positionArray;
 	float* colorArray;
 	float* normalArray;

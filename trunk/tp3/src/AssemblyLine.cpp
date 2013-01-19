@@ -26,24 +26,61 @@ Coordinate* AssemblyLine::calculateNormal(vector<Coordinate*>* points,unsigned i
 	Coordinate* normal = new Coordinate(normalX,0,normalZ);
 	normal->normalize();
 	return normal;
+}
+
+void AssemblyLine::advance(double speed){
+
+
+	advanceParameter += speed;
+}
+
+
+void AssemblyLine::setTexture(){
+
+	int texPosCounter = 0;
+	for(unsigned int i = 0;i<size-1;i++){
+		for(unsigned j = 0;j<sectionSize;j++){
+			textureArray[texPosCounter]=0;
+			textureArray[texPosCounter+1]=0+advanceParameter;
+			textureArray[texPosCounter+2]=1;
+			textureArray[texPosCounter+3]=1+advanceParameter;
+			textureArray[texPosCounter+4]=0;
+			textureArray[texPosCounter+5]=1+advanceParameter;
+			texPosCounter = texPosCounter+6;
+
+			textureArray[texPosCounter]=0;
+			textureArray[texPosCounter+1]=0+advanceParameter;
+			textureArray[texPosCounter+2]=1;
+			textureArray[texPosCounter+3]=1+advanceParameter;
+			textureArray[texPosCounter+4]=1;
+			textureArray[texPosCounter+5]=0+advanceParameter;
+			texPosCounter = texPosCounter+6;
+
+		}
+	}
 
 }
 
 AssemblyLine::AssemblyLine(){
 
+	advanceParameter = 0;
+
 	program = TextureProgram::Instance();
 
 	BSpline* bspline = new BSpline();
-	bspline->addPoint(-7,-7,0);
-	bspline->addPoint(-5,-7,0);
-	bspline->addPoint(-5,5,0);
-	bspline->addPoint(0,2,0);
-	bspline->addPoint(2,5,0);
-	bspline->addPoint(4,5,0);
-	bspline->addPoint(6,-5,0);
+//	bspline->addPoint(-7,-7,0);
+//	bspline->addPoint(-5,-7,0);
+//	bspline->addPoint(-5,5,0);
+//	bspline->addPoint(0,2,0);
+//	bspline->addPoint(2,5,0);
+//	bspline->addPoint(4,5,0);
+//	bspline->addPoint(6,2,0);
+	bspline->addPoint(-4,0,0);
+	bspline->addPoint(4,0,0);
+	bspline->addPoint(6,0,0);
 	bspline->calculate();
 	vector<Coordinate*>* points= bspline->getPoints();
-	unsigned int size = points->size();
+	size = points->size();
 
 	vector<Coordinate*>* section = new vector<Coordinate*>;
 	section->push_back(new Coordinate(-0.6,0,-0.2));
@@ -55,7 +92,7 @@ AssemblyLine::AssemblyLine(){
 	section->push_back(new Coordinate(0.6,0,0.2));
 	section->push_back(new Coordinate(0.6,0,-0.2));
 	section->push_back(new Coordinate(-0.6,0,-0.2));
-	unsigned int sectionSize = section->size()-1;
+	sectionSize = section->size()-1;
 
 	trianglesEstimated = (points->size()-1)*sectionSize*2;
 	this->positionArray = new float[trianglesEstimated*9];
@@ -64,15 +101,10 @@ AssemblyLine::AssemblyLine(){
 	this->textureArray = new float[trianglesEstimated*6];
 
 	int posCounter = 0;
-	int texPosCounter = 0;
-
 	Coordinate* coordinate1 = new Coordinate(0,0,section->at(0)->getZ());
 	Coordinate* coordinate2 = new Coordinate(0,0,section->at(1)->getZ());
-
 	Coordinate* coordinate1New = new Coordinate(0,0,coordinate1->getZ());
 	Coordinate* coordinate2New = new Coordinate(0,0,coordinate2->getZ());
-
-
 
 	double deltaX;
 	double deltaY;
@@ -142,6 +174,7 @@ AssemblyLine::AssemblyLine(){
 			normalArray[posCounter+8]=normal->getZ();
 			posCounter = posCounter + 9;
 
+
 			positionArray[posCounter]=coordinate1->getX();
 			positionArray[posCounter+1]=coordinate1->getY();
 			positionArray[posCounter+2]=coordinate1->getZ();
@@ -164,10 +197,11 @@ AssemblyLine::AssemblyLine(){
 
 			delete normal;
 
-		}
 
+		}
 	}
 
+	setTexture();
 
 	glGenBuffers(1, &bufferPositionHandler);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
@@ -188,8 +222,12 @@ AssemblyLine::AssemblyLine(){
 }
 
 void AssemblyLine::print(){
-	program->setTexture(14);
+
+	setTexture();
+
+	program->setTexture(3);
 	program->setActualProgram();
+
 
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
 	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
