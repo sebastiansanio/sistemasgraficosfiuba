@@ -10,7 +10,6 @@
 
 #include "BasicProgram.h"
 #include "TextureProgram.h"
-#include "AssemblyLineProgram.h"
 #include "Curves/BSpline.h"
 #include <math.h>
 
@@ -31,7 +30,7 @@ private:
 	GLuint bufferNormalHandler;
 	GLuint bufferTextureHandler;
 	int trianglesEstimated;
-	AssemblyLineProgram* program;
+	TextureProgram* program;
 	BSpline* bezier;
 	void rotate(Coordinate* coordinate, double angle);
 };
