@@ -13,7 +13,6 @@ BSpline::BSpline(){
 void BSpline::addPoint(float x,float y, float z){
 	Coordinate* coordinate=new Coordinate(x,y,z);
 	controlPoints->push_back(coordinate);
-
 }
 
 void BSpline::calculate(){
