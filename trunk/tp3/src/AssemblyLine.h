@@ -33,6 +33,7 @@ private:
 	int trianglesEstimated;
 	AssemblyLineProgram* program;
 	BSpline* bezier;
+	void rotate(Coordinate* coordinate, double angle);
 };
 
 

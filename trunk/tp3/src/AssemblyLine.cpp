@@ -8,26 +8,31 @@
 #include "AssemblyLine.h"
 
 
+
+void AssemblyLine::rotate(Coordinate* coordinate, double angle){
+
+
+	double x = coordinate->getX();
+	double y = coordinate->getY();
+	coordinate->setX(x * cos(angle) - (y* sin(angle)));
+	coordinate->setY(y * sin(angle) + (y* cos(angle)));
+
+}
+
+
 AssemblyLine::AssemblyLine(){
-
-	Coordinate*  coordinate1= new Coordinate(0.5,0,0);
-	Coordinate*  coordinate2= new Coordinate(0.5,0,0.2);
-	Coordinate*  coordinate3= new Coordinate(-0.5,0,0.2);
-	Coordinate*  coordinate4= new Coordinate(-0.5,0,0);
-
 
 	program = AssemblyLineProgram::Instance();
 	BSpline* bspline = new BSpline();
-	bspline->addPoint(0,0,0);
-	bspline->addPoint(0,2,0);
+	bspline->addPoint(0,-2,0);
+	bspline->addPoint(5,2,0);
 	bspline->addPoint(0,4,0);
-	bspline->addPoint(0,6,0);
+	bspline->addPoint(-5,6,0);
+	bspline->addPoint(0,8,0);
 
 
 	bspline->calculate();
-
 	vector<Coordinate*>* points= bspline->getPoints();
-
 	unsigned int size = points->size();
 
 	trianglesEstimated = (points->size()-1)*8;
@@ -40,14 +45,36 @@ AssemblyLine::AssemblyLine(){
 	int posCounter = 0;
 	int texPosCounter = 0;
 
+	Coordinate*  coordinate1= new Coordinate(0.5,0,0);
+	Coordinate*  coordinate2= new Coordinate(0.5,0,0.2);
+	Coordinate*  coordinate3= new Coordinate(-0.5,0,0.2);
+	Coordinate*  coordinate4= new Coordinate(-0.5,0,0);
+	Coordinate* coordinate1New = new Coordinate(coordinate1->getX(),coordinate1->getY(),coordinate1->getZ());
+	Coordinate* coordinate2New = new Coordinate(coordinate2->getX(),coordinate2->getY(),coordinate2->getZ());
+	Coordinate* coordinate3New = new Coordinate(coordinate3->getX(),coordinate3->getY(),coordinate3->getZ());
+	Coordinate* coordinate4New = new Coordinate(coordinate4->getX(),coordinate4->getY(),coordinate4->getZ());
+
 	for(unsigned int i = 0;i<size-1;i++){
 
 		double deltaX = points->at(i+1)->getX()-points->at(i)->getX();
 		double deltaY = points->at(i+1)->getY()-points->at(i)->getY();
-		Coordinate* coordinate1New = new Coordinate(coordinate1->getX()+deltaX,coordinate1->getY()+deltaY,coordinate1->getZ());
-		Coordinate* coordinate2New = new Coordinate(coordinate2->getX()+deltaX,coordinate2->getY()+deltaY,coordinate2->getZ());
-		Coordinate* coordinate3New = new Coordinate(coordinate3->getX()+deltaX,coordinate3->getY()+deltaY,coordinate3->getZ());
-		Coordinate* coordinate4New = new Coordinate(coordinate4->getX()+deltaX,coordinate4->getY()+deltaY,coordinate4->getZ());
+		double angle = atan(deltaY/deltaX);
+
+
+		coordinate1New->setX(coordinate1New->getX()+deltaX);
+		coordinate1New->setY(coordinate1New->getY()+deltaY);
+		coordinate2New->setX(coordinate2New->getX()+deltaX);
+		coordinate2New->setY(coordinate2New->getY()+deltaY);
+		coordinate3New->setX(coordinate3New->getX()+deltaX);
+		coordinate3New->setY(coordinate3New->getY()+deltaY);
+		coordinate4New->setX(coordinate4New->getX()+deltaX);
+		coordinate4New->setY(coordinate4New->getY()+deltaY);
+
+//		rotate(coordinate1New,angle);
+//		rotate(coordinate2New,angle);
+//		rotate(coordinate3New,angle);
+//		rotate(coordinate4New,angle);
+
 
 		positionArray[posCounter]=coordinate1->getX();
 		positionArray[posCounter+1]=coordinate1->getY();
@@ -138,10 +165,14 @@ AssemblyLine::AssemblyLine(){
 		posCounter = posCounter + 9;
 
 
-		coordinate1 = coordinate1New;
-		coordinate2 = coordinate2New;
-		coordinate3 = coordinate3New;
-		coordinate4 = coordinate4New;
+		coordinate1->setX(coordinate1New->getX());
+		coordinate1->setY(coordinate1New->getY());
+		coordinate2->setX(coordinate2New->getX());
+		coordinate2->setY(coordinate2New->getY());
+		coordinate3->setX(coordinate3New->getX());
+		coordinate3->setY(coordinate3New->getY());
+		coordinate4->setX(coordinate4New->getX());
+		coordinate4->setY(coordinate4New->getY());
 	}
 
 

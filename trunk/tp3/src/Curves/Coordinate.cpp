@@ -22,6 +22,20 @@ float Coordinate::getZ(){
 
 }
 
+void Coordinate::setX(float xNew){
+	x = xNew;
+}
+void Coordinate::setY(float yNew){
+	y = yNew;
+}
+void Coordinate::setZ(float zNew){
+	z = zNew;
+}
+
+Coordinate::~Coordinate(){
+
+}
+
 void Coordinate::normalize(){
 	float norm = sqrt(pow(x,2)+pow(y,2)+pow(z,2));
 	x = x/norm;
