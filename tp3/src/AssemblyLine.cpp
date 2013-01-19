@@ -280,17 +280,22 @@ void AssemblyLine::print(){
 
 void AssemblyLine::drawBottles(){
 
+	if(bottlesDistance->at(bottlesDistance->size()-1) >= pointsDistance->at(pointsDistance->size()-1))
+				bottlesDistance->erase(bottlesDistance->end());
+
 	for(unsigned int i = 0;i<bottlesDistance->size();i++){
+
 		for (unsigned int j = 0;j<pointsDistance->size()-1;j++){
 			if(bottlesDistance->at(i) >= pointsDistance->at(j) && bottlesDistance->at(i) <  pointsDistance->at(j+1)){
 
 				double proportion = (bottlesDistance->at(i)-pointsDistance->at(j))/(pointsDistance->at(j+1)-pointsDistance->at(j));
-				cout <<"proportion:" <<proportion <<endl;
 
 				double posX = points->at(j)->getX()*(1-proportion) + points->at(j+1)->getX() * (proportion);
 				double posY = points->at(j)->getY()*(1-proportion) + points->at(j+1)->getY() * (proportion);
-				glTranslatef(posX,posY,0);
-				Bottle::Instance()->print();
+				glPushMatrix();
+					glTranslatef(posX,posY,0);
+					Bottle::Instance()->print();
+				glPopMatrix();
 			}
 
 		}
