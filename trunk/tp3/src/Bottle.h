@@ -12,7 +12,7 @@ public:
 	static Bottle* Instance();
 	Bottle();
 	~Bottle();
-	void print();
+	void print(double liquidHeight,bool label);
 
 private:
 	static Bottle* instance;

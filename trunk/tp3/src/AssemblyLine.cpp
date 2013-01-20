@@ -35,15 +35,9 @@ void AssemblyLine::advance(double speed){
 		advanceParameter -= 50;
 	}
 	advanceParameter += speed;
-	for(unsigned int i = 0;i<bottlesDistance->size();i++){
-		bottlesDistance->at(i) = bottlesDistance->at(i)+speed;
+	for(unsigned int i = 0;i<bottles->size();i++){
+		bottles->at(i)->setDistance(bottles->at(i)->getDistance()+speed);
 	}
-
-
-	if(bottlesDistance->at(bottlesDistance->size()-1) >= pointsDistance->at(pointsDistance->size()-1)){
-		bottlesDistance->pop_back();
-	}
-
 
 	setTexture();
 	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
@@ -100,7 +94,8 @@ void AssemblyLine::setTexture(){
 AssemblyLine::AssemblyLine(){
 
 	advanceParameter = 0;
-	bottlesDistance = new vector<double>;
+	bottles = new vector<BottleInstance*>;
+
 	program = TextureProgram::Instance();
 
 	BSpline* bspline = new BSpline();
@@ -286,28 +281,33 @@ void AssemblyLine::print(){
 
 void AssemblyLine::drawBottles(){
 
-	for(unsigned int i = 0;i<bottlesDistance->size();i++){
+	for(unsigned int i = 0;i<bottles->size();i++){
+		if(bottles->at(i)->getDistance() >= pointsDistance->at(pointsDistance->size()-1)){
+			bottles->erase(bottles->begin()+i);
+			continue;
+		}
+	}
+	for(unsigned int i = 0;i<bottles->size();i++){
 		for (unsigned int j = 0;j<pointsDistance->size()-1;j++){
-			if(bottlesDistance->at(i) >= pointsDistance->at(j) && bottlesDistance->at(i) <  pointsDistance->at(j+1)){
-
-				double proportion = (bottlesDistance->at(i)-pointsDistance->at(j))/(pointsDistance->at(j+1)-pointsDistance->at(j));
+			if(bottles->at(i)->getDistance() >= pointsDistance->at(j) && bottles->at(i)->getDistance() <  pointsDistance->at(j+1)){
+				double proportion = (bottles->at(i)->getDistance()-pointsDistance->at(j))/(pointsDistance->at(j+1)-pointsDistance->at(j));
 				double posX = points->at(j)->getX()*(1-proportion) + points->at(j+1)->getX() * (proportion);
 				double posY = points->at(j)->getY()*(1-proportion) + points->at(j+1)->getY() * (proportion);
+				double liquidHeight = bottles->at(i)->getLiquidHeight();
+				bool hasLabel = bottles->at(i)->getHasLabel();
 				glPushMatrix();
 					glTranslatef(posX,posY,0);
-					Bottle::Instance()->print();
+					Bottle::Instance()->print(liquidHeight,hasLabel);
 				glPopMatrix();
 				break;
 			}
-
 		}
-
 	}
-
 }
 
 void AssemblyLine::addBottle(){
-	bottlesDistance->push_back(0);
+	BottleInstance* bottle= new BottleInstance(0,0,false);
+	bottles->push_back(bottle);
 }
 
 AssemblyLine::~AssemblyLine(){

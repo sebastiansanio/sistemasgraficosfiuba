@@ -167,11 +167,12 @@ Bottle::Bottle(){
 
 }
 
-void Bottle::print(){
+void Bottle::print(double liquidHeight,bool label){
 	program->setTexture(14);
 	program->setActualProgram();
 
-	program->setLiquidHeight(0.8,true);
+	program->setLiquidHeight(liquidHeight,label);
+
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
 	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);

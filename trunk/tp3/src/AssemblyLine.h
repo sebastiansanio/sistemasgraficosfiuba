@@ -11,6 +11,7 @@
 #include "BasicProgram.h"
 #include "TextureProgram.h"
 #include "Curves/BSpline.h"
+#include "BottleInstance.h"
 #include <math.h>
 
 class AssemblyLine{
@@ -25,7 +26,7 @@ public:
 private:
 	vector<Coordinate*>* points;
 	vector<double>* pointsDistance;
-	vector<double>* bottlesDistance;
+	vector<BottleInstance*>* bottles;
 	void calculateDistances();
 	void setTexture();
 	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int j);
