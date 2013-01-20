@@ -19,7 +19,7 @@ Scene* Scene::Instance ()
 
 Scene::Scene() {
 	generateBottleTime = 0;
-	generateBottleDelay = 100;
+	generateBottleDelay = 50;
 	this->piso = new RectangTex(20.0,20.0,0,2.0);
 	this->pared = new RectangTex(20.0,5.0,1,2.0);
 	this->techo = new RectangTex(20.0,20.0,2,2.0);
