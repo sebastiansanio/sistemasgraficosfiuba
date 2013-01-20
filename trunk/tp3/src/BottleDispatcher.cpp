@@ -784,7 +784,7 @@ BottleDispatcher::BottleDispatcher(){
 }
 
 void BottleDispatcher::print(){
-	program->setTexture(4);
+	program->setTexture(5);
 	program->setActualProgram();
 
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);

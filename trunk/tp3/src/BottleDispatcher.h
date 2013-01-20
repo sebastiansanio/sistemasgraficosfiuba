@@ -1,6 +1,7 @@
 #ifndef BOTTLEDISPATCHER_H_
 #define BOTTLEDISPATCHER_H_
 
+#include "CubeMapProgram.h"
 #include "TextureProgram.h"
 #include "Curves/Bezier.h"
 #include <math.h>
@@ -13,6 +14,7 @@ public:
 	void print();
 
 private:
+	TextureProgram* program;
 	static BottleDispatcher* instance;
 	float* positionArray;
 	float* colorArray;
@@ -23,7 +25,6 @@ private:
 	GLuint bufferNormalHandler;
 	GLuint bufferTextureHandler;
 	int trianglesEstimated;
-	TextureProgram* program;
 
 };
 
