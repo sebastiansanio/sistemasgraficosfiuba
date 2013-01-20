@@ -1,35 +1,21 @@
-#include "BottleLabeler.h"
+#include "Ramp.h"
 #include "Curves/Coordinate.h"
-#include "Bottle.h"
 
-
-BottleLabeler* BottleLabeler::instance = 0;
-BottleLabeler* BottleLabeler::Instance ()
+Ramp* Ramp::instance = 0;
+Ramp* Ramp::Instance ()
 {
   if (instance == 0)
   {
-    instance = new BottleLabeler();
+    instance = new Ramp(4,2,5);
   }
   return instance;
 }
 
-bool BottleLabeler::label(BottleInstance* bottle){
-	if(labelTime==0){
-		labelTime = 50;
-		return false;
-	}
-	labelTime--;
-	if(labelTime == 25){
-		bottle->setHasLabel(true);
-	}
-	return labelTime == 0;
-}
 
-BottleLabeler::BottleLabeler(){
+Ramp::Ramp(double height,double width,double length){
 
-	labelTime = 0;
 	program = TextureProgram::Instance();
-	trianglesEstimated = 1;
+	trianglesEstimated = 2;
 
 	this->positionArray = new float[trianglesEstimated*9];
 	this->colorArray = new float[trianglesEstimated*9];
@@ -38,34 +24,75 @@ BottleLabeler::BottleLabeler(){
 
 	int posCounter = 0;
 	int texPosCounter = 0;
+
+	double deltaZ=height;
+	double deltaX=-length;
+
+	double normalZ=-deltaX;
+	double normalX=deltaZ;
+
+
+	Coordinate* normal = new Coordinate(normalX,0,normalZ);
+	normal->normalize();
+
 	positionArray[posCounter]=0;
 	positionArray[posCounter+1]=0;
-	positionArray[posCounter+2]=0;
+	positionArray[posCounter+2]=height;
 	textureArray[texPosCounter]=0;
-	textureArray[texPosCounter+1]=0;
-	normalArray[posCounter]=0;
-	normalArray[posCounter+1]=0;
-	normalArray[posCounter+2]=1;
+	textureArray[texPosCounter+1]=1-1;
+	normalArray[posCounter]=normal->getX();
+	normalArray[posCounter+1]=normal->getY();
+	normalArray[posCounter+2]=normal->getZ();
 
-	positionArray[posCounter+3]=1;
-	positionArray[posCounter+4]=1;
-	positionArray[posCounter+5]=0;
-	textureArray[texPosCounter+2]=0;
-	textureArray[texPosCounter+3]=0;
-	normalArray[posCounter+3]=0;
-	normalArray[posCounter+4]=0;
-	normalArray[posCounter+5]=1;
+	positionArray[posCounter+3]=0;
+	positionArray[posCounter+4]=width;
+	positionArray[posCounter+5]=height;
+	textureArray[texPosCounter+2]=1;
+	textureArray[texPosCounter+3]=1-1;
+	normalArray[posCounter+3]=normal->getX();
+	normalArray[posCounter+4]=normal->getY();
+	normalArray[posCounter+5]=normal->getZ();
 
-	positionArray[posCounter+6]=1;
-	positionArray[posCounter+7]=0;
+	positionArray[posCounter+6]=length;
+	positionArray[posCounter+7]=width;
 	positionArray[posCounter+8]=0;
-	textureArray[texPosCounter+4]=0;
-	textureArray[texPosCounter+5]=0;
-	normalArray[posCounter+6]=0;
-	normalArray[posCounter+7]=0;
-	normalArray[posCounter+8]=1;
+	textureArray[texPosCounter+4]=1;
+	textureArray[texPosCounter+5]=1-0;
+	normalArray[posCounter+6]=normal->getX();
+	normalArray[posCounter+7]=normal->getY();
+	normalArray[posCounter+8]=normal->getZ();
 	posCounter+=9;
 	texPosCounter+=6;
+
+	positionArray[posCounter]=0;
+	positionArray[posCounter+1]=0;
+	positionArray[posCounter+2]=height;
+	textureArray[texPosCounter]=0;
+	textureArray[texPosCounter+1]=1-1;
+	normalArray[posCounter]=normal->getX();
+	normalArray[posCounter+1]=normal->getY();
+	normalArray[posCounter+2]=normal->getZ();
+
+	positionArray[posCounter+3]=length;
+	positionArray[posCounter+4]=0;
+	positionArray[posCounter+5]=0;
+	textureArray[texPosCounter+2]=0;
+	textureArray[texPosCounter+3]=1-0;
+	normalArray[posCounter+3]=normal->getX();
+	normalArray[posCounter+4]=normal->getY();
+	normalArray[posCounter+5]=normal->getZ();
+
+	positionArray[posCounter+6]=length;
+	positionArray[posCounter+7]=width;
+	positionArray[posCounter+8]=0;
+	textureArray[texPosCounter+4]=1;
+	textureArray[texPosCounter+5]=1-0;
+	normalArray[posCounter+6]=normal->getX();
+	normalArray[posCounter+7]=normal->getY();
+	normalArray[posCounter+8]=normal->getZ();
+	posCounter+=9;
+	texPosCounter+=6;
+	delete normal;
 
 
 	glGenBuffers(1, &bufferPositionHandler);
@@ -83,8 +110,8 @@ BottleLabeler::BottleLabeler(){
 
 }
 
-void BottleLabeler::print(){
-	program->setTexture(2);
+void Ramp::print(){
+	program->setTexture(14);
 	program->setActualProgram();
 
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
@@ -100,6 +127,6 @@ void BottleLabeler::print(){
 
 }
 
-BottleLabeler::~BottleLabeler(){
+Ramp::~Ramp(){
 
 }

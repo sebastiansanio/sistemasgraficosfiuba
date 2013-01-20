@@ -24,7 +24,6 @@ public:
 	void drawBottles();
 
 private:
-	double waitTime;
 	double labelerPosition;
 	double fillerPosition;
 	vector<Coordinate*>* points;

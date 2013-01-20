@@ -34,6 +34,7 @@ private:
 	AssemblyLine* assemblyLine;
 	BottleGenerator* bottleGenerator;
 	BottleDispatcher* bottleDispatcher;
+
 };
 
 #endif /* Scene_H_ */

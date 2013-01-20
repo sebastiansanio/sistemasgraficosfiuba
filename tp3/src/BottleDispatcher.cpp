@@ -14,9 +14,11 @@ BottleDispatcher* BottleDispatcher::Instance ()
 
 BottleDispatcher::BottleDispatcher(){
 
-	double height = 6;
-	double width = 2;
-	double length = 3.5;
+
+
+	height = 6;
+	width = 2;
+	length = 3.5;
 
 	double entranceHeightFromFloor = 0.7;
 	double entranceHeight = 1.5;
@@ -24,10 +26,12 @@ BottleDispatcher::BottleDispatcher(){
 
 	double exitHeightFromFloor = 4.5;
 	double exitHeight = 1.2;
-	double exitWidth = 3;
+	double exitWidth = 2;
+
+	ramp = new Ramp(exitHeightFromFloor,exitWidth,7);
 
 	double entranceWidthLocation = (width-entranceWidth)/2;
-	double exitWidthLocation = (length-exitWidth)/2;
+	exitWidthLocation = (length-exitWidth)/2;
 
 	program = TextureProgram::Instance();
 	trianglesEstimated = 24;
@@ -797,6 +801,13 @@ void BottleDispatcher::print(){
 	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
+
+	glPushMatrix();
+		glRotatef(90,0,0,1);
+		glTranslatef(width,-length+exitWidthLocation,0);
+		ramp->print();
+
+	glPopMatrix();
 
 }
 
