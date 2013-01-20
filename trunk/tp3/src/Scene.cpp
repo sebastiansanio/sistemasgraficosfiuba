@@ -100,7 +100,7 @@ void Scene::printScene(){
 				bottleGenerator->print();
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(14,5,0);
+				glTranslatef(13,5,0);
 				glRotatef(180,0,0,1);
 				bottleDispatcher->print();
 			glPopMatrix();
