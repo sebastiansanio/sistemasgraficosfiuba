@@ -74,6 +74,16 @@ TextureProgram::TextureProgram() {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
+	glActiveTexture(GL_TEXTURE5);
+	GLuint tid6;
+	glGenTextures(1, &tid6);
+	glBindTexture(GL_TEXTURE_2D, tid6);
+	BitMap* bitmap6 = new BitMap("metal2.bmp");
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmap6->getAncho(), bitmap6->getAlto(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap6->getMatriz());
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+
 
 	this->actualTexId = 0;
 
