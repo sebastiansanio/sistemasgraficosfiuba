@@ -23,8 +23,6 @@ protected:
 	Scene &operator= (const Scene & ) ;
 
 private:
-	int generateBottleTime;
-	int generateBottleDelay;
 	static Scene* instance;
 	RectangTex* piso;
 	RectangTex* pared;

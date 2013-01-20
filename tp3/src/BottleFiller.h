@@ -3,6 +3,7 @@
 
 #include "TextureProgram.h"
 #include "Curves/Bezier.h"
+#include "BottleInstance.h"
 #include <math.h>
 
 class BottleFiller{
@@ -11,8 +12,10 @@ public:
 	BottleFiller();
 	~BottleFiller();
 	void print();
+	bool fill(BottleInstance* bottle);
 
 private:
+	double fillTime;
 	static BottleFiller* instance;
 	float* positionArray;
 	float* colorArray;

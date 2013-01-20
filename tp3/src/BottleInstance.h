@@ -13,6 +13,7 @@ public:
 	double getDistance();
 	double getLiquidHeight();
 	bool getHasLabel();
+	bool isFilled();
 
 private:
 	double distance;

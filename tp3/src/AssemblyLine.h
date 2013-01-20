@@ -19,11 +19,14 @@ public:
 	AssemblyLine();
 	~AssemblyLine();
 	void print();
-	void advance(double speed);
+	void advance();
 	void addBottle();
 	void drawBottles();
 
 private:
+	double waitTime;
+	double labelerPosition;
+	double fillerPosition;
 	vector<Coordinate*>* points;
 	vector<double>* pointsDistance;
 	vector<BottleInstance*>* bottles;
