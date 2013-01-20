@@ -95,13 +95,14 @@ void Scene::printScene(){
 				glPopMatrix();
 			glPopMatrix();
 			glPushMatrix();
+				glTranslatef(-12.5,-6.815,0);
+				bottleGenerator->print();
+			glPopMatrix();
+			glPushMatrix();
 				glTranslatef(0.0,0.0,0.8);
 				assemblyLine->print();
 			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(0.0,0.0,2);
-				bottleGenerator->print();
-			glPopMatrix();
+
 
 	glPopMatrix();
 }
@@ -118,6 +119,6 @@ void Scene::advanceMotion(){
 }
 
 Scene::~Scene() {
-	// TODO Auto-generated destructor stub
+
 }
 
