@@ -1,26 +1,21 @@
-#ifndef BOTTLEDISPATCHER_H_
-#define BOTTLEDISPATCHER_H_
+#ifndef RAMP_H_
+#define RAMP_H_
 
 #include "CubeMapProgram.h"
 #include "TextureProgram.h"
 #include "Curves/Bezier.h"
-#include "Ramp.h"
 #include <math.h>
 
-class BottleDispatcher{
+class Ramp{
 public:
-	static BottleDispatcher* Instance();
-	BottleDispatcher();
-	~BottleDispatcher();
+	static Ramp* Instance();
+	Ramp(double height,double width,double length);
+	~Ramp();
 	void print();
 
 private:
-	double exitWidthLocation;
-	double height;
-	double length;
-	double width;
 	TextureProgram* program;
-	static BottleDispatcher* instance;
+	static Ramp* instance;
 	float* positionArray;
 	float* colorArray;
 	float* normalArray;
@@ -29,7 +24,6 @@ private:
 	GLuint bufferColorHandler;
 	GLuint bufferNormalHandler;
 	GLuint bufferTextureHandler;
-	Ramp* ramp;
 	int trianglesEstimated;
 
 };
