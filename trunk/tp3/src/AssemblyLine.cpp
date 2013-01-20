@@ -38,8 +38,11 @@ void AssemblyLine::advance(double speed){
 	for(unsigned int i = 0;i<bottlesDistance->size();i++){
 		bottlesDistance->at(i) = bottlesDistance->at(i)+speed;
 	}
-	if(bottlesDistance->at(bottlesDistance->size()-1) >= pointsDistance->at(pointsDistance->size()-1))
-		bottlesDistance->erase(bottlesDistance->end());
+
+
+	if(bottlesDistance->at(bottlesDistance->size()-1) >= pointsDistance->at(pointsDistance->size()-1)){
+		bottlesDistance->pop_back();
+	}
 
 
 	setTexture();
@@ -91,6 +94,7 @@ void AssemblyLine::setTexture(){
 		}
 		texFrom = texTo;
 	}
+
 }
 
 AssemblyLine::AssemblyLine(){
@@ -100,13 +104,14 @@ AssemblyLine::AssemblyLine(){
 	program = TextureProgram::Instance();
 
 	BSpline* bspline = new BSpline();
-	bspline->addPoint(-7,-7,0);
-	bspline->addPoint(-5,-7,0);
-	bspline->addPoint(-5,5,0);
-	bspline->addPoint(0,2,0);
-	bspline->addPoint(2,5,0);
-	bspline->addPoint(4,5,0);
-	bspline->addPoint(6,2,0);
+	bspline->addPoint(-13,-6,0);
+	bspline->addPoint(-10,-6,0);
+	bspline->addPoint(-6,-5,0);
+	bspline->addPoint(-6,5,0);
+	bspline->addPoint(1,4,0);
+	bspline->addPoint(7,4,0);
+	bspline->addPoint(14,4,0);
+
 	bspline->calculate();
 	points= bspline->getPoints();
 	size = points->size();
@@ -255,6 +260,7 @@ void AssemblyLine::calculateDistances(){
 		distance += sqrt(pow(points->at(i+1)->getX()-points->at(i)->getX(),2)+pow(points->at(i+1)->getY()-points->at(i)->getY(),2));
 		pointsDistance->push_back(distance);
 	}
+
 }
 
 void AssemblyLine::print(){

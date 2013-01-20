@@ -20,9 +20,9 @@ Scene* Scene::Instance ()
 Scene::Scene() {
 	generateBottleTime = 0;
 	generateBottleDelay = 100;
-	this->piso = new RectangTex(10.0,10.0,0,2.0);
-	this->pared = new RectangTex(10.0,5.0,1,2.0);
-	this->techo = new RectangTex(10.0,10.0,2,2.0);
+	this->piso = new RectangTex(20.0,20.0,0,2.0);
+	this->pared = new RectangTex(20.0,5.0,1,2.0);
+	this->techo = new RectangTex(20.0,20.0,2,2.0);
 	this->cube1 = new CubeRef(1.0,1.0,1.0);
 	this->rectang = new Rectang(1.0,1.0,0.5);
 	this->lampara = new Lampara();
@@ -36,23 +36,23 @@ void Scene::printScene(){
 			//Dibujando el escenario
 			piso->print();
 			glPushMatrix();
-				glTranslatef(0.0,10.0,5.0);
+				glTranslatef(0.0,20.0,5.0);
 				glRotatef(90,1.0,0.0,0.0);
 				pared->print();
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(0.0,-10.0,5.0);
+				glTranslatef(0.0,-20.0,5.0);
 				glRotatef(-90,1.0,0.0,0.0);
 				pared->print();
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(-10.0,0.0,5.0);
+				glTranslatef(-20.0,0.0,5.0);
 				glRotatef(90,0.0,1.0,0.0);
 				glRotatef(90,0.0,0.0,1.0);
 				pared->print();
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(10.0,0.0,5.0);
+				glTranslatef(20.0,0.0,5.0);
 				glRotatef(-90,0.0,1.0,0.0);
 				glRotatef(90,0.0,0.0,1.0);
 				pared->print();
