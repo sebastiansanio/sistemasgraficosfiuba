@@ -14,6 +14,7 @@
 #include "Lampara.h"
 #include "Bottle.h"
 #include "AssemblyLine.h"
+#include "BottleGenerator.h"
 
 class Scene {
 public:
@@ -39,6 +40,7 @@ private:
 	Lampara* lampara;
 	Bottle* bottle;
 	AssemblyLine* assemblyLine;
+	BottleGenerator* bottleGenerator;
 };
 
 #endif /* Scene_H_ */
