@@ -22,11 +22,15 @@ BottleDispatcher::BottleDispatcher(){
 	double entranceHeight = 1.5;
 	double entranceWidth = 1.2;
 
+	double exitHeightFromFloor = 4.5;
+	double exitHeight = 1.2;
+	double exitWidth = 3;
 
 	double entranceWidthLocation = (width-entranceWidth)/2;
+	double exitWidthLocation = (length-exitWidth)/2;
 
 	program = TextureProgram::Instance();
-	trianglesEstimated = 18;
+	trianglesEstimated = 24;
 
 	this->positionArray = new float[trianglesEstimated*9];
 	this->colorArray = new float[trianglesEstimated*9];
@@ -281,7 +285,7 @@ BottleDispatcher::BottleDispatcher(){
 	posCounter+=9;
 	texPosCounter+=6;
 
-	//Other lateral
+	//Other lateral down
 	positionArray[posCounter]=0;
 	positionArray[posCounter+1]=width;
 	positionArray[posCounter+2]=0;
@@ -293,9 +297,9 @@ BottleDispatcher::BottleDispatcher(){
 
 	positionArray[posCounter+3]=length;
 	positionArray[posCounter+4]=width;
-	positionArray[posCounter+5]=height;
+	positionArray[posCounter+5]=exitHeightFromFloor;
 	textureArray[texPosCounter+2]=1-1;
-	textureArray[texPosCounter+3]=1-1;
+	textureArray[texPosCounter+3]=1-exitHeightFromFloor/height;
 	normalArray[posCounter+3]=rightNormal->getX();
 	normalArray[posCounter+4]=rightNormal->getY();
 	normalArray[posCounter+5]=rightNormal->getZ();
@@ -322,6 +326,66 @@ BottleDispatcher::BottleDispatcher(){
 
 	positionArray[posCounter+3]=length;
 	positionArray[posCounter+4]=width;
+	positionArray[posCounter+5]=exitHeightFromFloor;
+	textureArray[texPosCounter+2]=1-1;
+	textureArray[texPosCounter+3]=1-exitHeightFromFloor/height;
+	normalArray[posCounter+3]=rightNormal->getX();
+	normalArray[posCounter+4]=rightNormal->getY();
+	normalArray[posCounter+5]=rightNormal->getZ();
+
+	positionArray[posCounter+6]=0;
+	positionArray[posCounter+7]=width;
+	positionArray[posCounter+8]=exitHeightFromFloor;
+	textureArray[texPosCounter+4]=1-0;
+	textureArray[texPosCounter+5]=1-exitHeightFromFloor/height;
+	normalArray[posCounter+6]=rightNormal->getX();
+	normalArray[posCounter+7]=rightNormal->getY();
+	normalArray[posCounter+8]=rightNormal->getZ();
+	posCounter+=9;
+	texPosCounter+=6;
+
+
+	//Other lateral up
+	positionArray[posCounter]=0;
+	positionArray[posCounter+1]=width;
+	positionArray[posCounter+2]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter]=1-0;
+	textureArray[texPosCounter+1]=1-(exitHeightFromFloor+exitHeight)/height;
+	normalArray[posCounter]=rightNormal->getX();
+	normalArray[posCounter+1]=rightNormal->getY();
+	normalArray[posCounter+2]=rightNormal->getZ();
+
+	positionArray[posCounter+3]=length;
+	positionArray[posCounter+4]=width;
+	positionArray[posCounter+5]=height;
+	textureArray[texPosCounter+2]=1-1;
+	textureArray[texPosCounter+3]=1-1;
+	normalArray[posCounter+3]=rightNormal->getX();
+	normalArray[posCounter+4]=rightNormal->getY();
+	normalArray[posCounter+5]=rightNormal->getZ();
+
+	positionArray[posCounter+6]=length;
+	positionArray[posCounter+7]=width;
+	positionArray[posCounter+8]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter+4]=1-1;
+	textureArray[texPosCounter+5]=1-(exitHeightFromFloor+exitHeight)/height;
+	normalArray[posCounter+6]=rightNormal->getX();
+	normalArray[posCounter+7]=rightNormal->getY();
+	normalArray[posCounter+8]=rightNormal->getZ();
+	posCounter+=9;
+	texPosCounter+=6;
+
+	positionArray[posCounter]=0;
+	positionArray[posCounter+1]=width;
+	positionArray[posCounter+2]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter]=1-0;
+	textureArray[texPosCounter+1]=1-(exitHeightFromFloor+exitHeight)/height;
+	normalArray[posCounter]=rightNormal->getX();
+	normalArray[posCounter+1]=rightNormal->getY();
+	normalArray[posCounter+2]=rightNormal->getZ();
+
+	positionArray[posCounter+3]=length;
+	positionArray[posCounter+4]=width;
 	positionArray[posCounter+5]=height;
 	textureArray[texPosCounter+2]=1-1;
 	textureArray[texPosCounter+3]=1-1;
@@ -334,6 +398,125 @@ BottleDispatcher::BottleDispatcher(){
 	positionArray[posCounter+8]=height;
 	textureArray[texPosCounter+4]=1-0;
 	textureArray[texPosCounter+5]=1-1;
+	normalArray[posCounter+6]=rightNormal->getX();
+	normalArray[posCounter+7]=rightNormal->getY();
+	normalArray[posCounter+8]=rightNormal->getZ();
+	posCounter+=9;
+	texPosCounter+=6;
+
+	//Other lateral left
+	positionArray[posCounter]=exitWidthLocation+exitWidth;
+	positionArray[posCounter+1]=width;
+	positionArray[posCounter+2]=exitHeightFromFloor;
+	textureArray[texPosCounter]=1-(exitWidthLocation+exitWidth)/length;
+	textureArray[texPosCounter+1]=1-exitHeightFromFloor/height;
+	normalArray[posCounter]=rightNormal->getX();
+	normalArray[posCounter+1]=rightNormal->getY();
+	normalArray[posCounter+2]=rightNormal->getZ();
+
+	positionArray[posCounter+3]=length;
+	positionArray[posCounter+4]=width;
+	positionArray[posCounter+5]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter+2]=1-1;
+	textureArray[texPosCounter+3]=1-(exitHeightFromFloor+exitHeight)/height;
+	normalArray[posCounter+3]=rightNormal->getX();
+	normalArray[posCounter+4]=rightNormal->getY();
+	normalArray[posCounter+5]=rightNormal->getZ();
+
+	positionArray[posCounter+6]=length;
+	positionArray[posCounter+7]=width;
+	positionArray[posCounter+8]=exitHeightFromFloor;
+	textureArray[texPosCounter+4]=1-1;
+	textureArray[texPosCounter+5]=1-exitHeightFromFloor/height;
+	normalArray[posCounter+6]=rightNormal->getX();
+	normalArray[posCounter+7]=rightNormal->getY();
+	normalArray[posCounter+8]=rightNormal->getZ();
+	posCounter+=9;
+	texPosCounter+=6;
+
+	positionArray[posCounter]=exitWidthLocation+exitWidth;
+	positionArray[posCounter+1]=width;
+	positionArray[posCounter+2]=exitHeightFromFloor;
+	textureArray[texPosCounter]=1-(exitWidthLocation+exitWidth)/length;
+	textureArray[texPosCounter+1]=1-exitHeightFromFloor/height;
+	normalArray[posCounter]=rightNormal->getX();
+	normalArray[posCounter+1]=rightNormal->getY();
+	normalArray[posCounter+2]=rightNormal->getZ();
+
+	positionArray[posCounter+3]=length;
+	positionArray[posCounter+4]=width;
+	positionArray[posCounter+5]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter+2]=1-1;
+	textureArray[texPosCounter+3]=1-(exitHeightFromFloor+exitHeight)/height;
+	normalArray[posCounter+3]=rightNormal->getX();
+	normalArray[posCounter+4]=rightNormal->getY();
+	normalArray[posCounter+5]=rightNormal->getZ();
+
+	positionArray[posCounter+6]=exitWidthLocation+exitWidth;
+	positionArray[posCounter+7]=width;
+	positionArray[posCounter+8]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter+4]=1-(exitWidthLocation+exitWidth)/length;
+	textureArray[texPosCounter+5]=1-(exitHeightFromFloor+exitHeight)/height;
+	normalArray[posCounter+6]=rightNormal->getX();
+	normalArray[posCounter+7]=rightNormal->getY();
+	normalArray[posCounter+8]=rightNormal->getZ();
+	posCounter+=9;
+	texPosCounter+=6;
+
+
+	//Other lateral Right
+	positionArray[posCounter]=0;
+	positionArray[posCounter+1]=width;
+	positionArray[posCounter+2]=exitHeightFromFloor;
+	textureArray[texPosCounter]=1-0;
+	textureArray[texPosCounter+1]=1-exitHeightFromFloor/height;
+	normalArray[posCounter]=rightNormal->getX();
+	normalArray[posCounter+1]=rightNormal->getY();
+	normalArray[posCounter+2]=rightNormal->getZ();
+
+	positionArray[posCounter+3]=exitWidthLocation;
+	positionArray[posCounter+4]=width;
+	positionArray[posCounter+5]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter+2]=1-exitWidthLocation/length;
+	textureArray[texPosCounter+3]=1-(exitHeightFromFloor+exitHeight)/height;
+	normalArray[posCounter+3]=rightNormal->getX();
+	normalArray[posCounter+4]=rightNormal->getY();
+	normalArray[posCounter+5]=rightNormal->getZ();
+
+	positionArray[posCounter+6]=exitWidthLocation;
+	positionArray[posCounter+7]=width;
+	positionArray[posCounter+8]=exitHeightFromFloor;
+	textureArray[texPosCounter+4]=1-exitWidthLocation/length;
+	textureArray[texPosCounter+5]=1-exitHeightFromFloor/height;
+	normalArray[posCounter+6]=rightNormal->getX();
+	normalArray[posCounter+7]=rightNormal->getY();
+	normalArray[posCounter+8]=rightNormal->getZ();
+	posCounter+=9;
+	texPosCounter+=6;
+
+	positionArray[posCounter]=0;
+	positionArray[posCounter+1]=width;
+	positionArray[posCounter+2]=exitHeightFromFloor;
+	textureArray[texPosCounter]=1-0;
+	textureArray[texPosCounter+1]=1-exitHeightFromFloor/height;
+	normalArray[posCounter]=rightNormal->getX();
+	normalArray[posCounter+1]=rightNormal->getY();
+	normalArray[posCounter+2]=rightNormal->getZ();
+
+	positionArray[posCounter+3]=exitWidthLocation;
+	positionArray[posCounter+4]=width;
+	positionArray[posCounter+5]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter+2]=1-exitWidthLocation/length;
+	textureArray[texPosCounter+3]=1-(exitHeightFromFloor+exitHeight)/height;
+	normalArray[posCounter+3]=rightNormal->getX();
+	normalArray[posCounter+4]=rightNormal->getY();
+	normalArray[posCounter+5]=rightNormal->getZ();
+
+	positionArray[posCounter+6]=0;
+	positionArray[posCounter+7]=width;
+	positionArray[posCounter+8]=exitHeightFromFloor+exitHeight;
+	textureArray[texPosCounter+4]=1-0;
+	textureArray[texPosCounter+5]=1-(exitHeightFromFloor+exitHeight)/height;
 	normalArray[posCounter+6]=rightNormal->getX();
 	normalArray[posCounter+7]=rightNormal->getY();
 	normalArray[posCounter+8]=rightNormal->getZ();
