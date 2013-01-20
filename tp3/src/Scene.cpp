@@ -27,7 +27,7 @@ Scene::Scene() {
 	this->rectang = new Rectang(1.0,1.0,0.5);
 	this->lampara = new Lampara();
 	this->bottle = new Bottle();
-
+	bottleGenerator = new BottleGenerator();
 	assemblyLine = new AssemblyLine();
 }
 
@@ -94,12 +94,14 @@ void Scene::printScene(){
 					lampara->print();
 				glPopMatrix();
 			glPopMatrix();
-
 			glPushMatrix();
 				glTranslatef(0.0,0.0,0.8);
 				assemblyLine->print();
 			glPopMatrix();
-
+			glPushMatrix();
+				glTranslatef(0.0,0.0,2);
+				bottleGenerator->print();
+			glPopMatrix();
 
 	glPopMatrix();
 }
