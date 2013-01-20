@@ -400,7 +400,7 @@ BottleGenerator::BottleGenerator(){
 	positionArray[posCounter+1]=0;
 	positionArray[posCounter+2]=entranceHeightFromFloor+entranceHeight;
 	textureArray[texPosCounter]=0;
-	textureArray[texPosCounter+1]=2-(entranceHeightFromFloor+entranceHeight)/height;
+	textureArray[texPosCounter+1]=1-(entranceHeightFromFloor+entranceHeight)/height;
 	normalArray[posCounter]=0;
 	normalArray[posCounter+1]=1;
 	normalArray[posCounter+2]=0;
@@ -409,7 +409,7 @@ BottleGenerator::BottleGenerator(){
 	positionArray[posCounter+4]=width;
 	positionArray[posCounter+5]=entranceHeightFromFloor+entranceHeight;
 	textureArray[texPosCounter+2]=1;
-	textureArray[texPosCounter+3]=2-(entranceHeightFromFloor+entranceHeight)/height;
+	textureArray[texPosCounter+3]=1-(entranceHeightFromFloor+entranceHeight)/height;
 	normalArray[posCounter+3]=0;
 	normalArray[posCounter+4]=1;
 	normalArray[posCounter+5]=0;
