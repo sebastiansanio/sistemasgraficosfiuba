@@ -170,7 +170,6 @@ Bottle::Bottle(){
 void Bottle::print(double liquidHeight,bool label){
 	program->setTexture(14);
 	program->setActualProgram();
-
 	program->setLiquidHeight(liquidHeight,label);
 
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
@@ -183,6 +182,39 @@ void Bottle::print(double liquidHeight,bool label){
 	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
+
+}
+
+void Bottle::printPack(double liquidHeight,bool label){
+	program->setTexture(14);
+	program->setActualProgram();
+	program->setLiquidHeight(liquidHeight,label);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
+	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);
+	glVertexAttribPointer( VERTEX_COL_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferPositionHandler);
+	glVertexAttribPointer( VERTEX_POS_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
+	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+	double distance = 0.15;
+	glPushMatrix();
+		glTranslatef(distance,distance,0);
+		glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-distance,-distance,0);
+		glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(distance,-distance,0);
+		glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-distance,distance,0);
+		glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
+	glPopMatrix();
+
 
 }
 
