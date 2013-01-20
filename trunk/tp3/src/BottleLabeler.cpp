@@ -1,5 +1,7 @@
 #include "BottleLabeler.h"
 #include "Curves/Coordinate.h"
+#include "Bottle.h"
+
 
 BottleLabeler* BottleLabeler::instance = 0;
 BottleLabeler* BottleLabeler::Instance ()
@@ -11,10 +13,21 @@ BottleLabeler* BottleLabeler::Instance ()
   return instance;
 }
 
+bool BottleLabeler::label(BottleInstance* bottle){
+	if(labelTime==0){
+		labelTime = 50;
+		return false;
+	}
+	labelTime--;
+	if(labelTime == 0){
+		bottle->setHasLabel(true);
+	}
+	return labelTime == 0;
+}
 
 BottleLabeler::BottleLabeler(){
 
-
+	labelTime = 0;
 	program = TextureProgram::Instance();
 	trianglesEstimated = 1;
 

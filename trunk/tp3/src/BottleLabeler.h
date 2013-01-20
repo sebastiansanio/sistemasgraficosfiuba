@@ -3,6 +3,7 @@
 
 #include "TextureProgram.h"
 #include "Curves/Bezier.h"
+#include "BottleInstance.h"
 #include <math.h>
 
 class BottleLabeler{
@@ -11,8 +12,9 @@ public:
 	BottleLabeler();
 	~BottleLabeler();
 	void print();
-
+	bool label(BottleInstance* bottle);
 private:
+	double labelTime;
 	static BottleLabeler* instance;
 	float* positionArray;
 	float* colorArray;

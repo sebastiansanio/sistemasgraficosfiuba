@@ -7,6 +7,8 @@
 
 #include "AssemblyLine.h"
 #include "Bottle.h"
+#include "BottleFiller.h"
+#include "BottleLabeler.h"
 #define PI 3.14159265
 
 
@@ -30,10 +32,34 @@ Coordinate* AssemblyLine::calculateNormal(vector<Coordinate*>* points,unsigned i
 	return normal;
 }
 
-void AssemblyLine::advance(double speed){
-	if(advanceParameter>50){
-		advanceParameter -= 50;
+void AssemblyLine::advance(){
+
+	double speed = 0.05;
+
+	bool continueWork = true;
+	for(unsigned int i = 0;i<bottles->size();i++){
+		if(bottles->at(i)->getDistance()>=labelerPosition && bottles->at(i)->getHasLabel()==false){
+			bool finnished = BottleLabeler::Instance()->label(bottles->at(i));
+			if(finnished == false)
+				continueWork = false;
+		}
+		if(bottles->at(i)->isFilled() == false && bottles->at(i)->getDistance()>=fillerPosition){
+			bool finnished = BottleFiller::Instance()->fill(bottles->at(i));
+			if(finnished == false)
+				continueWork = false;
+		}
+
 	}
+
+
+	if(continueWork == false)
+		return;
+	cout <<"hola:" << advanceParameter<<endl;
+	if(advanceParameter>=2){
+		addBottle();
+		advanceParameter -= 2;
+	}
+
 	advanceParameter += speed;
 	for(unsigned int i = 0;i<bottles->size();i++){
 		bottles->at(i)->setDistance(bottles->at(i)->getDistance()+speed);
@@ -92,7 +118,8 @@ void AssemblyLine::setTexture(){
 }
 
 AssemblyLine::AssemblyLine(){
-
+	fillerPosition = 20;
+	labelerPosition = 16;
 	advanceParameter = 0;
 	bottles = new vector<BottleInstance*>;
 

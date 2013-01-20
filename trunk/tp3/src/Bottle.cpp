@@ -35,7 +35,14 @@ Coordinate* Bottle::calculateNormal(vector<Coordinate*>* points,unsigned int i,f
 	return coordinate;
 }
 
+double Bottle::getFilledHeight(){
+	return filledHeight;
+}
+
 Bottle::Bottle(){
+
+	filledHeight = 0.8;
+
 	program = BottleProgram::Instance();
 	bezier=new Bezier();
 	bezier->addPoint(0,1.5/10,0);
@@ -185,10 +192,10 @@ void Bottle::print(double liquidHeight,bool label){
 
 }
 
-void Bottle::printPack(double liquidHeight,bool label){
+void Bottle::printPack(){
 	program->setTexture(14);
 	program->setActualProgram();
-	program->setLiquidHeight(liquidHeight,label);
+	program->setLiquidHeight(filledHeight,true);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
 	glVertexAttribPointer( VERTEX_NOR_ATTR_INDEX, 3 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 	glBindBuffer( GL_ARRAY_BUFFER, bufferColorHandler);

@@ -1,10 +1,3 @@
-/*
- * Scene.cpp
- *
- *  Created on: 10/01/2012
- *      Author: damian
- */
-
 #include "Scene.h"
 
 Scene* Scene::instance = 0;// Inicializar el puntero
@@ -18,8 +11,6 @@ Scene* Scene::Instance ()
 }
 
 Scene::Scene() {
-	generateBottleTime = 0;
-	generateBottleDelay = 50;
 	this->piso = new RectangTex(20.0,20.0,0,2.0);
 	this->pared = new RectangTex(20.0,5.0,1,2.0);
 	this->techo = new RectangTex(20.0,20.0,2,2.0);
@@ -109,19 +100,13 @@ void Scene::printScene(){
 				glTranslatef(0.0,0.0,0.8);
 				assemblyLine->print();
 			glPopMatrix();
-			bottle->printPack(0.8,true);
+			bottle->printPack();
 
 	glPopMatrix();
 }
 
 void Scene::advanceMotion(){
-	if(generateBottleTime<=0){
-		assemblyLine->addBottle();
-		generateBottleTime += generateBottleDelay;
-	}else{
-		generateBottleTime --;
-	}
-	assemblyLine->advance(0.05);
+	assemblyLine->advance();
 
 }
 

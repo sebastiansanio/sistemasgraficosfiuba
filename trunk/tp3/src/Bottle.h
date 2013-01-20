@@ -13,9 +13,10 @@ public:
 	Bottle();
 	~Bottle();
 	void print(double liquidHeight,bool label);
-	void printPack(double liquidHeight,bool label);
-
+	void printPack();
+	double getFilledHeight();
 private:
+	double filledHeight;
 	static Bottle* instance;
 	Coordinate* calculateNormal(vector<Coordinate*>* points,unsigned int i,float j);
 	float* positionArray;

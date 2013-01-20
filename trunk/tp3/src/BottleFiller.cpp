@@ -1,5 +1,7 @@
 #include "BottleFiller.h"
 #include "Curves/Coordinate.h"
+#include "Bottle.h"
+#include "math.h"
 
 BottleFiller* BottleFiller::instance = 0;
 BottleFiller* BottleFiller::Instance ()
@@ -11,10 +13,27 @@ BottleFiller* BottleFiller::Instance ()
   return instance;
 }
 
+bool BottleFiller::fill(BottleInstance* bottle){
+	if(fillTime == 0){
+		fillTime = 50;
+		return false;
+	}
+	if(fillTime<=45 && fillTime>5){
+		double actualLiquidHeight = bottle->getLiquidHeight();
+		Bottle* paintBottle =  Bottle::Instance();
+		double maxLiquidHeight = paintBottle->getFilledHeight();
+		double fillRatio = maxLiquidHeight/40;
+		double fill = min(fillRatio,maxLiquidHeight-actualLiquidHeight);
+		bottle->setLiquidHeight(actualLiquidHeight+fill);
+	}
+	fillTime --;
+	return fillTime == 0;
+}
 
 BottleFiller::BottleFiller(){
 
 
+	fillTime = 0;
 	program = TextureProgram::Instance();
 	trianglesEstimated = 1;
 
