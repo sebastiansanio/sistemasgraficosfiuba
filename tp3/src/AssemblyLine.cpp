@@ -105,7 +105,7 @@ AssemblyLine::AssemblyLine(){
 	bspline->addPoint(-6,5,0);
 	bspline->addPoint(1,4,0);
 	bspline->addPoint(10,4,0);
-	bspline->addPoint(17,4,0);
+	bspline->addPoint(14,4,0);
 
 	bspline->calculate();
 	points= bspline->getPoints();
