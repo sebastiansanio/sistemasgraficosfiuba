@@ -54,7 +54,7 @@ void AssemblyLine::advance(){
 
 	if(continueWork == false)
 		return;
-	cout <<"hola:" << advanceParameter<<endl;
+
 	if(advanceParameter>=2){
 		addBottle();
 		advanceParameter -= 2;
