@@ -13,6 +13,7 @@ public:
 	Bottle();
 	~Bottle();
 	void print(double liquidHeight,bool label);
+	void printPack(double liquidHeight,bool label);
 
 private:
 	static Bottle* instance;

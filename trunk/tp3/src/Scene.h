@@ -1,10 +1,3 @@
-/*
- * Scene.h
- *
- *  Created on: 10/01/2012
- *      Author: damian
- */
-
 #ifndef Scene_H_
 #define Scene_H_
 
@@ -15,6 +8,7 @@
 #include "Bottle.h"
 #include "AssemblyLine.h"
 #include "BottleGenerator.h"
+#include "BottleDispatcher.h"
 
 class Scene {
 public:
@@ -41,6 +35,7 @@ private:
 	Bottle* bottle;
 	AssemblyLine* assemblyLine;
 	BottleGenerator* bottleGenerator;
+	BottleDispatcher* bottleDispatcher;
 };
 
 #endif /* Scene_H_ */
