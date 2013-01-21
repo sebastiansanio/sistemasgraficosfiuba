@@ -14,11 +14,18 @@ public:
 	double getLiquidHeight();
 	bool getHasLabel();
 	bool isFilled();
+	void setPosition(double newX,double newY,double newZ);
+	double getX();
+	double getY();
+	double getZ();
 
 private:
 	double distance;
 	double liquidHeight;
 	bool hasLabel;
+	double posX;
+	double posY;
+	double posZ;
 
 };
 

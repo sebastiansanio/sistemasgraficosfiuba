@@ -9,6 +9,7 @@
 #include "AssemblyLine.h"
 #include "BottleGenerator.h"
 #include "BottleDispatcher.h"
+#include "Bullet.h"
 
 class Scene {
 public:
@@ -34,7 +35,7 @@ private:
 	AssemblyLine* assemblyLine;
 	BottleGenerator* bottleGenerator;
 	BottleDispatcher* bottleDispatcher;
-
+	Bullet* bullet;
 };
 
 #endif /* Scene_H_ */

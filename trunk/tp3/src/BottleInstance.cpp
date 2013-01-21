@@ -30,4 +30,18 @@ double BottleInstance::getLiquidHeight(){
 bool BottleInstance::getHasLabel(){
 	return hasLabel;
 }
+void BottleInstance::setPosition(double newX,double newY,double newZ){
+	posX = newX;
+	posY = newY;
+	posZ = newZ;
+}
+double BottleInstance::getX(){
+	return posX;
+}
+double BottleInstance::getY(){
+	return posY;
+}
+double BottleInstance::getZ(){
+	return posZ;
+}
 
