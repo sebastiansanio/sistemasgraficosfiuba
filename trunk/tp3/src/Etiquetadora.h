@@ -9,6 +9,7 @@
 #define ETIQUETADORA_H_
 
 #include "CubeRef.h"
+#include "PortaEtiqueta.h"
 
 class Etiquetadora {
 public:
