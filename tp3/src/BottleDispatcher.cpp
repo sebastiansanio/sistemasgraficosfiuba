@@ -14,8 +14,6 @@ BottleDispatcher* BottleDispatcher::Instance ()
 
 BottleDispatcher::BottleDispatcher(){
 
-
-
 	height = 6;
 	width = 2;
 	length = 3.5;
@@ -24,11 +22,11 @@ BottleDispatcher::BottleDispatcher(){
 	double entranceHeight = 1.5;
 	double entranceWidth = 1.2;
 
-	double exitHeightFromFloor = 4.5;
-	double exitHeight = 1.2;
+	double exitHeightFromFloor = 3.3;
+	double exitHeight = 1.7;
 	double exitWidth = 2;
 
-	ramp = new Ramp(exitHeightFromFloor,exitWidth,7);
+	ramp = new Ramp(exitHeightFromFloor +0.45,exitWidth,9);
 
 	double entranceWidthLocation = (width-entranceWidth)/2;
 	exitWidthLocation = (length-exitWidth)/2;
@@ -805,6 +803,7 @@ void BottleDispatcher::print(){
 	glPushMatrix();
 		glRotatef(90,0,0,1);
 		glTranslatef(width,-length+exitWidthLocation,0);
+		glTranslatef(-1,0,0);
 		ramp->print();
 
 	glPopMatrix();
