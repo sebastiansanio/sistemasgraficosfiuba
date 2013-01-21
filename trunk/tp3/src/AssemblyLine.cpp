@@ -119,7 +119,7 @@ void AssemblyLine::setTexture(){
 
 AssemblyLine::AssemblyLine(){
 	fillerPosition = 20;
-	labelerPosition = 16;
+	labelerPosition = 26;
 	advanceParameter = 0;
 	bottles = new vector<BottleInstance*>;
 
