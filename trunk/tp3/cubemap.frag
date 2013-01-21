@@ -12,11 +12,16 @@ uniform samplerCube Texture2;
 uniform vec3 lightPos[NUMLIGHT];
 uniform vec3 lightSpotDir[NUMLIGHT];
 
+float rand(){
+    return fract(sin(dot(Position ,vec3(12.9898,78.233,15.633))) * 43758.5453);
+}
+
 void main()
-{
-	//vec3 color = vec3(texture( Texture1, TexCoord ));
+{	
+
+	vec3 color = vec3(0.25,0.25,0.25) + vec3(0.64,0.4,0.32) * 0.25 * rand();
 	
-	vec3 color = vec3(texture(Texture2,ReflectDir));
+	color = mix(vec3(texture(Texture2,ReflectDir)),color,0.8);
 	
 	//Iluminacion ambiente
 	
