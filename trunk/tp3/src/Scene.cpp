@@ -96,7 +96,6 @@ void Scene::printScene(){
 				glRotatef(180,0,0,1);
 				bottleDispatcher->print();
 			glPopMatrix();
-
 			glPushMatrix();
 				glTranslatef(0.0,0.0,0.8);
 				assemblyLine->print();

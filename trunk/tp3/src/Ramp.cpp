@@ -111,7 +111,7 @@ Ramp::Ramp(double height,double width,double length){
 }
 
 void Ramp::print(){
-	program->setTexture(14);
+	program->setTexture(2);
 	program->setActualProgram();
 
 	glBindBuffer( GL_ARRAY_BUFFER, bufferNormalHandler);
