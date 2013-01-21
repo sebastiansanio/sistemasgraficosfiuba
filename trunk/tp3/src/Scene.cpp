@@ -21,16 +21,13 @@ Scene::Scene() {
 	bottleGenerator = new BottleGenerator();
 	assemblyLine = new AssemblyLine();
 	bottleDispatcher = new BottleDispatcher();
+	this->etiquetadora = new Etiquetadora();
 	bullet = new Bullet();
 }
 
 void Scene::printScene(){
 	glPushMatrix();
 			//Dibujando el escenario
-			glPushMatrix();
-//				glTranslatef(0.0,0.0,2.0);
-				this->cube1->print();
-			glPopMatrix();
 			piso->print();
 			glPushMatrix();
 				glTranslatef(0.0,20.0,5.0);
@@ -103,6 +100,10 @@ void Scene::printScene(){
 			glPushMatrix();
 				glTranslatef(0.0,0.0,0.8);
 				assemblyLine->print();
+			glPopMatrix();
+			glPushMatrix();
+				glTranslatef(-1.0,6.5,0.0);
+				this->etiquetadora->print();
 			glPopMatrix();
 			bottle->printPack();
 
