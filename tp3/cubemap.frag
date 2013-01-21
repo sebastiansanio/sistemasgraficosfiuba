@@ -19,7 +19,7 @@ float rand(){
 void main()
 {	
 
-	vec3 color = vec3(0.25,0.25,0.25) + vec3(0.64,0.4,0.32) * 0.25 * rand();
+	vec3 color = vec3(0.25,0.25,0.25) + vec3(0.64,0.4,0.32) * 0.5 * rand();
 	
 	color = mix(vec3(texture(Texture2,ReflectDir)),color,0.8);
 	
