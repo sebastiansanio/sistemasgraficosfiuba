@@ -21,6 +21,7 @@ Scene::Scene() {
 	bottleGenerator = new BottleGenerator();
 	assemblyLine = new AssemblyLine();
 	bottleDispatcher = new BottleDispatcher();
+	bullet = new Bullet();
 }
 
 void Scene::printScene(){
@@ -106,8 +107,8 @@ void Scene::printScene(){
 }
 
 void Scene::advanceMotion(){
+	bullet->advanceMotion();
 	assemblyLine->advance();
-
 }
 
 Scene::~Scene() {
