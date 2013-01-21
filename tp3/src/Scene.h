@@ -37,6 +37,7 @@ private:
 	BottleGenerator* bottleGenerator;
 	BottleDispatcher* bottleDispatcher;
 	Etiquetadora* etiquetadora;
+	PortaEtiqueta* portaEtiqueta;
 	Bullet* bullet;
 };
 

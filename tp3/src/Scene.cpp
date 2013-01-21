@@ -22,6 +22,7 @@ Scene::Scene() {
 	assemblyLine = new AssemblyLine();
 	bottleDispatcher = new BottleDispatcher();
 	this->etiquetadora = new Etiquetadora();
+	this->portaEtiqueta = new PortaEtiqueta();
 	bullet = new Bullet();
 }
 
@@ -105,7 +106,9 @@ void Scene::printScene(){
 				glTranslatef(-1.0,6.5,0.0);
 				this->etiquetadora->print();
 			glPopMatrix();
-			bottle->printPack();
+			bottle->print(0.0,true);
+//			glTranslatef(0.0,5.0,2.0);
+//			portaEtiqueta->print();
 
 	glPopMatrix();
 }
