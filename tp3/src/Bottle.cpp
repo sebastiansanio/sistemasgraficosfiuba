@@ -45,7 +45,12 @@ Bottle::Bottle(){
 
 	program = BottleProgram::Instance();
 	bezier=new Bezier();
-	bezier->addPoint(0,1.5/10,0);
+
+	bezier->addPoint(0,0,0);
+	bezier->addPoint(0,0,0);
+	bezier->addPoint(0,0,0);
+	bezier->addPoint(0,1.5/10,0.01);
+
 	bezier->addPoint(0,1.25/10,0.5/5);
 	bezier->addPoint(0,1.25/10,0.75/5);
 	bezier->addPoint(0,1.5/10,1.6/5);
@@ -57,8 +62,12 @@ Bottle::Bottle(){
 	bezier->addPoint(0,1.5/10,3.2/5);
 	bezier->addPoint(0,0.5/10,4.0/5);
 	bezier->addPoint(0,0.5/10,5.0/5);
-	bezier->calculate();
 
+	bezier->addPoint(0,0,5.0/5);
+	bezier->addPoint(0,0,5.0/5);
+	bezier->addPoint(0,0,5.0/5);
+
+	bezier->calculate();
 
 	vector<Coordinate*>* points= bezier->getPoints();
 	unsigned int size = points->size();
@@ -78,6 +87,7 @@ Bottle::Bottle(){
 
 	int posCounter = 0;
 	int texPosCounter = 0;
+
 
 	for(unsigned int i=0;i<size-1;i++){
 		for(float j=0;j<360;j=j+STEP){

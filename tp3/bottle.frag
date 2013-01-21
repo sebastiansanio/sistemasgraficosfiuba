@@ -24,6 +24,9 @@ void main()
 	float currentLiquidHeight = liquidHeight[0];
 	float hasLabel = liquidHeight[1];
 	 
+	if(hasLabel == 0 && height > 0.99)
+		discard;
+	 
 	if((color[0] == 0 && color[1] == 0 && color[2] == 0) || hasLabel == 0 ){
 		if(height< currentLiquidHeight){
 			color[0] = 0.4; 
