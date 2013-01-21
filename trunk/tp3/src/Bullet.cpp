@@ -52,7 +52,7 @@ void Bullet::advanceMotion(){
             btTransform trans;
             fallRigidBody->getMotionState()->getWorldTransform(trans);
 
-            std::cout << "sphere height: " << trans.getOrigin().getY() << std::endl;
+//            std::cout << "sphere height: " << trans.getOrigin().getY() << std::endl;
     }
 
     dynamicsWorld->removeRigidBody(fallRigidBody);

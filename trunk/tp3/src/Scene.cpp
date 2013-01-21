@@ -27,6 +27,10 @@ Scene::Scene() {
 void Scene::printScene(){
 	glPushMatrix();
 			//Dibujando el escenario
+			glPushMatrix();
+//				glTranslatef(0.0,0.0,2.0);
+				this->cube1->print();
+			glPopMatrix();
 			piso->print();
 			glPushMatrix();
 				glTranslatef(0.0,20.0,5.0);
