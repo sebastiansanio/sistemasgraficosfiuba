@@ -1,7 +1,9 @@
 #include "Bullet.h"
+#include <iostream>
 
 
 void Bullet::advanceMotion(){
+
 	cout <<"advancing" <<endl;
 }
 
