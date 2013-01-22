@@ -6,10 +6,10 @@
 #include "RectangTex.h"
 #include "Lampara.h"
 #include "Bottle.h"
+#include "Etiquetadora.h"
 #include "AssemblyLine.h"
 #include "BottleGenerator.h"
 #include "BottleDispatcher.h"
-#include "Etiquetadora.h"
 #include "Bullet.h"
 
 class Scene {
@@ -33,11 +33,10 @@ private:
 	Rectang* rectang;
 	Lampara* lampara;
 	Bottle* bottle;
+	Etiquetadora* etiquetadora;
 	AssemblyLine* assemblyLine;
 	BottleGenerator* bottleGenerator;
 	BottleDispatcher* bottleDispatcher;
-	Etiquetadora* etiquetadora;
-	PortaEtiqueta* portaEtiqueta;
 	Bullet* bullet;
 };
 
