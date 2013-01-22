@@ -4,6 +4,11 @@
 BottleInstance::~BottleInstance(){
 
 }
+
+BottleInstance::BottleInstance(){
+
+}
+
 BottleInstance::BottleInstance(double initialDistance,double initialLiquidHeight,bool initialHasLabel){
 	distance = initialDistance;
 	liquidHeight = initialLiquidHeight;

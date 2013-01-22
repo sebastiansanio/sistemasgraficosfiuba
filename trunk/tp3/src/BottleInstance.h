@@ -5,6 +5,7 @@
 
 class BottleInstance{
 public:
+	BottleInstance();
 	~BottleInstance();
 	BottleInstance(double initialDistance,double initialLiquidHeight,bool initialHasLabel);
 	void setDistance(double newDistance);

@@ -21,7 +21,7 @@ Scene::Scene() {
 	bottleGenerator = new BottleGenerator();
 	assemblyLine = new AssemblyLine();
 	bottleDispatcher = new BottleDispatcher();
-	bullet = new Bullet();
+	bullet = Bullet::Instance();
 }
 
 void Scene::printScene(){
@@ -100,7 +100,7 @@ void Scene::printScene(){
 				glTranslatef(0.0,0.0,0.8);
 				assemblyLine->print();
 			glPopMatrix();
-			bottle->print(0.0,true);
+			bullet->drawBottles();
 
 	glPopMatrix();
 }

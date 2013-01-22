@@ -7,6 +7,7 @@
 
 #include "AssemblyLine.h"
 #include "Bottle.h"
+#include "Bullet.h"
 #include "BottleFiller.h"
 #include "BottleLabeler.h"
 #define PI 3.14159265
@@ -71,6 +72,18 @@ void AssemblyLine::advance(){
 		bottles->at(i)->setDistance(bottles->at(i)->getDistance()+speed);
 	}
 
+	for(unsigned int i = 0;i<bottles->size();i++){
+		if(bottles->at(i)->getDistance()>pointsDistance->at(pointsDistance->size()-1)){
+			bottles->erase(bottles->begin()+i);
+			bottlesQuantity ++;
+		}
+	}
+
+	if(bottlesQuantity >= 4){
+		bottlesQuantity = 0;
+		Bullet::Instance()->addPack();
+	}
+
 	setTexture();
 	glBindBuffer( GL_ARRAY_BUFFER, bufferTextureHandler);
 	glBufferData( GL_ARRAY_BUFFER, (trianglesEstimated * 6) * sizeof (float), this->textureArray, GL_STATIC_DRAW );
@@ -124,6 +137,7 @@ void AssemblyLine::setTexture(){
 }
 
 AssemblyLine::AssemblyLine(){
+	bottlesQuantity = 0;
 	fillerPosition = 14;
 	labelerPosition = 18;
 	advanceParameter = 0;

@@ -9,11 +9,15 @@
 
 class Bullet{
 public:
+	static Bullet* Instance();
+	void addPack();
+	void drawBottles();
 	Bullet();
 	~Bullet();
 	void advanceMotion();
 
 private:
+	static Bullet* instance;
 	vector<BottleInstance*>* bottles;
 };
 
