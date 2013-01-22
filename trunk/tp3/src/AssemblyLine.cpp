@@ -43,7 +43,6 @@ void AssemblyLine::advance(){
 				this->etiquetadora->start();
 				etiquetando=true;
 			}
-			etiquetadora->mover();
 			bool finnished = BottleLabeler::Instance()->label(bottles->at(i));
 			if(finnished) etiquetando = false;
 			if(finnished == false)
@@ -312,7 +311,10 @@ void AssemblyLine::print(){
 
 	drawBottles();
 
+	glPushMatrix();
+	glTranslatef(-1.0,5.8,-1.0);
 	etiquetadora->print();
+	glPopMatrix();
 
 }
 

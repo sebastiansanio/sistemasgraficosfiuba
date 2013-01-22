@@ -6,9 +6,9 @@
  */
 
 #include "Etiquetadora.h"
-#define ETIQUE_SUP 2.0
+#define ETIQUE_SUP 2.2
 #define ETIQUE_INF 1.1
-#define ETIQUE_VELOCIDAD 0.05
+#define ETIQUE_VELOCIDAD 0.1
 
 Etiquetadora::Etiquetadora() {
 	this->cubeRef = new CubeRef(1.0,1.0,1.0);
@@ -30,10 +30,10 @@ void Etiquetadora::print() {
 			cubeRef->print();
 		glPopMatrix();
 		//En 1.1 está por arriba de la base de la botella, en 2.0 por arriba de la tapa
-		glTranslatef(0.0,-1.0,posEtiquetadora);
+		glTranslatef(0.0,-1.5,posEtiquetadora);
 		portaEtiqueta->print();
-		glScalef(0.02,0.3,0.05);
-		glTranslatef(12.5,0.6,12.0);
+		glScalef(0.02,0.6,0.05);
+		glTranslatef(12.5,0.9,11.0);
 		cubeRef->print();
 		glTranslatef(-25,0.0,0.0);
 		cubeRef->print();
