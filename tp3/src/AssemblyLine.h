@@ -12,6 +12,7 @@
 #include "TextureProgram.h"
 #include "Curves/BSpline.h"
 #include "BottleInstance.h"
+#include "Etiquetadora.h"
 #include <math.h>
 
 class AssemblyLine{
@@ -46,6 +47,8 @@ private:
 	int trianglesEstimated;
 	TextureProgram* program;
 	BSpline* bezier;
+	Etiquetadora* etiquetadora;
+	bool etiquetando;
 };
 
 
