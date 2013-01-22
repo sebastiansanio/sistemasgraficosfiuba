@@ -39,6 +39,7 @@ void AssemblyLine::advance(){
 	bool continueWork = true;
 	for(unsigned int i = 0;i<bottles->size();i++){
 		if(bottles->at(i)->getDistance()>=labelerPosition && bottles->at(i)->getHasLabel()==false){
+			cout << etiquetando << endl;
 			if(!etiquetando) {
 				this->etiquetadora->start();
 				etiquetando=true;
