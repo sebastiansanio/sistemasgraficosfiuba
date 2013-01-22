@@ -48,8 +48,11 @@ void AssemblyLine::advance(){
 			if(finnished){
 				etiquetando = false;
 			}
-			if(finnished == false)
+			if(finnished == false){
+				etiquetadora->mover();
 				continueWork = false;
+			}
+
 		}
 		if(bottles->at(i)->isFilled() == false && bottles->at(i)->getDistance()>=fillerPosition){
 			bool finnished = BottleFiller::Instance()->fill(bottles->at(i));

@@ -29,7 +29,7 @@ void Etiquetadora::print() {
 			glScalef(0.3,0.3,0.4);
 			cubeRef->print();
 		glPopMatrix();
-		//En 1.1 está por arriba de la base de la botella, en 2.0 por arriba de la tapa
+		//En 1.1 estï¿½ por arriba de la base de la botella, en 2.0 por arriba de la tapa
 		glTranslatef(0.0,-1.5,posEtiquetadora);
 		portaEtiqueta->print();
 		glScalef(0.02,0.6,0.05);
@@ -38,7 +38,6 @@ void Etiquetadora::print() {
 		glTranslatef(-25,0.0,0.0);
 		cubeRef->print();
 	glPopMatrix();
-	mover();
 }
 
 void Etiquetadora::start() {

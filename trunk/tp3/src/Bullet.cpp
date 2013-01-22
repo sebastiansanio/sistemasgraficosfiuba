@@ -16,6 +16,7 @@ Bullet* Bullet::Instance ()
 
 Bullet::Bullet(){
 	bottles = new vector<BottleInstance*>;
+	addPack();
 }
 
 Bullet::~Bullet(){
@@ -24,7 +25,7 @@ Bullet::~Bullet(){
 
 void Bullet::addPack(){
 	BottleInstance* bottle = new BottleInstance();
-	bottle->setPosition(0,0,1);
+	bottle->setPosition(13,5,6);
 	bottles->push_back(bottle);
 
 }
