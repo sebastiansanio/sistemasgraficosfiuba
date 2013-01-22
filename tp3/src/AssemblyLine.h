@@ -25,6 +25,7 @@ public:
 	void drawBottles();
 
 private:
+	int bottlesQuantity;
 	double labelerPosition;
 	double fillerPosition;
 	vector<Coordinate*>* points;

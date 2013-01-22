@@ -1,13 +1,42 @@
 #include "Bullet.h"
 #include <iostream>
+#include "Bottle.h"
 #include "include/btBulletDynamicsCommon.h"
 #include "include/btBulletCollisionCommon.h"
+
+Bullet* Bullet::instance = 0;
+Bullet* Bullet::Instance ()
+{
+  if (instance == 0)
+  {
+    instance = new Bullet();
+  }
+  return instance;
+}
 
 Bullet::Bullet(){
 	bottles = new vector<BottleInstance*>;
 }
 
 Bullet::~Bullet(){
+
+}
+
+void Bullet::addPack(){
+	BottleInstance* bottle = new BottleInstance();
+	bottle->setPosition(0,0,1);
+	bottles->push_back(bottle);
+
+}
+
+void Bullet::drawBottles(){
+
+	for(unsigned int i = 0;i<bottles->size();i++){
+		glPushMatrix();
+			glTranslatef(bottles->at(i)->getX(),bottles->at(i)->getY(),bottles->at(i)->getZ());
+			Bottle::Instance()->printPack();
+		glPopMatrix();
+	}
 
 }
 
