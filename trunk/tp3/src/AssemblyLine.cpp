@@ -39,14 +39,15 @@ void AssemblyLine::advance(){
 
 	bool continueWork = true;
 	for(unsigned int i = 0;i<bottles->size();i++){
-		if(bottles->at(i)->getDistance()>=labelerPosition && bottles->at(i)->getHasLabel()==false){
-			cout << etiquetando << endl;
+		if(bottles->at(i)->getDistance()>=labelerPosition && bottles->at(i)->getLabelFinished()==false){
 			if(!etiquetando) {
 				this->etiquetadora->start();
 				etiquetando=true;
 			}
 			bool finnished = BottleLabeler::Instance()->label(bottles->at(i));
-			if(finnished) etiquetando = false;
+			if(finnished){
+				etiquetando = false;
+			}
 			if(finnished == false)
 				continueWork = false;
 		}

@@ -13,6 +13,7 @@ BottleInstance::BottleInstance(double initialDistance,double initialLiquidHeight
 	distance = initialDistance;
 	liquidHeight = initialLiquidHeight;
 	hasLabel = initialHasLabel;
+	labelFinished = initialHasLabel;
 }
 bool BottleInstance::isFilled(){
 	return (liquidHeight>=Bottle::Instance()->getFilledHeight());
@@ -26,6 +27,9 @@ void BottleInstance::setLiquidHeight(double newLiquidHeight){
 void BottleInstance::setHasLabel(bool newHasLabel){
 	hasLabel = newHasLabel;
 }
+void BottleInstance::setLabelFinished(bool newLabelFinished){
+	labelFinished = newLabelFinished;
+}
 double BottleInstance::getDistance(){
 	return distance;
 }
@@ -34,6 +38,9 @@ double BottleInstance::getLiquidHeight(){
 }
 bool BottleInstance::getHasLabel(){
 	return hasLabel;
+}
+bool BottleInstance::getLabelFinished(){
+	return labelFinished;
 }
 void BottleInstance::setPosition(double newX,double newY,double newZ){
 	posX = newX;
