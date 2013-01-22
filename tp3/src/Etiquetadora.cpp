@@ -42,9 +42,11 @@ void Etiquetadora::print() {
 }
 
 void Etiquetadora::start() {
-	this->moviendo = true;
-	this->subiendo = false;
-	this->posEtiquetadora = ETIQUE_SUP - ETIQUE_VELOCIDAD;
+	if(!moviendo) {
+		this->moviendo = true;
+		this->subiendo = false;
+		this->posEtiquetadora = ETIQUE_SUP - ETIQUE_VELOCIDAD;
+	}
 }
 
 void Etiquetadora::mover() {
