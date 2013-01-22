@@ -102,10 +102,26 @@ PortaEtiqueta::PortaEtiqueta() {
 		// i es el numero de vertice
 		seccion = i / verticesSeccion;
 
+		//Si es una superficie plana en z corrigo la normal
+		if(normalArray[(i*3)+2] > 10000000) {
+			normalArray[(i*3)] = 0.0;
+			normalArray[(i*3)+1] = 0.0;
+			normalArray[(i*3)+2] = 1.0;
+		} else if (normalArray[(i*3)+2] < -10000000) {
+			normalArray[(i*3)] = 0.0;
+			normalArray[(i*3)+1] = 0.0;
+			normalArray[(i*3)+2] = -1.0;
+		}
+
 		if(seccion == 0) {
 			colorArray[i*3]=0.0;
 			colorArray[(i*3)+1]=0.0;
 			colorArray[(i*3)+2]=0.0;
+
+		} else if (seccion == 5) {
+			colorArray[i*3]=0.846;
+			colorArray[(i*3)+1]=0.471;
+			colorArray[(i*3)+2]=0.232;
 		} else {
 			colorArray[i*3]=0.846;
 			colorArray[(i*3)+1]=0.471;

@@ -17,12 +17,11 @@ Scene::Scene() {
 	this->cube1 = new CubeRef(1.0,1.0,1.0);
 	this->rectang = new Rectang(1.0,1.0,0.5);
 	this->lampara = new Lampara();
+	this->etiquetadora = new Etiquetadora();
 	this->bottle = new Bottle();
 	bottleGenerator = new BottleGenerator();
 	assemblyLine = new AssemblyLine();
 	bottleDispatcher = new BottleDispatcher();
-	this->etiquetadora = new Etiquetadora();
-	this->portaEtiqueta = new PortaEtiqueta();
 	bullet = new Bullet();
 }
 
@@ -107,8 +106,6 @@ void Scene::printScene(){
 				this->etiquetadora->print();
 			glPopMatrix();
 			bottle->print(0.0,true);
-//			glTranslatef(0.0,5.0,2.0);
-//			portaEtiqueta->print();
 
 	glPopMatrix();
 }

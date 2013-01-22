@@ -15,11 +15,16 @@ class Etiquetadora {
 public:
 	Etiquetadora();
 	void print();
+	void start();
+	void mover();
 	virtual ~Etiquetadora();
 
 private:
-	RectangRef* rectang;
 	CubeRef* cubeRef;
+	PortaEtiqueta* portaEtiqueta;
+	float posEtiquetadora;
+	bool moviendo;
+	bool subiendo;
 };
 
 #endif /* CUBEREF_H_ */
