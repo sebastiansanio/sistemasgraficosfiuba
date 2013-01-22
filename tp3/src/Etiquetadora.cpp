@@ -8,7 +8,7 @@
 #include "Etiquetadora.h"
 #define ETIQUE_SUP 2.2
 #define ETIQUE_INF 1.1
-#define ETIQUE_VELOCIDAD 0.1
+#define ETIQUE_VELOCIDAD 0.05
 
 Etiquetadora::Etiquetadora() {
 	this->cubeRef = new CubeRef(1.0,1.0,1.0);

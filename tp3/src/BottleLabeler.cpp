@@ -19,10 +19,15 @@ bool BottleLabeler::label(BottleInstance* bottle){
 		return false;
 	}
 	labelTime--;
-	if(labelTime == 40){
+	if(labelTime == 30){
 		bottle->setHasLabel(true);
 	}
-	return labelTime == 0;
+	if(labelTime == 0) {
+		bottle->setLabelFinished(true);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 BottleLabeler::BottleLabeler(){
