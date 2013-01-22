@@ -39,7 +39,13 @@ void AssemblyLine::advance(){
 	bool continueWork = true;
 	for(unsigned int i = 0;i<bottles->size();i++){
 		if(bottles->at(i)->getDistance()>=labelerPosition && bottles->at(i)->getHasLabel()==false){
+			if(!etiquetando) {
+				this->etiquetadora->start();
+				etiquetando=true;
+			}
+			etiquetadora->mover();
 			bool finnished = BottleLabeler::Instance()->label(bottles->at(i));
+			if(finnished) etiquetando = false;
 			if(finnished == false)
 				continueWork = false;
 		}
@@ -121,6 +127,8 @@ AssemblyLine::AssemblyLine(){
 	fillerPosition = 14;
 	labelerPosition = 18;
 	advanceParameter = 0;
+	this->etiquetadora = new Etiquetadora();
+	this->etiquetando = false;
 	bottles = new vector<BottleInstance*>;
 
 	program = TextureProgram::Instance();
@@ -303,6 +311,8 @@ void AssemblyLine::print(){
 	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
 
 	drawBottles();
+
+	etiquetadora->print();
 
 }
 
