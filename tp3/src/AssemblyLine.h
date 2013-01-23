@@ -13,6 +13,7 @@
 #include "Curves/BSpline.h"
 #include "BottleInstance.h"
 #include "Etiquetadora.h"
+#include "Llenadora.h"
 #include <math.h>
 
 class AssemblyLine{
@@ -50,6 +51,8 @@ private:
 	BSpline* bezier;
 	Etiquetadora* etiquetadora;
 	bool etiquetando;
+	Llenadora* llenadora;
+	bool llenando;
 };
 
 

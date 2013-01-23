@@ -55,9 +55,19 @@ void AssemblyLine::advance(){
 
 		}
 		if(bottles->at(i)->isFilled() == false && bottles->at(i)->getDistance()>=fillerPosition){
+			if(!llenando) {
+				this->llenadora->start();
+				llenando=true;
+			}
 			bool finnished = BottleFiller::Instance()->fill(bottles->at(i));
-			if(finnished == false)
+			if(finnished){
+				llenando = false;
+			}
+			if(finnished == false) {
+				this->llenadora->mover();
 				continueWork = false;
+			}
+
 		}
 
 	}
@@ -146,7 +156,10 @@ AssemblyLine::AssemblyLine(){
 	labelerPosition = 18;
 	advanceParameter = 0;
 	this->etiquetadora = new Etiquetadora();
+	this->llenadora = new Llenadora();
 	this->etiquetando = false;
+	this->llenando = false;
+
 	bottles = new vector<BottleInstance*>;
 
 	program = TextureProgram::Instance();
@@ -333,6 +346,8 @@ void AssemblyLine::print(){
 	glPushMatrix();
 	glTranslatef(-1.0,5.8,-1.0);
 	etiquetadora->print();
+	glTranslatef(3.0,0,0.0);
+	llenadora->print();
 	glPopMatrix();
 
 }
