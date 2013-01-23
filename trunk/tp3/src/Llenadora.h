@@ -22,6 +22,8 @@ public:
 private:
 	CubeRef* cubeRef;
 	Generic* tanque;
+	Generic* cilindro;
+	Generic* toroide;
 	//PortaEtiqueta* portaEtiqueta;
 	float posLlenadora;
 	bool moviendo;
