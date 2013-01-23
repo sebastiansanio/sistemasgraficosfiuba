@@ -21,6 +21,10 @@ public:
 	double getX();
 	double getY();
 	double getZ();
+	void setNormal(double newX,double newY,double newZ);
+	double getNormalX();
+	double getNormalY();
+	double getNormalZ();
 
 private:
 	double distance;
@@ -30,6 +34,9 @@ private:
 	double posX;
 	double posY;
 	double posZ;
+	double normalX;
+	double normalY;
+	double normalZ;
 
 };
 

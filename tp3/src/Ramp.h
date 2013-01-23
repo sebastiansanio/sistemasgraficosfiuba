@@ -12,8 +12,10 @@ public:
 	Ramp(double height,double width,double length);
 	~Ramp();
 	void print();
+	Coordinate* getNormal();
 
 private:
+	Coordinate* normal;
 	TextureProgram* program;
 	static Ramp* instance;
 	float* positionArray;

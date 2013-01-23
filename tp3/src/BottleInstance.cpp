@@ -21,6 +21,7 @@ bool BottleInstance::isFilled(){
 void BottleInstance::setDistance(double newDistance){
 	distance = newDistance;
 }
+
 void BottleInstance::setLiquidHeight(double newLiquidHeight){
 	liquidHeight = newLiquidHeight;
 }
@@ -56,4 +57,17 @@ double BottleInstance::getY(){
 double BottleInstance::getZ(){
 	return posZ;
 }
-
+void BottleInstance::setNormal(double newX,double newY,double newZ){
+	normalX = newX;
+	normalY = newY;
+	normalZ = newZ;
+}
+double BottleInstance::getNormalX(){
+	return normalX;
+}
+double BottleInstance::getNormalY(){
+	return normalY;
+}
+double BottleInstance::getNormalZ(){
+	return normalZ;
+}

@@ -6,6 +6,9 @@
 #include "Curves/BSpline.h"
 #include "BottleInstance.h"
 #include <math.h>
+#include "include/btBulletDynamicsCommon.h"
+#include "include/btBulletCollisionCommon.h"
+
 
 class Bullet{
 public:
@@ -19,6 +22,14 @@ public:
 private:
 	static Bullet* instance;
 	vector<BottleInstance*>* bottles;
+	btBroadphaseInterface* broadphase;
+	btDefaultCollisionConfiguration* collisionConfiguration;
+	btCollisionDispatcher* dispatcher;
+	btSequentialImpulseConstraintSolver* solver;
+	btDiscreteDynamicsWorld* dynamicsWorld;
+	btCollisionShape* groundShape;
+
+
 };
 
 #endif
