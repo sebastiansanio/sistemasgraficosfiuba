@@ -31,6 +31,9 @@ void BottleInstance::setHasLabel(bool newHasLabel){
 void BottleInstance::setLabelFinished(bool newLabelFinished){
 	labelFinished = newLabelFinished;
 }
+void BottleInstance::setFillFinished(bool newFillFinished){
+	fillFinished = newFillFinished;
+}
 double BottleInstance::getDistance(){
 	return distance;
 }
@@ -42,6 +45,9 @@ bool BottleInstance::getHasLabel(){
 }
 bool BottleInstance::getLabelFinished(){
 	return labelFinished;
+}
+bool BottleInstance::getFillFinished(){
+	return fillFinished;
 }
 void BottleInstance::setPosition(double newX,double newY,double newZ){
 	posX = newX;

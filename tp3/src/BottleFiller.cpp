@@ -27,7 +27,12 @@ bool BottleFiller::fill(BottleInstance* bottle){
 		bottle->setLiquidHeight(actualLiquidHeight+fill);
 	}
 	fillTime --;
-	return fillTime == 0;
+	if(fillTime == 0) {
+		bottle->setFillFinished(true);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 BottleFiller::BottleFiller(){

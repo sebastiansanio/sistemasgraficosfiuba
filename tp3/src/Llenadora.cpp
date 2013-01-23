@@ -8,7 +8,7 @@
 #include "Llenadora.h"
 #define LLENA_SUP 2.5
 #define LLENA_INF 2.25
-#define LLENA_VELOCIDAD 0.02
+#define LLENA_VELOCIDAD 0.08
 #define PI 3.14159265
 #define STEP_LLENA 10
 
@@ -376,11 +376,18 @@ void Llenadora::start() {
 	if(!moviendo) {
 		this->moviendo = true;
 		this->subiendo = false;
+		this->tiempoRestante = 50;
 		this->posLlenadora = LLENA_SUP - LLENA_VELOCIDAD;
 	}
 }
 
 void Llenadora::mover() {
+	this->tiempoRestante--;
+	if(tiempoRestante<=45 && tiempoRestante>5) {
+		this->moviendo = false;
+	} else if (tiempoRestante==5) {
+		this->moviendo = true;
+	}
 	if(this->moviendo) {
 		if(this->posLlenadora >= LLENA_SUP) {
 			this->subiendo = false;
