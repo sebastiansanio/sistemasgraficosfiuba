@@ -24,12 +24,14 @@ Bullet::Bullet(){
     solver = new btSequentialImpulseConstraintSolver;
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
     dynamicsWorld->setGravity(btVector3(0,0,-10));
-    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,0,1),1);
 
-    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
+    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,0,1),0);
+    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+
     dynamicsWorld->addRigidBody(groundRigidBody);
+
 
 	addPack();
 }
@@ -50,7 +52,7 @@ void Bullet::addPack(){
 //	bottle->setNormal(0,0,1);
 //	bottles->push_back(bottle);
 
-	btBoxShape* collisionShape = new btBoxShape(btVector3(1,1,1));
+	btBoxShape* collisionShape = new btBoxShape(btVector3(0.3,0.3,0.5));
 	btVector3 fallInertia(0,0,0);
 	btScalar mass = 1;
 	collisionShape->calculateLocalInertia(mass,fallInertia);
@@ -69,13 +71,14 @@ void Bullet::drawBottles(){
 
 	for(int i = 0;i<bottles->size();i++){
 		glPushMatrix();
-			btTransform trans;
+			btTransform transform;
 
 			btRigidBody* rigidBody = bottles->at(i);
-		    rigidBody->getMotionState()->getWorldTransform(trans);
+		    rigidBody->getMotionState()->getWorldTransform(transform);
 
-		    std::cout << "Bottle height: " << trans.getOrigin().getZ() << std::endl;
-		    glTranslatef(0,0,trans.getOrigin().getZ());
+		    glTranslatef(transform.getOrigin().getX(),transform.getOrigin().getY(),transform.getOrigin().getZ());
+		    btVector3 axis = transform.getRotation().getAxis();
+		    glRotatef(transform.getRotation().getAngle()*360/6.2832f,axis.getX(),axis.getY(),axis.getZ());
 		    Bottle::Instance()->printPack();
 
 		glPopMatrix();
