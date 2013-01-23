@@ -24,7 +24,6 @@ private:
 	Generic* tanque;
 	Generic* cilindro;
 	Generic* toroide;
-	//PortaEtiqueta* portaEtiqueta;
 	float posLlenadora;
 	bool moviendo;
 	bool subiendo;
