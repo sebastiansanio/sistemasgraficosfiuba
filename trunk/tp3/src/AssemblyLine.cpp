@@ -341,7 +341,6 @@ void AssemblyLine::print(){
 
 	glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
 
-	drawBottles();
 
 	glPushMatrix();
 	glTranslatef(-1.0,5.8,-1.0);
@@ -349,6 +348,8 @@ void AssemblyLine::print(){
 	glTranslatef(-3.83,0.04,0.0);
 	llenadora->print();
 	glPopMatrix();
+
+	drawBottles();
 
 }
 
