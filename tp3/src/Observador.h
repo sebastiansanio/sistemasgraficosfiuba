@@ -20,6 +20,7 @@ public:
 	virtual void right();
 	virtual void forward();
 	virtual void backward();
+	virtual void rotate(float angleX, float angleY);
 	float* getEye();
 	float* getAt();
 	float* getUp();

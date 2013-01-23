@@ -19,6 +19,7 @@ public:
 	void right();
 	void forward();
 	void backward();
+	void rotate(float angleX, float angleY);
 	virtual ~ObservadorCentro();
 
 private:
