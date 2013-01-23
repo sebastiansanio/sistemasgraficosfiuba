@@ -2,6 +2,12 @@
 #include "Scene.h"
 #include "Curves/BSpline.h"
 
+int anchoVentana;
+int altoVentana;
+
+float ultPosMouseX = -1;
+float ultPosMouseY = -1;
+
 void OnIdle (void)
 {
 }
@@ -34,10 +40,12 @@ void init(void)
 
 void display(void)
 {
-	glViewport (0, 0, (GLsizei) 1024, (GLsizei) 768);
+	anchoVentana=1024;
+	altoVentana=768;
+	glViewport (0, 0, (GLsizei) anchoVentana, (GLsizei) altoVentana);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluPerspective(60.0, (GLfloat) 1024/(GLfloat) 768, 0.10, 100.0);
+	gluPerspective(60.0, (GLfloat) anchoVentana/(GLfloat) altoVentana, 0.10, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -56,6 +64,8 @@ void display(void)
 }
 
 void reshape (int w, int h) {
+	anchoVentana = w;
+	altoVentana = h;
 	glViewport (0, 0, (GLsizei) w, (GLsizei) h);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
@@ -104,6 +114,28 @@ void keyboard (unsigned char key, int x, int y) {
    }
 }
 
+void mouseClick(int button, int state, int x, int y) {
+	ultPosMouseX = (x+0.0)/anchoVentana;
+	ultPosMouseY = (y+0.0)/altoVentana;
+}
+
+void mouseMotion(int x, int y){
+	float nuevoX = (x+0.0)/anchoVentana;
+	float nuevoY = (y+0.0)/altoVentana;
+	if(ultPosMouseX == -1 && ultPosMouseY == -1) {
+		ultPosMouseX = nuevoX;
+		ultPosMouseY = nuevoY;
+	} else {
+		//Toda la ventana son 180 grados
+		float angleX = (nuevoX-ultPosMouseX) * 180;
+		float angleY = (nuevoY-ultPosMouseY) * 180;
+		ultPosMouseX = nuevoX;
+		ultPosMouseY = nuevoY;
+		Camera::Instance()->rotate(angleX,angleY);
+	}
+
+}
+
 void timerFunc(int value){
 	Scene::Instance()->advanceMotion();
 	glutTimerFunc(50,timerFunc,0);
@@ -126,6 +158,8 @@ int main(int argc, char** argv)
    glutKeyboardFunc(keyboard);
    glutIdleFunc(OnIdle);
    glutTimerFunc(50,timerFunc,0);
+   glutMotionFunc(mouseMotion);
+   glutMouseFunc(mouseClick);
 
    //Inicializando GLEW
    GLenum err = glewInit();

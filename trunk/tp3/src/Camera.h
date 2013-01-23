@@ -28,6 +28,7 @@ public:
 	void right();
 	void forward();
 	void backward();
+	void rotate(float angleX, float angleY);
 	void toCaminante();
 	void toCentro();
 	GLfloat inverseViewMatrix[16];

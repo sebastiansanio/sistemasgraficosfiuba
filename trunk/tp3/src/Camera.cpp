@@ -190,6 +190,10 @@ void Camera::backward(){
 	this->observador->backward();
 }
 
+void Camera::rotate(float angleX, float angleY){
+	this->observador->rotate(angleX,angleY);
+}
+
 void Camera::toCaminante(){
 	this->observador = new ObservadorCaminante();
 }

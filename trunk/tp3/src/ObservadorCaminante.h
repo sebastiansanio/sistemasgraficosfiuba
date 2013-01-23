@@ -19,10 +19,12 @@ public:
 	void right();
 	void forward();
 	void backward();
+	void rotate(float angleX, float angleY);
 	virtual ~ObservadorCaminante();
 
 private:
-	float angulo;
+	float anguloX;
+	float anguloY;
 };
 
 #endif /* OBSERVADORCAMINANTE_H_ */

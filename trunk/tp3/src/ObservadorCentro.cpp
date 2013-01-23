@@ -47,6 +47,9 @@ void ObservadorCentro::backward(){
 	calcPosition();
 }
 
+void ObservadorCentro::rotate(float angleX, float angleY){
+}
+
 void ObservadorCentro::calcPosition(){
 	eye[0]= ratio * cos(anglehor) * sin(anglevert);
 	eye[1]= ratio * sin(anglehor) * sin(anglevert);

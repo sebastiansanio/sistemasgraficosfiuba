@@ -27,6 +27,9 @@ void Observador::forward(){
 void Observador::backward(){
 }
 
+void Observador::rotate(float angleX, float angleY){
+}
+
 float* Observador::getEye() {
 	return eye;
 }
