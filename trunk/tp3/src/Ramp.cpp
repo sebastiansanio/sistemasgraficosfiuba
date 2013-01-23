@@ -11,6 +11,9 @@ Ramp* Ramp::Instance ()
   return instance;
 }
 
+Coordinate* Ramp::getNormal(){
+	return normal;
+}
 
 Ramp::Ramp(double height,double width,double length){
 
@@ -32,7 +35,7 @@ Ramp::Ramp(double height,double width,double length){
 	double normalX=deltaZ;
 
 
-	Coordinate* normal = new Coordinate(normalX,0,normalZ);
+	normal = new Coordinate(normalX,0,normalZ);
 	normal->normalize();
 
 	positionArray[posCounter]=0;
@@ -92,7 +95,6 @@ Ramp::Ramp(double height,double width,double length){
 	normalArray[posCounter+8]=normal->getZ();
 	posCounter+=9;
 	texPosCounter+=6;
-	delete normal;
 
 
 	glGenBuffers(1, &bufferPositionHandler);

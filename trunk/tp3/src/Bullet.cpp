@@ -1,8 +1,9 @@
 #include "Bullet.h"
 #include <iostream>
 #include "Bottle.h"
-#include "include/btBulletDynamicsCommon.h"
-#include "include/btBulletCollisionCommon.h"
+#include "Curves/Coordinate.h"
+#include "Ramp.h"
+#include <math.h>
 
 Bullet* Bullet::instance = 0;
 Bullet* Bullet::Instance ()
@@ -16,46 +17,14 @@ Bullet* Bullet::Instance ()
 
 Bullet::Bullet(){
 	bottles = new vector<BottleInstance*>;
-	addPack();
-}
 
-Bullet::~Bullet(){
-
-}
-
-void Bullet::addPack(){
-	BottleInstance* bottle = new BottleInstance();
-	bottle->setPosition(13,5,6);
-	bottles->push_back(bottle);
-
-}
-
-void Bullet::drawBottles(){
-
-	for(unsigned int i = 0;i<bottles->size();i++){
-		glPushMatrix();
-			glTranslatef(bottles->at(i)->getX(),bottles->at(i)->getY(),bottles->at(i)->getZ());
-			Bottle::Instance()->printPack();
-		glPopMatrix();
-	}
-
-}
-
-void Bullet::advanceMotion(){
-    btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-
-    btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-    btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-    btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
-
-    btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
-
+    broadphase = new btDbvtBroadphase();
+    collisionConfiguration = new btDefaultCollisionConfiguration();
+    dispatcher = new btCollisionDispatcher(collisionConfiguration);
+    solver = new btSequentialImpulseConstraintSolver;
+    dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
     dynamicsWorld->setGravity(btVector3(0,-10,0));
-
-
-    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,1,0),1);
-
+    groundShape = new btStaticPlaneShape(btVector3(0,1,0),1);
     btCollisionShape* fallShape = new btSphereShape(1);
 
 
@@ -104,6 +73,43 @@ void Bullet::advanceMotion(){
     delete collisionConfiguration;
     delete dispatcher;
     delete broadphase;
+
+
+
+
+
+	addPack();
+}
+
+Bullet::~Bullet(){
+
+}
+
+void Bullet::addPack(){
+	BottleInstance* bottle = new BottleInstance();
+	Coordinate* normal = Ramp::Instance()->getNormal();
+
+	bottle->setPosition(11.2,3.9,3.7);
+	bottle->setNormal(normal->getX(),normal->getY(),normal->getZ());
+
+	cout << normal->getX() << ":" <<normal->getY()<<":"<<normal->getZ() <<endl;
+
+	bottles->push_back(bottle);
+
+}
+
+void Bullet::drawBottles(){
+
+	for(unsigned int i = 0;i<bottles->size();i++){
+		glPushMatrix();
+			glTranslatef(bottles->at(i)->getX(),bottles->at(i)->getY(),bottles->at(i)->getZ());
+			Bottle::Instance()->printPack();
+		glPopMatrix();
+	}
+
+}
+
+void Bullet::advanceMotion(){
 
 
 }
