@@ -16,101 +16,75 @@ Bullet* Bullet::Instance ()
 }
 
 Bullet::Bullet(){
-	bottles = new vector<BottleInstance*>;
 
+	bottles = new btAlignedObjectArray<btRigidBody*>();
     broadphase = new btDbvtBroadphase();
     collisionConfiguration = new btDefaultCollisionConfiguration();
     dispatcher = new btCollisionDispatcher(collisionConfiguration);
     solver = new btSequentialImpulseConstraintSolver;
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
-    dynamicsWorld->setGravity(btVector3(0,-10,0));
-    groundShape = new btStaticPlaneShape(btVector3(0,1,0),1);
-    btCollisionShape* fallShape = new btSphereShape(1);
-
+    dynamicsWorld->setGravity(btVector3(0,0,-10));
+    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,0,1),1);
 
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
-    btRigidBody::btRigidBodyConstructionInfo
-            groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
+    btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
     dynamicsWorld->addRigidBody(groundRigidBody);
-
-
-    btDefaultMotionState* fallMotionState =
-            new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,50,0)));
-    btScalar mass = 1;
-    btVector3 fallInertia(0,0,0);
-    fallShape->calculateLocalInertia(mass,fallInertia);
-    btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,fallShape,fallInertia);
-    btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
-    dynamicsWorld->addRigidBody(fallRigidBody);
-
-
-    for (int i=0 ; i<300 ; i++) {
-            dynamicsWorld->stepSimulation(1/60.f,10);
-
-            btTransform trans;
-            fallRigidBody->getMotionState()->getWorldTransform(trans);
-
-//            std::cout << "sphere height: " << trans.getOrigin().getY() << std::endl;
-    }
-
-    dynamicsWorld->removeRigidBody(fallRigidBody);
-    delete fallRigidBody->getMotionState();
-    delete fallRigidBody;
-
-    dynamicsWorld->removeRigidBody(groundRigidBody);
-    delete groundRigidBody->getMotionState();
-    delete groundRigidBody;
-
-
-    delete fallShape;
-
-    delete groundShape;
-
-
-    delete dynamicsWorld;
-    delete solver;
-    delete collisionConfiguration;
-    delete dispatcher;
-    delete broadphase;
-
-
-
-
 
 	addPack();
 }
 
 Bullet::~Bullet(){
 
+	delete dynamicsWorld;
+	delete solver;
+	delete broadphase;
+	delete dispatcher;
+	delete collisionConfiguration;
 }
 
 void Bullet::addPack(){
-	BottleInstance* bottle = new BottleInstance();
-	Coordinate* normal = Ramp::Instance()->getNormal();
 
-	bottle->setPosition(11.2,3.9,3.7);
-	bottle->setNormal(normal->getX(),normal->getY(),normal->getZ());
+//	BottleInstance* bottle = new BottleInstance();
+//	bottle->setPosition(11.2,3.9,3.7);
+//	bottle->setNormal(0,0,1);
+//	bottles->push_back(bottle);
 
-	cout << normal->getX() << ":" <<normal->getY()<<":"<<normal->getZ() <<endl;
-
-	bottles->push_back(bottle);
+	btBoxShape* collisionShape = new btBoxShape(btVector3(1,1,1));
+	btVector3 fallInertia(0,0,0);
+	btScalar mass = 1;
+	collisionShape->calculateLocalInertia(mass,fallInertia);
+	btTransform transform;
+	transform.setIdentity();
+	transform.setOrigin(btVector3(btScalar(0),btScalar(0),btScalar(3.7)));
+	btDefaultMotionState* motionState = new btDefaultMotionState(transform);
+    btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass,motionState,collisionShape,fallInertia);
+    btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
+    bottles->push_back(rigidBody);
+    dynamicsWorld->addRigidBody(rigidBody);
 
 }
 
 void Bullet::drawBottles(){
 
-	for(unsigned int i = 0;i<bottles->size();i++){
+	for(int i = 0;i<bottles->size();i++){
 		glPushMatrix();
-			glTranslatef(bottles->at(i)->getX(),bottles->at(i)->getY(),bottles->at(i)->getZ());
-			Bottle::Instance()->printPack();
+			btTransform trans;
+
+			btRigidBody* rigidBody = bottles->at(i);
+		    rigidBody->getMotionState()->getWorldTransform(trans);
+
+		    std::cout << "Bottle height: " << trans.getOrigin().getZ() << std::endl;
+		    glTranslatef(0,0,trans.getOrigin().getZ());
+		    Bottle::Instance()->printPack();
+
 		glPopMatrix();
 	}
 
 }
 
 void Bullet::advanceMotion(){
-
+	dynamicsWorld->stepSimulation(1/60.f,10);
 
 }
 
