@@ -216,19 +216,19 @@ void Bottle::printPack(){
 	glVertexAttribPointer( VERTEX_TEX_ATTR_INDEX, 2 , GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 	double distance = 0.15;
 	glPushMatrix();
-		glTranslatef(distance,distance,0);
+		glTranslatef(distance,distance,-0.5);
 		glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef(-distance,-distance,0);
+		glTranslatef(-distance,-distance,-0.5);
 		glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef(distance,-distance,0);
+		glTranslatef(distance,-distance,-0.5);
 		glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef(-distance,distance,0);
+		glTranslatef(-distance,distance,-0.5);
 		glDrawArrays( GL_TRIANGLES, 0, trianglesEstimated * 3);
 	glPopMatrix();
 
