@@ -21,13 +21,12 @@ public:
 
 private:
 	static Bullet* instance;
-	vector<BottleInstance*>* bottles;
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld* dynamicsWorld;
-	btCollisionShape* groundShape;
+	btAlignedObjectArray<btRigidBody*>* bottles;
 
 
 };
