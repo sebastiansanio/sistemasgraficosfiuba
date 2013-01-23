@@ -12,10 +12,12 @@ public:
 	void setLiquidHeight(double newLiquidHeight);
 	void setHasLabel(bool newHasLabel);
 	void setLabelFinished(bool newLabelFinished);
+	void setFillFinished(bool newFillFinished);
 	double getDistance();
 	double getLiquidHeight();
 	bool getHasLabel();
 	bool getLabelFinished();
+	bool getFillFinished();
 	bool isFilled();
 	void setPosition(double newX,double newY,double newZ);
 	double getX();
@@ -31,6 +33,7 @@ private:
 	double liquidHeight;
 	bool hasLabel;
 	bool labelFinished;
+	bool fillFinished;
 	double posX;
 	double posY;
 	double posZ;

@@ -25,6 +25,7 @@ private:
 	Generic* cilindro;
 	Generic* toroide;
 	float posLlenadora;
+	int tiempoRestante;
 	bool moviendo;
 	bool subiendo;
 };

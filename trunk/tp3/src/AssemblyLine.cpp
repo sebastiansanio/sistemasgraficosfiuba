@@ -54,7 +54,7 @@ void AssemblyLine::advance(){
 			}
 
 		}
-		if(bottles->at(i)->isFilled() == false && bottles->at(i)->getDistance()>=fillerPosition){
+		if(bottles->at(i)->getFillFinished() == false && bottles->at(i)->getDistance()>=fillerPosition){
 			if(!llenando) {
 				this->llenadora->start();
 				llenando=true;
