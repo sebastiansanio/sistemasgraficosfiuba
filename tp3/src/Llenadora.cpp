@@ -14,7 +14,6 @@
 
 Llenadora::Llenadora() {
 	this->cubeRef = new CubeRef(1.0,1.0,1.0);
-//	this->portaEtiqueta = new PortaEtiqueta();
 	this->posLlenadora = LLENA_SUP;
 	this->moviendo=false;
 
