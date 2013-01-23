@@ -366,8 +366,8 @@ void Llenadora::print() {
 			glRotatef(90,0,1,0);
 			toroide->print();
 		glPopMatrix();
-		glTranslatef(0.0,-1.70,-0.25);
-		glScalef(1.5,1.5,0.05);
+		glTranslatef(0.0,-1.70,-0.28);
+		glScalef(1.7,1.7,0.08);
 		cilindro->print();
 	glPopMatrix();
 }
