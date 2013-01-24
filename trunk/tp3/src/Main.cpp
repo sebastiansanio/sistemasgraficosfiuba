@@ -109,6 +109,10 @@ void keyboard (unsigned char key, int x, int y) {
 		  Camera::Instance()->toCentro();
 		  glutPostRedisplay();
 		  break;
+      case 'p':
+		  Bullet::Instance()->addPack();
+		  glutPostRedisplay();
+		  break;
      default:
          break;
    }
