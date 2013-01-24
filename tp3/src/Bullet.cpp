@@ -2,7 +2,6 @@
 #include <iostream>
 #include "Bottle.h"
 #include "Curves/Coordinate.h"
-#include "Ramp.h"
 #include <math.h>
 
 Bullet* Bullet::instance = 0;
@@ -17,6 +16,7 @@ Bullet* Bullet::Instance ()
 
 Bullet::Bullet(){
 
+
 	bottles = new btAlignedObjectArray<btRigidBody*>();
     broadphase = new btDbvtBroadphase();
     collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -29,9 +29,20 @@ Bullet::Bullet(){
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-
     dynamicsWorld->addRigidBody(groundRigidBody);
 
+    rectangTex = new RectangTex(0.50,3.5,2,1);
+    btCollisionShape* rampShape = new btBoxShape(btVector3(0.50,3.5,0.001));
+    float mass = 0;
+    btVector3 fallInertia(0,0,0);
+    btTransform transform;
+    transform.setIdentity();
+    transform.setOrigin(btVector3(btScalar(11.25),btScalar(1.1),btScalar(1.8)));
+    transform.setRotation(btQuaternion(btVector3(1,0,0),btScalar(25*6.28318531/360)));
+    btDefaultMotionState* motionState = new btDefaultMotionState(transform);
+    btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass,motionState,rampShape,fallInertia);
+    ramp = new btRigidBody(rigidBodyCI);
+    dynamicsWorld->addRigidBody(ramp);
 
 	addPack();
 }
@@ -47,27 +58,33 @@ Bullet::~Bullet(){
 
 void Bullet::addPack(){
 
-//	BottleInstance* bottle = new BottleInstance();
-//	bottle->setPosition(11.2,3.9,3.7);
-//	bottle->setNormal(0,0,1);
-//	bottles->push_back(bottle);
-
 	btBoxShape* collisionShape = new btBoxShape(btVector3(0.3,0.3,0.5));
 	btVector3 fallInertia(0,0,0);
-	btScalar mass = 1;
+	btScalar mass = 0.2;
 	collisionShape->calculateLocalInertia(mass,fallInertia);
 	btTransform transform;
 	transform.setIdentity();
-	transform.setOrigin(btVector3(btScalar(0),btScalar(0),btScalar(3.7)));
+	transform.setOrigin(btVector3(btScalar(11.25),btScalar(4.3),btScalar(3.8)));
+	transform.setRotation(btQuaternion(btVector3(1,0,0),btScalar(25*6.28318531/360)));
 	btDefaultMotionState* motionState = new btDefaultMotionState(transform);
     btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass,motionState,collisionShape,fallInertia);
     btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
+    rigidBody->setLinearVelocity(btVector3(0,0,0));
     bottles->push_back(rigidBody);
     dynamicsWorld->addRigidBody(rigidBody);
 
 }
 
 void Bullet::drawBottles(){
+
+	glPushMatrix();
+		btTransform transformRamp;
+		ramp->getMotionState()->getWorldTransform(transformRamp);
+		glTranslatef(transformRamp.getOrigin().getX(),transformRamp.getOrigin().getY(),transformRamp.getOrigin().getZ());
+		btVector3 axis = transformRamp.getRotation().getAxis();
+		glRotatef(transformRamp.getRotation().getAngle()*360/6.2832f,axis.getX(),axis.getY(),axis.getZ());
+		rectangTex->print();
+	glPopMatrix();
 
 	for(int i = 0;i<bottles->size();i++){
 		glPushMatrix();

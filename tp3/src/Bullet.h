@@ -8,6 +8,7 @@
 #include <math.h>
 #include "include/btBulletDynamicsCommon.h"
 #include "include/btBulletCollisionCommon.h"
+#include "RectangTex.h"
 
 
 class Bullet{
@@ -20,6 +21,8 @@ public:
 	void advanceMotion();
 
 private:
+	RectangTex* rectangTex;
+	btRigidBody* ramp;
 	static Bullet* instance;
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;

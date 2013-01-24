@@ -4,7 +4,7 @@
 #include "CubeMapProgram.h"
 #include "TextureProgram.h"
 #include "Curves/Bezier.h"
-#include "Ramp.h"
+#include "RectangTex.h"
 #include <math.h>
 
 class BottleDispatcher{
@@ -15,6 +15,7 @@ public:
 	void print();
 
 private:
+	RectangTex* inside;
 	double exitWidthLocation;
 	double height;
 	double length;
@@ -29,7 +30,6 @@ private:
 	GLuint bufferColorHandler;
 	GLuint bufferNormalHandler;
 	GLuint bufferTextureHandler;
-	Ramp* ramp;
 	int trianglesEstimated;
 
 };
