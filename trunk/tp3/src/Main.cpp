@@ -142,7 +142,7 @@ void mouseMotion(int x, int y){
 
 void timerFunc(int value){
 	Scene::Instance()->advanceMotion();
-	glutTimerFunc(50,timerFunc,0);
+	glutTimerFunc(25,timerFunc,0);
 	glutPostRedisplay();
 
 }
@@ -161,7 +161,7 @@ int main(int argc, char** argv)
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutIdleFunc(OnIdle);
-   glutTimerFunc(50,timerFunc,0);
+   glutTimerFunc(25,timerFunc,0);
    glutMotionFunc(mouseMotion);
    glutMouseFunc(mouseClick);
 
