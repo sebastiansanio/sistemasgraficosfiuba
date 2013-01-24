@@ -34,7 +34,7 @@ void Scene::printScene(){
 				pared->print();
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(0.0,-20.0,5.0);
+				glTranslatef(0.0,-13.0,5.0);
 				glRotatef(-90,1.0,0.0,0.0);
 				pared->print();
 			glPopMatrix();

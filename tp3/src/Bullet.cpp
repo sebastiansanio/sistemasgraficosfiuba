@@ -31,6 +31,31 @@ Bullet::Bullet(){
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
     dynamicsWorld->addRigidBody(groundRigidBody);
 
+
+    btCollisionShape* wallShape1 = new btStaticPlaneShape(btVector3(0,1,0),0);
+    btDefaultMotionState* wallMotionState1 = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-13,0)));
+    btRigidBody::btRigidBodyConstructionInfo wallRigidBodyCI1(0,wallMotionState1,wallShape1,btVector3(0,0,0));
+    btRigidBody* wallRigidBody1 = new btRigidBody(wallRigidBodyCI1);
+    dynamicsWorld->addRigidBody(wallRigidBody1);
+
+    btCollisionShape* wallShape2 = new btStaticPlaneShape(btVector3(0,-1,0),0);
+    btDefaultMotionState* wallMotionState2 = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,20,0)));
+    btRigidBody::btRigidBodyConstructionInfo wallRigidBodyCI2(0,wallMotionState2,wallShape2,btVector3(0,0,0));
+    btRigidBody* wallRigidBody2 = new btRigidBody(wallRigidBodyCI2);
+    dynamicsWorld->addRigidBody(wallRigidBody2);
+
+    btCollisionShape* wallShape3 = new btStaticPlaneShape(btVector3(1,0,0),0);
+    btDefaultMotionState* wallMotionState3 = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(-20,0,0)));
+    btRigidBody::btRigidBodyConstructionInfo wallRigidBodyCI3(0,wallMotionState3,wallShape3,btVector3(0,0,0));
+    btRigidBody* wallRigidBody3 = new btRigidBody(wallRigidBodyCI3);
+    dynamicsWorld->addRigidBody(wallRigidBody3);
+
+    btCollisionShape* wallShape4 = new btStaticPlaneShape(btVector3(-1,0,0),0);
+    btDefaultMotionState* wallMotionState4 = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(20,0,0)));
+    btRigidBody::btRigidBodyConstructionInfo wallRigidBodyCI4(0,wallMotionState4,wallShape4,btVector3(0,0,0));
+    btRigidBody* wallRigidBody4 = new btRigidBody(wallRigidBodyCI4);
+    dynamicsWorld->addRigidBody(wallRigidBody4);
+
     rectangTex = new RectangTex(0.50,3.5,2,1);
     btCollisionShape* rampShape = new btBoxShape(btVector3(0.50,3.5,0.001));
     float mass = 0;
@@ -44,7 +69,7 @@ Bullet::Bullet(){
     ramp = new btRigidBody(rigidBodyCI);
     dynamicsWorld->addRigidBody(ramp);
 
-	addPack();
+
 }
 
 Bullet::~Bullet(){
@@ -69,7 +94,7 @@ void Bullet::addPack(){
 	btDefaultMotionState* motionState = new btDefaultMotionState(transform);
     btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass,motionState,collisionShape,fallInertia);
     btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
-    rigidBody->setLinearVelocity(btVector3(0,0,0));
+    rigidBody->applyCentralImpulse(btVector3(0,-3,-1));
     bottles->push_back(rigidBody);
     dynamicsWorld->addRigidBody(rigidBody);
 
