@@ -10,7 +10,7 @@
 ObservadorCentro::ObservadorCentro() {
 	ratio=10.0f;
 	anglehor=0.0f;
-	anglevert= 3.1416/2; //(3.1416 * 3) / 4;
+	anglevert= 2.5;
 	this->calcPosition();
 }
 

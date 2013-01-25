@@ -77,11 +77,11 @@ void keyboard (unsigned char key, int x, int y) {
       case 'r':
          exit(0);
          break;
-      case 'w':
+      case 'q':
     	  Camera::Instance()->upz();
     	  glutPostRedisplay();
     	  break;
-      case 's':
+      case 'e':
     	  Camera::Instance()->downz();
 		  glutPostRedisplay();
 		  break;
@@ -93,11 +93,11 @@ void keyboard (unsigned char key, int x, int y) {
     	  Camera::Instance()->right();
 		  glutPostRedisplay();
 		  break;
-      case 'q':
+      case 'w':
     	  Camera::Instance()->forward();
 		  glutPostRedisplay();
 		  break;
-      case 'e':
+      case 's':
     	  Camera::Instance()->backward();
 		  glutPostRedisplay();
 		  break;
@@ -142,7 +142,7 @@ void mouseMotion(int x, int y){
 
 void timerFunc(int value){
 	Scene::Instance()->advanceMotion();
-	glutTimerFunc(25,timerFunc,0);
+	glutTimerFunc(30,timerFunc,0);
 	glutPostRedisplay();
 
 }
@@ -161,7 +161,7 @@ int main(int argc, char** argv)
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutIdleFunc(OnIdle);
-   glutTimerFunc(25,timerFunc,0);
+   glutTimerFunc(30,timerFunc,0);
    glutMotionFunc(mouseMotion);
    glutMouseFunc(mouseClick);
 
