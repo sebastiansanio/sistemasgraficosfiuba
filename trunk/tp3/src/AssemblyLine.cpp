@@ -152,8 +152,8 @@ void AssemblyLine::setTexture(){
 
 AssemblyLine::AssemblyLine(){
 	bottlesQuantity = 0;
-	fillerPosition = 14;
-	labelerPosition = 18;
+	fillerPosition = 19;
+	labelerPosition = 23;
 	advanceParameter = 0;
 	this->etiquetadora = new Etiquetadora();
 	this->llenadora = new Llenadora();
@@ -343,10 +343,13 @@ void AssemblyLine::print(){
 
 
 	glPushMatrix();
-	glTranslatef(-1.0,5.8,-1.0);
-	etiquetadora->print();
-	glTranslatef(-3.83,0.04,0.0);
-	llenadora->print();
+		glTranslatef(4.0,5.5,-1.0);
+		etiquetadora->print();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(0.0,6.2,-1.0);
+		llenadora->print();
 	glPopMatrix();
 
 	drawBottles();
@@ -355,12 +358,7 @@ void AssemblyLine::print(){
 
 void AssemblyLine::drawBottles(){
 
-	for(unsigned int i = 0;i<bottles->size();i++){
-		if(bottles->at(i)->getDistance() >= pointsDistance->at(pointsDistance->size()-1)){
-			bottles->erase(bottles->begin()+i);
-			continue;
-		}
-	}
+
 	for(unsigned int i = 0;i<bottles->size();i++){
 		for (unsigned int j = 0;j<pointsDistance->size()-1;j++){
 			if(bottles->at(i)->getDistance() >= pointsDistance->at(j) && bottles->at(i)->getDistance() <  pointsDistance->at(j+1)){

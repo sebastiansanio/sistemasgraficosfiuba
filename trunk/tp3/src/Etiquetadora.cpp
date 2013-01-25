@@ -21,7 +21,7 @@ void Etiquetadora::print() {
 	glPushMatrix();
 		glPushMatrix();
 			glTranslatef(0.0,0.0,1.8);
-			glScalef(0.5,0.5,1.0);
+			glScalef(0.7,0.7,1.0);
 			cubeRef->print();
 		glPopMatrix();
 		glPushMatrix();
