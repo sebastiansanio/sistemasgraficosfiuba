@@ -85,7 +85,7 @@ void Bullet::addPack(){
 
 	btBoxShape* collisionShape = new btBoxShape(btVector3(0.3,0.3,0.5));
 	btVector3 fallInertia(0,0,0);
-	btScalar mass = 0.2;
+	btScalar mass = 4;
 	collisionShape->calculateLocalInertia(mass,fallInertia);
 	btTransform transform;
 	transform.setIdentity();
@@ -94,7 +94,7 @@ void Bullet::addPack(){
 	btDefaultMotionState* motionState = new btDefaultMotionState(transform);
     btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass,motionState,collisionShape,fallInertia);
     btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
-    rigidBody->applyCentralImpulse(btVector3(0,-3,-1));
+    rigidBody->applyCentralImpulse(btVector3(0,-30,-10));
     bottles->push_back(rigidBody);
     dynamicsWorld->addRigidBody(rigidBody);
 
