@@ -348,7 +348,7 @@ void AssemblyLine::print(){
 	glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(0.0,6.2,-1.0);
+		glTranslatef(0.0,6.1,-1.0);
 		llenadora->print();
 	glPopMatrix();
 
